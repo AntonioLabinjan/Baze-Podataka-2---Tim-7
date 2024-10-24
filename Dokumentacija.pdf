@@ -1,0 +1,3462 @@
+ 
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+Dokumentacija uz projektni zadatak
+POLICIJA
+
+
+
+
+
+Tim VII
+Maja  Ajhorn
+Nika Horvat
+Antonio Labinjan
+Petar Prenc
+Ana Rogalo
+Anastazija Širol
+
+Baze podataka II
+Mentori:
+doc. dr. sc. Goran Oreški
+mag. inf. Romeo Šajina
+
+
+
+Uvod 
+Odabir projekta Policija temelji se na prepoznavanju važne uloge koju policija ima u društvu. Važnost policijskih službenika ogleda se u njihovom aktivnom sudjelovanju u zaštiti zajednice od razli?itih prijetnji, održavanju javnog reda te odgovoru na izazove sigurnosti. Njihov položaj zahtijeva visok stupanj odgovornosti, eti?nosti i profesionalnosti. Cijenjenje policajaca kao javnih službenika od strane gra?ana klju?no je za izgradnju pozitivnog odnosa izme?u policije i zajednice te podržava njihovu u?inkovitu ulogu u o?uvanju društvenog mira. 
+ 
+Slika 1 Preuzeto s BalkanInsight
+U izradi ovog projekta sudjelovali su Maja Ajhorn, Nika Horvat, Antonio Labinjan, Petar Prenc, Ana Rogalo i Anastazija Širol. 
+
+Tablice 
+Kao što je ve? spomenuto, naša se baza podataka sastoji od 18 tablica. Svaka od njih predstavlja specifi?an entitet relevantan za policijski domen, te omogu?uje detaljno organiziranje i povezivanje podataka.
+Podrucje_uprave
+Tablica Podrucje_uprave koristi se za pohranu podataka o podru?ju pojedine uprave. Atributi ove tablice su id i naziv.
+
+Kao primarni klju? odabran je atribut id, tipa INTEGER. Dodavanjem AUTO_INCREMENT-a na primarni klju?, baza podataka ?e automatski dodijeliti jedinstvene i rastu?e vrijednosti atributu prilikom svakog umetanja novog retka. Atribut naziv je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova te predstavlja naziv županije. Dodatno, atribut naziv je postavljen kao UNIQUE, što osigurava da odre?eno podru?je uprave pripada jedinstvenoj županiji, a kako bi se osigurao obavezan unos tih podataka, na istoimeni je atribut postavljeno ograni?enje NOT NULL. 
+
+U tablici Podrucje_uprave smo postavili indeks na stupac naziv.
+Mjesto
+Tablica Mjesto nam dodatno opisuje to?nu lokaciju koja se nalazi unutar pojedinog podru?ja uprave te je klju?na u pra?enju lokacija relevantnih za policijske aktivnosti. Atributi ove tablice su id, naziv i id_podrucje_uprave.
+
+Primarni klju? ove tablice je atribut id, tipa INTEGER i s AUTO_INCREMENT svojstvom. Atribut naziv tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova te predstavlja naziv grada. Kako bi unos podataka atributa naziv bio nužan, postavljeno je ograni?enje NOT NULL. Strani klju? id_podrucje_uprave atribut je tipa INTEGER. Istoimeni atribut relaciju Mjesto povezuje s relacijom Podrucje_uprave, omogu?uju?i povezivanje mjesta s odgovaraju?im podru?jem uprave. 
+
+U ovoj smo tablici postavili indekse na stupce naziv i id_podrucje_uprave.
+Zgrada
+Tablica Zgrada namijenjena je fizi?kom lociranju zgrada relevantnih za policijski sustav. Atributi ove tablice su id, adresa, id_mjesto i vrsta_zgrade.
+
+Primarni klju? ove tablice je atribut id, tipa INTEGER. Na primarni je klju? primijenjeno AUTO_INCREMENT svojstvo. Atribut adresa tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova, a sadržava ime ulice i numeri?ku vrijednost koja ozna?ava specifi?nu policijsku zgradu.  Na atribut adresa dodano je ograni?enje NOT NULL, ?ime se osigurava obavezan unos podataka o adresi za svaku zgradu. Atribut id_mjesto strani je klju? tipa INTEGER. Istoimeni atribut relaciju Zgrada povezuje s relacijom Mjesto, omogu?uju?i povezivanje policijske zgrade s odgovaraju?im mjestom i podru?jem uprave. Posljednji je atribut vrsta_zgrade i tipa je VARCHAR s maksimalnom duljinom unosa od 30 znakova. Ovaj atribut ozna?ava specifi?nu vrstu zgrade. 
+
+U ovoj smo tablici postavili indekse na stupac adresa i stupac id_mjesto.
+Radno_mjesto
+Tablica Radno_mjesto služi za pohranu informacija o razli?itim vrstama radnih mjesta, te omogu?uje organizaciju i pra?enje pozicija unutar policijske organizacije. Atributi ove tablice su id, naziv i opis.
+
+Kao primarni klju? ove tablice odabran je atribut id i tipa je INTEGER.  Na atribut id je primijenjeno AUTO_INCREMENT svojstvo. Atribut naziv tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova te predstavlja naziv odre?enog radnog mjesta. Istom je atributu dodijeljeno ograni?enje NOT NULL kako bi osigurao obavezan unos vrijednosti. Dodatno, postavljeno je ograni?enje UNIQUE kako bi svaki naziv radnog mjesta u relaciji imao jedinstvenu vrijednost. Sljede?i je atribut opis, tipa TEXT, koji omogu?uje pohranu dodatnih informacija vezanih uz odre?enu radnu poziciju. Tip podataka TEXT se koristi kada standardni tipovi podataka CHAR I VARCHAR nisu dovoljni.
+Odjeli 
+Tablica Odjeli namijenjena je pohrani informacija o razli?itim odjelima unutar policijske organizacije. Atributi ove tablice su id, naziv i opis.
+
+Kao primarni klju? odabran je atribut id koji je tipa INTEGER i s AUTO_INCREMENT svojstvom. Atribut naziv tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova te predstavlja naziv pojedinog odjela. Na istoimeni atribut postavljena su dva ograni?enja, NOT NULL i UNIQUE. NOT NULL osigurava da svaki odjel ima obavezno definiran naziv, dok UNIQUE ograni?enje osigurava da svaki naziv ima jedinstvenu vrijednost, odnosno da ne može postojati dva ili više odjela s istim nazivom. Posljednji je atribut opis, tipa TEXT, koji omogu?uje pohranu dodatnih informacija povezanih s odre?enim odjelom. 
+Osoba
+Tablica Osoba namijenjena je evidenciji osoba unutar naše baze podataka. Atributi ove tablice su id, ime_prezime, datum_rodenja, oib, spol, adresa, telefon i email.
+
+Primarni klju? ove tablice je atribut id, tipa INTEGER. Na primarni klju? je primijenjeno svojstvo AUTO_INCREMENT. Atribut ime_prezime tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova, a namijenjen je pohrani imena i prezimena pojedinaca. Atribut datum_rodenja, tipa DATE, koristi se za bilježenje datuma ro?enja. Sljede?i je atribut oib koji predstavlja osobni identifikacijski broj svake osobe i tipa je CHAR. Tip podataka CHAR, za razliku od tipa VARCHAR, polje je znakova fiksne veli?ine. Ovaj tip podataka odabran je zato što se osobni identifikacijski broj (oib) sastoji od to?no 11 znamenki. Atribut spol tipa je VARCHAR s maksimalnom duljinom unosa od 10 znakova. Ovaj atribut opisuje rodnu pripadnost osobe. adresa je atribut tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova. Namijenjen je pohrani informacija o prebivalištu pojedine osobe, uklju?uju?i ime ulice i ku?ni broj. Dodatno, tablica sadrži atribute telefon i email. Atribut telefon je tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova i sadrži kontakt pojedine osobe. S druge strane, atribut email je tipa VARHCAR s duljinom unosa od 255 znakova, a služi za pohranu elektroni?ke pošte pojedinaca. S obzirom na to da oib i email za svaku osobu mora biti jedinstven, na oba je atributa postavljeno ograni?enje UNIQUE. Nadalje, na sve atribute, osim na primarni klju?, postavljeno je ograni?enje NOT NULL kako bi se osigurao obavezan unos podataka za svaku osobu u sustavu.
+
+U tablici Osoba, indekse smo postavili na stupce oib i email.
+Zaposlenik
+Tablica Zaposlenik služi za evidenciju podataka o zaposlenicima unutar policijske organizacije. Atributi ove tablice su id, datum_zaposlenja, datum_izlaska_iz_sluzbe, id_nadredeni, id_radno_mjesto, id_odjel, id_zgrada i id_osoba. 
+
+Kao primarni klju? odabran je atribut id koji je tipa INTEGER i svojstva AUTO_INCREMENT. Tablica uklju?uje dva zna?ajna vremenska atributa koji prate trenutni status zaposlenika, a to su datum_zaposlenja i datum_izlaska_iz_sluzbe. Atribut datum_zaposlenja bilježi dan kada je zaposlenik po?eo obnašati dužnosti unutar policijske organizacije, dok datum_izlaska_iz_sluzbe ozna?ava dan kada je zaposlenik prestao obnašati dužnosti unutar policijske organizacije. Kako bi se osiguralo bilježenje datuma po?etka zaposlenja za svakog zaposlenika, na atribut datum_zaposlenja postavljeno je ograni?enje NOT NULL. Sljede?i je atribut id_nadredeni koji je tipa podataka INTEGER. Ovaj atribut omogu?uje uspostavu hijerarhijskog odnosa izme?u zaposlenika, omogu?uju?i da pojedini zaposlenik ima nadre?enog unutar iste tablice. Atributi id_radno_mjesto, id_odjel, id_zgrada i id_osoba unutar tablice Zaposlenik klju?ni su u povezivanju informacija o zaposlenicima s relevantnim podacima unutar sustava. Atribut id_radno_mjesto omogu?uje identifikaciju radnog mjesta koje zaposlenik obavlja, povezuju?i se s tablicom Radno_mjesto. Atribut id_odjel uspostavlja vezu izme?u zaposlenika i odjela kojem pripada, referenciraju?i se na tablicu Odjel. S druge strane, atribut id_zgrada identificira zgradu u kojoj zaposlenik obavlja svoje radne zadatke, povezuju?i se s tablicom Zgrada. Kona?no, atribut id_osoba služi za povezivanje informacija o zaposleniku s pojedinostima o toj osobi, što olakšava pra?enje svakog zaposlenika unutar organizacije. Svi navedeni atributi su tipa INTEGER.
+
+Indekse smo postavili na stupac datum_zaposlenja i na stupac id_radno_mjesto.
+
+Vozilo
+Tablica Vozilo namijenjena je evidenciji i pra?enju vozila unutar naše baze podataka. Atributi ove tablice su id, marka, model, registracija, godina_proizvodnje, sluzbeno_vozilo i id_vlasnik.
+
+Primarni klju? ove tablice je atribut id, tipa INTEGER, na koji je primijenjeno svojstvo AUTO_INCREMENT. Atributi marka i model su tipa podataka VARCHAR s maksimalnom duljinom unosa od 255 znakova. Atribut marka ozna?ava marku vozila, dok atribut model odre?eni model. registracija je atribut tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova te predstavlja identifikacijski broj vozila. Da bi svako vozilo imalo jedinstveni identifikacijski broj, na registracijsku je oznaku postavljeno UNIQUE ograni?enje. Atribut godina_proizvodnje tipa je INTEGER i bilježi godinu proizvodnje pojedinog vozila. Atribut sluzbeno_vozilo tipa je BOOLEAN i ozna?ava je li vozilo službeno ili ne. Posljednji je atribut id_vlasnik, tipa INTEGER, koji relaciju Vozilo povezuje s relacijom Osoba, odnosno vozilo povezuje s njegovim vlasnikom. Na atribute marka, model, godina_proizvodnje i id_vlasnik postavljeno je ograni?enje NOT NULL, što zna?i da je za svako vozilo unos tih podataka obavezan.
+
+Ovdje smo dodali indekse na stupce registracija i id_vlasnik.
+Predmet
+Tablica Predmet namijenjena je evidenciji razli?itih predmeta povezanih s kriminalisti?kim slu?ajem i prona?enih na mjestu zlo?ina. Atributi ove tablice su id, naziv i id_mjesto_pronalaska.
+
+Kao primarni klju? odabran je atribut id, tipa INTEGER, kojem je dodijeljeno svojstvo AUTO_INCREMENT. Atribut naziv tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova te predstavlja naziv prona?enog predmeta. Dodatno, na istoimeni je atribut postavljeno NOT NULL ograni?enje kako bi unos naziva za svaki predmet bio obavezan. Atribut id_mjesto_pronalaska, tipa INTEGER, relaciju Predmet povezuje s relacijom Mjesto, ?ime predmet povezuje s odre?enim mjestom pronalaska.
+
+U tablici Predmet smo postavili indekse na naziv i id_mjesto_pronalaska.
+Kaznjiva_djela
+Tablica Kaznjiva_djela ima ulogu pra?enja kažnjivih djela. Atributi ove tablice su id, naziv, opis, predvidena_kazna i predvidena_novcana_kazna. 
+
+Primarni klju? ove tablice je atribut id koji je tipa INTEGER i dodijeljeno mu je svojstvo AUTO_INCREMENT. Atribut naziv tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakove te predstavlja naziv kažnjivih djela. Atribut je ograni?en NOT NULL ograni?enjem kako bi unos naziva bio nužan, dok UNIQUE ograni?enje osigurava da ne može postojati isti naziv za dva ili više kažnjivih djela. Sljede?i je atribut opis koji je tipa TEXT, tako?er ograni?en NOT NULL ograni?enjem, a služi za pohranu dodatnih informacija povezanih s pojedinim kažnjivim djelom. Posljednja dva atributa su predvidena_kazna i predvidena_novcana_kazna. predvidena_kazna je atribut tipa INTEGER i  predstavlja predvi?eno trajanje zatvorske kazne koja je povezana s kažnjivim djelom. Atribut predvidena_novcana_kazna tipa je DECIMAL koji ozna?ava decimalni broj s ukupno 10 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke. Istoimeni atribut se odnosi na predvi?enu nov?anu kaznu povezanu s definiranim kažnjivim djelom. 
+Pas
+Tablica Pas namijenjena je pra?enju psa u policijskoj službi. Atributi ove tablice su id, id_trener, oznaka, godina_rodenja, status i id_kaznjivo_djelo.
+
+Primarni klju? ove tablice je id tipa INTEGER  i dodijeljeno mu je svojstvo AUTO_INCREMENT. Atribut id_trener, tako?er tipa INTEGER, relaciju Pas povezuje s relacijom Zaposlenik. Na taj na?in, istoimeni atribut svakog psa povezuje sa zaposlenikom koji je zadužena za rad s njim. Atribut oznaka, tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, predstavlja jedinstvenu oznaku za svakog psa. Da bi osigurali da ni jedan pas ne dijeli istu oznaku, na ovaj je atribut postavljeno UNIQUE ograni?enje. Atribut godina_rodenja tipa je INTEGER i bilježi godinu ro?enja psa, dok je status atribut tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova koji opisuje trenutni status psa unutar policijske službe. Posljednji atribut je id_kaznjivo_djelo tipa INTEGER. Ovaj atribut relaciju Pas povezuje s relacijom Kaznjivo_djelo, ?ime svakog psa povezuje sa specifi?nim zadatkom ili funkcijom za koju je on obu?en u kontekstu kažnjivih djela. 
+
+U tablici Pas, indeks smo postavili na stupac id_kaznjivo_djelo.
+Slucaj 
+Tablica Slucaj služi pohrani klju?nih informacija o kriminalisti?kim slu?ajevima, te uz to prati i ukupnu vrijednost zapljena. Atributi ove tablice su id, naziv, opis, pocetak, zavrsetak, status, id_pocinitelj, id_izvjestitelj, id_voditelj, id_dokaz, ukupna_vrijednost_zapljena, id_pas, id_svjedok i id_ostecenik.
+
+Kao primarni klju? ove tablice odabran je atribut id. Primarni klju? je tipa INTEGER i dodijeljeno mu je svojstvo AUTO_INCREMENT. Atribut naziv tipa je VARCHAR s maksimalnom duljinom unosa od 255 znakova i predstavlja naziv slu?aja. Nadopunjuje ga atribut opis, tipa TEXT, koji pruža mogu?nost unosa detaljnijeg opisa i dodatnih informacija koje se odnose na specifi?nosti ili važne pojedinosti vezane uz odre?eni slu?aj. Dodatno, na atribut je postavljeno NOT NULL ograni?enje kako bi unos naziva slu?aja bio nužan. Sljede?a dva atributa su pocetak i zavrsetak, oba tipa DATETIME. Atribut pocetak ozna?ava vrijeme po?etka slu?aja, dok zavrsetak ozna?ava vrijeme njegovog završetka te dolaska osu?ene osobe u zgradu zatvora u slu?aju da je osoba osu?ena na zatvorsku kaznu. Na atribut pocetak je postavljeno NOT NULL ograni?enje kojim se osigurava obavezan unos po?etka slu?aja. status je atribut tipa VARCHAR, s maksimalnom duljinom unosa od 20 znakova, koji opisuje trenutni status slu?aja. Atributi id_pocinitelj, id_izvjestitelj, id_voditelj, id_dokaz, ukupna_vrijednost_zapljena, id_pas, id_svjedok i id_ostecenik su tipa INTEGER. id_pocinitelj se referencira na atribut id u tablici Osoba i predstavlja osobu koja je povezana s po?injenjem kažnjivog djela. Atribut id_izvjestitelj relaciju Slucaj povezuje s relacijom Osoba, a predstavlja osobu koja je prijavila slu?aj na policiji. Atribut id_voditelj se referencira na atribut id u tablici Zaposlenik. Taj atribut ozna?ava zaposlenika koji je odre?en kao voditelj u okviru slu?aja. Atribut id_dokaz se referencira na atribut id u tablici Dokaz i ozna?ava dokaz koji je povezan s istim slu?ajem. ukupna_vrijednost_zapljena predstavlja numeri?ku vrijednost koja ozna?ava financijsku vrijednost predmeta koji su zaplijenjeni u okviru slu?aja. Ako se prilikom unosa podataka u tablicu ne navede vrijednost za atribut ukupna_vrijednost_zapljena, vrijednost ?e automatski biti postavljena na nulu (DEFAULT 0). Atribut id_pas povezuje relaciju Slucaj s relacijom Pas i ozna?ava psa koji je uklju?en u istražni tim u okviru kriminalisti?kog slu?aja. id_svjedok se referencira na atribut id u tablici Osoba, a ozna?ava osobu koja je svjedo?ila slu?aju. Kona?no, id_ostecenik povezuje relaciju Slucaj s relacijom Osoba. Istoimeni atribut ozna?ava osobu koja je ozlije?ena ili ošte?ena u vezi sa slu?ajem.
+
+U ovoj smo tablici indekse postavili na stupce pocetak, id_pocinitelj, id_izvjestitelj, id_voditelj, id_dokaz, id_pas, id_svjedok i id_ostecenik.
+Evidencija_dogadaja
+Tablica Evidencija_dogadaja je namijenjena evidenciji ne kriminalnih doga?aja. Atributi ove tablice su id, id_slucaj, opis_dogadaja, datum_vrijeme i id_mjesto.
+
+Primarni klju? ove tablice je atribut id koji je tipa INTEGER. Na primarni klju? je postavljeno AUTO_INCREMENT svojstvo. Atribut id_slucaj, tako?er tipa INTEGER, relaciju Evidencija_dogadaja povezuje s relacijom Slucaj, ?ime omogu?uje povezivanje ne kriminalnih doga?aja s konkretnim slu?ajem. Kako bi se osigurao obavezan unos opisa za svaki zabilježeni doga?aj, na atribut je postavljeno NOT NULL ograni?enje. Sljede?i je atribut opis_dogadaja koji je tipa podataka TEXT i bilježi detaljan opis ne kriminalnog doga?aja. Atribut datum_vrijeme tipa je DATETIME i ozna?ava to?an datum i vrijeme izlaska policije na uvi?aj. Dodatno, na istoimeni je atribut postavljeno NOT NULL ograni?enje kako bi osigurali da se za svaki evidentirani doga?aj mora unijeti traženi podatak. Atribut id_mjesto tipa je INTEGER i relaciju Evidencija_dogadaja povezuje s relacijom Mjesto, omogu?uju?i identifikaciju lokacije gdje se je odre?eni ne kriminalni doga?aj odvijao. Tako?er, i na ovaj je atribut primijenjeno NOT NULL ograni?enje koje osigurava da svaki doga?aj ima definiranu lokaciju zbivanja.
+
+U ovoj tablici, indekse smo postavili na id_slucaj i id_mjesto.
+Kaznjiva_djela_u_slucaju 
+Tablica Kaznjiva_djela_u_slucaju nastala je iz razloga jer se u jednom slu?aju može dogoditi više kažnjivih djela, ali se isto kažnjivo djelo može ponoviti u više slu?ajeva. Tako?er, u tablici pratimo i mjesto kako bismo znali na kojem se to?no mjestu dogodilo odre?eno kažnjivo djelo. Atributi ove tablice su id, id_mjesto, id_slucaj i id_kaznjivo_djelo.
+
+Primarni klju? ove tablice je atribut id koji je tipa INTEGER. Na atribut id je postavljeno svojstvo AUTO_INCREMENT. Preostali su atributi id_mjesto, id_slucaj i id_kaznjivo_djelo tako?er tipa INTEGER i strani su klju?evi. id_mjesto tablicu Kaznjiva_djela_u_slucaju povezuje s tablicom Mjesto, atribut id_slucaj s tablicom Slucaj, dok id_kaznjivo_djelo tablicu povezuje s tablicom Kaznjiva_djela.
+
+U tablici Kaznjiva_djela_u_slucaju smo indekse postavili na id_mjesto, id_slucaj i id_kaznjivo_djelo.
+Izvjestaji
+Tablica Izvještaji namijenjena je pohrani izvještaja generiranih u okviru kriminalisti?kih slu?ajeva. Atributi ove tablice su id, naslov, sadrzaj, id_autor i id_slucaj.
+
+Kao primarni klju? je odabran atribut id tipa INTEGER i s AUTO_INCREMENT svojstvom. Atribut naslov, tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, predstavlja naslov koji sažeto opisuje sadržaj izvještaja. Sljede?i je atribut sadrzaj koji je tipa TEXT i predstavlja opsežan tekstualni opis i detalje pojedinog slu?aja. id_autor je atribut tipa INTEGER koji relaciju Izvjestaji povezuje s relacijom Zaposlenik. Na taj se na?in napisani izvještaj povezuje sa zaposlenikom koji ga je napisao. Atribut id_slucaj tako?er je tipa INTEGER, a relaciju Izvještaji povezuje s relacijom Slucaj. Istoimeni atribut predstavlja vezu izme?u izvještaja i odre?enog slu?aja na koji se izvještaj odnosi. Na sve atribute, osim na primarni klju?, postavljeno je ograni?enje NOT NULL kako bi se osigurao obavezan unos tih podataka.
+
+U tablici Izvjestaji smo indekse postavili na stupce id_autor i id_izvjestaj. 
+Zapljene
+Tablica Zapljene koristi se za pra?enje predmeta koji su zaplijenjeni u okviru istražnih slu?ajeva, prate?i pritom i vrijednost svake zapljene. Atributi ove tablice su id, id_slucaj, id_predmet i vrijednost.
+
+Kao primarni klju? odabran je atribut id koji je tipa INTEGER. Na primarni klju? je postavljeno AUTO_INCREMENT svojstvo. Atributi id_slucaj i id_predmet tako?er su tipa INTEGER i ograni?eni su NOT NULL ograni?enjem kako bi unos tih podataka bio obavezan. id_slucaj relaciju Zapljene povezuje s relacijom Slucaj, dok id_predmet relaciju Zapljene povezuje s relacijom Predmet. Zajedno, predmet povezuju s odgovaraju?im istražnim slu?ajem. Posljednji je atribut vrijednost koji je tipa NUMERIC te pohranjuje brojeve s ukupno 10 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke. Ovaj atribut predstavlja nov?anu vrijednost zapljene pojedinog predmeta.
+
+Ovdje smo indekse postavili na stupce id_slucaj i id_predmet.
+Sredstvo_utvrdivanja_istine
+Tablica Sredstvo_utvrdivanja_istine služi evidenciji razli?itih sredstava koja se koriste u svrhu utvr?ivanja istine u istražnim postupcima. Atributi ove tablice su id i naziv.
+
+Primani klju? ove tablice je atribut id koji je tipa INTEGER i s AUTO_INCREMENT svojstvom. Atribut naziv tipa  je VARCHAR s maksimalnom duljinom unosa od 100 znakova i predstavlja naziv sredstva za utvr?ivanje istine. Odabrali smo razli?ita sredstva za testiranje, uklju?uju?i poligraf, alkotest, urin test, krvni test i ispitivanje
+Sui_slucaj
+Tablica Sui_slucaj namijenjena je povezivanju i evidenciji pojedinog sredstva za utvr?ivanje istine s odre?enim slu?ajem. Atributi ove tablice su id, id_sui i id_slucaj.
+
+Primarni klju? ove tablice je atribut id, tipa INTEGER. Primarnom klju?u je dodijeljeno AUTO_INCREMENT svojstvo. Posljednja dva atributa su id i id_sui, oba tako?er tipa INTEGER. Atribut id_sui strani je klju? koji relaciju Sui_slucaj povezuje s relacijom Sredstvo_utvrdivanja_istine, dok id_slucaj relaciju Sui_slucaj povezuje s relacijom Slucaj. Zajedno, atributi id_sui i id_slucaj stvaraju klju?nu vezu koja pojedino sredstvo za utvr?ivanje istine povezuje s odre?enim slu?ajem. Nadalje, na sve atribute, osim na primarni klju?, postavljeno je ograni?enje NOT NULL kako bi se osigurao obavezan unos tih podataka. 
+
+Shema baze podataka
+Podrucje_uprave (id, naziv)
+Mjesto (id, naziv, id_podrucje_uprave)
+Zgrada (id, adresa, id_mjesto, vrsta_zgrade)
+Radno_mjesto (id, vrsta, dodatne_informacije)
+Odjelo (id, naziv, opis)
+Osoba (id, ime_prezime, datum_rodenja, oib, spol, adresa, telefon, email)
+Zaposlenik (id, datum_zaposlenja, datum_izlaska_iz_sluzbe, id_nadredeni, id_radno_mjesto, id_odjel, id_zgrada, id_osoba)
+Vozilo (id, marka, model, registracija, godina_proizvodnje, sluzbeno_vozilo, id_vlasnik)
+Predmet (id, naziv, id_mjesto_pronalaska)
+Kaznjiva_djela (id, naziv, opis, predvidena_kazna, predvidena_novcana_kazna)
+Pas (id, id_trener, oznaka, godina_rodenja, status, id_kaznjivo_djelo)
+Slucaj (id, naziv, opis, pocetak, zavrsetak, status, id_pocinitelj, id_izvjestitelj, id_voditelj, id_dokaz, ukupna_vrijednost_zapljena, id_pas, id_svjedok)
+Evidencija_dogadaja (id, id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto)
+Kaznjiva_djela_u_slucaju (id, id_mjesto, id_slucaj, id_kaznjivo_djelo)
+Izvjestaji (id, naslov, sadrzaj, id_autor, id_slucaj)
+Zapljene (id, id_slucaj, id_predmet, vrijednost)
+Sredstvo_utvrdivanja_istine (id, naziv)
+Sui_slucaj (id, id_sui, id_slucaj)
+
+
+
+Funkcionalnosti
+Upiti 
+Ispiši prosje?an broj godina osoba koje su prijavile digitalno nasilje
+SELECT AVG(YEAR(S.pocetak)-YEAR(O.datum_rodenja)) AS prosjecan_broj_godina
+FROM slucaj S INNER JOIN osoba O ON S.id_izvjestitelj=O.id
+WHERE S.naziv LIKE '%digitalno nasilje%';
+
+Operacijom INNER JOIN, me?usobno smo povezali tablice Slucaj i Osoba. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_izvjestitelj iz tablice Slucaj uspore?uje s atributom id u tablici Osoba. Tablici Slucaj dodijelili smo alias S, a tablici Osoba alias O.
+
+Primjenom WHERE uvjeta smo filtrirali slu?ajeve koji u nazivu sadrže digitalno nasilje.
+
+Izra?unali smo prosje?nu dob osoba koriste?i trenutnu godinu i godinu ro?enja svake osobe iz tablice Osoba.
+
+YEAR(O.datum_rodenja) dohva?a godinu ro?enja svake osobe iz stupca datum_rodenja u tablici Osoba
+YEAR(NOW() dohva?a godinu u kojoj je osoba prijavila digitalno nasilje
+AVG izra?unava prosjek dobivenih godina
+
+Za dobivenu vrijednost u prethodnom koraku, novi smo stupac nazvali prosjecan_broj_godina.
+
+
+Prikaži osobu ?iji je nestanak posljednji prijavljen
+SELECT O.*
+FROM osoba O INNER JOIN slucaj S ON O.id=S.id_ostecenik
+WHERE S.naziv LIKE '%nestala%'
+ORDER BY S.pocetak DESC
+LIMIT 1;
+
+Tablicu Osoba smo operacijom INNER JOIN povezali s tablicom Slucaj. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_ostecenik u tablici Slucaj. Tablici Osoba dodijeljen je alias O, a tablici Slucaj alias S.
+
+Primjenom WHERE uvjeta smo filtrirali slu?ajeve koji u nazivu sadrže nestala.
+
+Koriste?i ORDER BY i DESC, dobivene smo podatke sortirali prema datumu nestanka osobe silazno (DESC), odnosno od  najnovijeg prema najstarijem datumu nestanka.
+
+S LIMIT 1 smo dobili informacije o osobi ?iji je nestanak zabilježen posljednji.
+
+Koriste?i O.* u SELECT dijelu upita, u rezultatu prikazujemo sve informacije iz tablice Osoba.
+
+
+Prikaži naj?eš?u vrstu kažnjivog djela
+SELECT KD.*
+FROM kaznjiva_djela KD INNER JOIN kaznjiva_djela_u_slucaju KDS 
+ON KDS.id_kaznjivo_djelo = KD.id
+GROUP BY KD.id
+ORDER BY COUNT(*)
+LIMIT 1;
+
+Prvo smo koriste?i operaciju INNER JOIN povezali tablice Kaznjiva_djela i Kaznjiva_djela_u_slucaju. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju. Tablici Kaznjiva_djela dodijelili smo alias KD, a tablici Kaznjiva_djela_u_slucaju alias KDS.
+
+Dobiveni smo rezultat grupirali prema jedinstvenom id-u tablice Kaznjiva_djela.
+
+Istoimeni je stupac sortiran prema broju pojavljivanja.
+
+COUNT() je agregacijska funkcija koja za svako kažnjivo djelo ra?una koliko se puta pojavljuje
+ORDER BY COUNT (*) dobivene rezultate sortira prema broju pojavljivanja
+
+S LIMIT 1 smo dohvatili kažnjivo djelo koje se pojavljuje naj?eš?e.
+
+Koriste?i KD.*, u rezultatu su prikazani svi stupci iz tablice Kaznjiva_djela.
+
+
+Ispišimo sve voditelje slu?ajeva i slu?ajeve koje vode
+SELECT O.Ime_Prezime, S.Naziv AS 'Naziv slu?aja'
+FROM Zaposlenik Z
+JOIN Osoba O ON Z.id_osoba = O.Id
+JOIN Slucaj S ON Z.Id = S.id_voditelj;
+
+Koriste?i operaciju INNER JOIN, povezali smo tablicu Zaposlenik s tablicama Osoba i Slucaj. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_osoba iz tablice Zaposlenik uspore?uje s atributom id u tablici Osoba, dok atribut id iz tablice Zaposlenik s atributom id_voditelj u tablici Slucaj. Tablici Zaposlenik dodijelili smo alias Z, tablici Osoba alias O, a tablici Slucaj alias S.
+
+Kona?no, u SELECT dijelu upita smo s O.Ime_Prezime, S.Naziv AS 'Naziv slu?aja' u rezultatu prikazali ime i prezime zaposlenika koji su voditelji te nazive njihovih slu?ajeva.
+
+
+Ispišimo slu?ajeve i evidencije za odre?enu osobu (osumnji?enika)
+SELECT O.Ime_Prezime, S.Naziv AS 'Naziv slu?aja', ED.opis_dogadaja, ED.datum_vrijeme, ED.id_mjesto
+FROM Slucaj S
+JOIN Evidencija_dogadaja ED ON S.Id = ED.id_slucaj
+JOIN Osoba O ON O.Id = S.id_pocinitelj
+WHERE O.Ime_Prezime = 'Ime Prezime';
+
+Prvo smo operacijom INNER JOIN povezali tablicu Slucaj s tablicama Evidencija_dogadaja i Osoba. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slu?aj u tablici Evidencija_dogadaj te atribut id iz tablice Osoba s atributom id_pocinitelj u tablice Slucaj. Tablici Slucaj dodijeljen je alias S, tablici Evidencija_doga?aja alias ED, a tablici Osoba alias O.
+
+Uvjetom WHERE se dobiveni podaci filtriraju prema željenom imenu i prezimenu osobe.
+
+Posljednje, u SELECT-u smo dodali atribute koji predstavljaju stupce koji se odnose na ime i prezime osumnji?enika, naziv slu?aja, opis doga?aja, datum i vrijeme te mjesto slu?aja. Stupac koji predstavlja naziv slu?aja, nazvali smo Naziv slu?aja.
+
+
+Ispišimo sve osobe koje su osumnji?ene za odre?eno KD
+SELECT DISTINCT O.Ime_Prezime
+FROM Osoba O
+JOIN Slucaj S ON O.Id = S.id_pocinitelj
+JOIN Kaznjiva_djela_u_slucaju	KDS ON S.Id = KDS.id_slucaj
+JOIN Kaznjiva_djela	KD ON KDS.id_kaznjivo_djelo = KD.id
+WHERE KD.Naziv = 'Naziv kaznjivog djela';
+
+U prvom smo koraku operacijom JOIN povezali tablice Osoba, Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_pocinitelj u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Osoba je dodijeljen alias O, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS i tablici Kaznjiva_djela alias KD.
+
+WHERE uvjetom se dobiveni podaci filtriraju prema traženom nazivu kažnjivog djela.
+
+U SELECT dijelu upita smo dodali atribut koji predstavlja stupac koji se odnosi na ime i prezime svake osobe koja je osumnji?ene za traženo kažnjivo djelo. Koristimo DISTINCT kako bi osigurali da u rezultatu upita budu samo jedinstvene vrijednosti atributa.
+
+
+Prona?imo sve slu?ajeve koji sadrže KD i nisu riješeni
+SELECT S.Naziv, KD.Naziv AS kaznjivo_djelo
+FROM Slucaj S
+INNER JOIN Kaznjiva_djela_u_slucaju KDS ON S.id = KDS.id_slucaj
+INNER JOIN Kaznjiva_djela KD ON 
+KDS.id_kaznjivo_djelo= KD.id
+WHERE S.Status = 'Aktivan';
+
+U prvom smo koraku operacijom INNER JOIN povezali tablice Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Slucaj smo dodijelili alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+Korištenjem WHERE uvjeta, dobiveni se podaci filtriraju prema statusu slu?aja. U ovom upitu, traže se samo oni slu?ajevi koji imaju status Riješen.
+
+U posljednjem koraku, u SELECT dijelu upita smo dodali atribute koji predstavljaju stupce koji se odnose na naziv pojedinog slu?aja i kažnjivog djela. Stupac koji predstavlja naziv kažnjivog djela, nazvali smo kaznjivo_djelo.
+
+
+Izra?unajmo iznos zapljene za svaki pojedini slu?aj
+SELECT S.id, S.Naziv, SUM(ZA.Vrijednost) AS ukupna_vrijednost_zapljena
+FROM Slucaj S
+LEFT JOIN Zapljene ZA ON S.id = ZA.id_slucaj
+GROUP BY S.id, S.Naziv;
+
+U prvom koraku, koriste?i operaciju LEFT JOIN koja nam omogu?uje da uklju?imo sve retke iz lijeve tablice, uklju?uju?i i one koji nemaju odgovaraju?e podudaranje u desnoj, povezujemo tablicu Slucaj s tablicom Zapljene. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Zapljene. Tablici Slucaj je dodijeljen alias, a tablici Zapljene alias ZA.
+
+Dobivene smo podatke pomo?u GROUP BY grupirali prema id-u i nazivu slu?aja.
+
+Zatim, u SELECT dijelu upita navodimo atribute id i naziv tablice Slucaj te primjenjujemo agregacijsku funkciju SUM kako bi dobili ukupne vrijednosti zapljene za svaki slu?aj. Za dobivenu smo vrijednost novi stupac nazvali ukupna_vrijednost_zapljena.
+
+
+Prona?i prosje?nu vrijednost zapljene za pojedina kažnjiva djela
+SELECT KD.Naziv AS vrsta_kaznjivog_djela, AVG(ZA.Vrijednost) AS prosjecna_vrijednost_zapljene
+FROM Kaznjiva_djela_u_slucaju KDS
+JOIN Kaznjiva_djela KD ON KDS.id_kaznjivo_djelo= KD.Id
+JOIN Zapljene ZA ON KDS.id_slucaj = ZA.id_slucaj
+GROUP BY KD.naziv;
+
+Prvo koristimo operaciju JOIN kojom povezujemo tablicu Kaznjiva_djela_u_slucaju s tablicama Kaznjiva_djela i Zapljene. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_kaznjivo_djelo iz tablice Kaznjivo_djelo uspore?uje s atributom id u tablici Kaznjiva_djela i atribut id_slucaj iz tablice Kaznjiva_djela_u_slucaju s atributom id_slucaj u tablici Zapljene. Tablici Kaznjiva_djela_u_slucaji dodijeljen je alias KDS, tablici Kaznjiva_djela alias KD, a tablici Zapljene alias Z.
+
+Koriste?i GROUP BY, dobiveni su podaci grupirani prema nazivu kažnjivog djela 
+
+U SELECT dijelu upita smo naveli atribut koji predstavlja stupac koji se odnosi na naziv kažnjivog djela, a pomo?u agregacijske funkcije AVG smo dobili prosje?nu vrijednost zapljene za svaku vrstu djela. Za dobivenu smo vrijednost novi stupac nazvali prosjecna_vrijednost_zapljene.
+
+
+Prona?i sve odjele i broj zaposlenika na njima
+SELECT O.Naziv AS naziv_odjela, COUNT(Z.Id) AS broj_zaposelnika
+FROM Zaposlenik Z
+JOIN Odjeli O ON Z.id_odjel  = O.Id
+GROUP BY O.id, O.Naziv;
+
+Prvo, operacijom JOIN smo povezali tablice Zaposlenik i Odjeli. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_odjel u tablici Zaposlenik uspore?uje s atributom id u tablici Odjeli. Tablici Zaposlenik je dodijeljen alias Z, a tablici Odjeli alias O.
+
+S GROUP BY, rezultate grupiramo prema id-u i nazivu svakog odjela.
+
+Za dobivenu smo vrijednost novi stupac nazvali broj_zaposlenika.
+
+U SELECT-u smo naveli atribute koji predstavljaju stupce koji se odnose na id i naziv pojedinog odjela te ga nazvali naziv_odjela, a pomo?u agregacijske funkcije COUNT, zaposlenike brojimo za svaki odjel zasebno. Novi stupac koji prikazuje broj zaposlenika na svakom odjelu, nazvali smo broj_zaposlenika.
+
+
+Prona?i ukupnu vrijednost zapljena po odjelu i sortiraj ih po vrijednosti silazno
+SELECT Z.id_odjel, SUM(ZA.vrijednost) AS ukupna_vrijednost_zapljena
+FROM Slucaj S
+JOIN Zapljene ZA ON S.Id = ZA.id_slucaj
+JOIN Zaposlenik Z ON S.id_voditelj= Z.Id
+GROUP BY Z.id_odjel
+ORDER BY ukupna_vrijednost_zapljena DESC;
+
+U prvom smo koraku operacijom JOIN povezali tablice Slucaj, Zapljene i Zaposlenik. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Zapljene i atribut id_voditelj iz tablice Slucaj s atributom id u tablici Zaposlenik. Tablici Slucaj dodijelili smo alias S, tablici Zapljene alias ZA, a tablici Zaposlenik alias Z.
+
+Koriste?i GROUP BY, rezultate grupiramo prema id-u odjela.
+
+U SELECT dijelu upita, grupiranje agregacijskoj funkciji SUM omogu?uje da izra?una ukupnu vrijednost zapljena za svaki odjel zasebno. Dodatno, prije SUM-a smo dodali atribut koji predstavlja id svakog odjela iz tablice Zaposlenik. Za dobivene smo vrijednosti zapljena novi stupac nazvali ukupna_vrijednost_zapljena.
+
+Zatim, dobivene rezultate sortiramo silazno (DESC) prema ukupnoj vrijednosti zapljena pomo?u ORDER BY klauzule.
+
+
+Prona?i osobu koja mora odslužiti najve?u ukupnu zatvorsku kaznu
+SELECT O.Id, O.Ime_Prezime, SUM(KD.Predvidena_kazna) AS ukupna_kazna
+FROM Osoba O
+INNER JOIN Slucaj S ON O.Id = S.id_pocinitelj
+INNER JOIN Kaznjiva_Djela_u_Slucaju KDS ON S.Id = KDS.id_slucaj
+INNER JOIN Kaznjiva_Djela KD ON KDS.id_kaznjivo_djelo= KD.ID
+WHERE KD.predvidena_kazna IS NOT NULL
+GROUP BY O.id, O.ime_prezime
+ORDER BY ukupna_kazna DESC
+LIMIT 1;
+
+U prvom koraku, operacijom INNER JOIN povezujemo tablice Osoba, Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_pocinitelj u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Osoba smo dodijelili alias O, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+Zatim smo pomo?u WHERE-a filtrirali redove gdje predvi?ena kazna nije NULL, ?ime dobivamo sve osobe koje su odslužile neku zatvorsku kaznu.
+
+S GROUP BY, dobiveni rezultat grupiramo prema id-u, imenu i prezimenu svake osobe.
+
+U SELECT dijelu upita, grupiranje agregacijskoj funkciji SUM omogu?uje zbrajanje predvi?enih kazni za svaku osobu. Tako?er, navodimo i atribute koji predstavljaju id, ime i prezime svake osobe. Za dobivene smo vrijednosti zbrojenih kazni novi stupac nazvali ukupna_kazna.
+
+Pomo?u ORDER BY klauzule, podatke iz tablice ukupna_kazna sortiramo silazno (DESC).
+
+
+Prikaži sva vozila i u koliko slu?ajeva su se oni upisali
+SELECT V.*, COUNT(S.id) AS broj_slucajeva
+FROM Vozilo V LEFT OUTER JOIN Osoba O ON V.id_vlasnik = O.id
+INNER JOIN Slucaj S ON O.id = S.id_pocinitelj
+GROUP BY V.id;
+
+Prvo smo operacijom LEFT OUTER JOIN tablicu Vozilo spojili s tablicom Osoba, a s operacijom INNER JOIN tablicu Osoba s tablicom Slucaj. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_vlasnik iz tablice Vozilo uspore?uje s atributom id u tablici Osoba i atribut id iz tablice Osoba s atributom id_pocinitelj u tablici Slucaj. Tablici Vozilo dodijeljen je alias V, tablici Osoba alias O, a tablici Slucaj alias S.
+
+Zatim koristimo GROUP BY kako bi rezultate grupirali prema id-u svakog vozila.
+
+U SELECT dijelu upita navodimo sve atribute iz tablice Vozila, a grupiranje agregacijskoj funkciji COUNT omogu?uje da broji slu?ajeve za svako vozilo zasebno. Za dobivene smo vrijednosti novi stupac nazvali broj_slucajeva.
+
+
+Mjesto s najviše slu?ajeva ili s najmanje slu?ajeva
+SELECT M.*, COUNT(ED.id) AS broj_slucajeva
+FROM Mjesto M INNER JOIN Evidencija_dogadaja ED ON  M.id = ED.id_mjesto
+GROUP BY M.id 
+ORDER BY broj_slucajeva DESC 
+LIMIT 1;
+
+Prvo smo koriste?i INNER JOIN operaciju povezali tablice Mjesto i Evidencija_dogadaja. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Mjesto uspore?uje s atributom id_mjesto u tablici Evidencija_doga?aja. Tablici Mjesto dodijelili smo alias M, a tablici Evidencija_dogadaja alias ED.
+
+Koriste?i GROUP BY klauzulu, rezultate smo grupirali prema id-u i nazivu mjesta.
+
+SELECT dohva?a stupce koji se odnose na id i naziv mjesta, a grupiranje agregacijskoj funkciji COUNT omogu?uje da broji doga?aje za svako mjesto zasebno. Za dobivene smo vrijednosti zbrojenih doga?aja novi stupac nazvali broj_slucajeva.
+
+Istoimeni novi stupac broj_slucajeva smo koriste?i ORDER BY klauzulu sortirali silazno (DESC), što zna?i da ?e prvo biti prikazano mjesto s najve?im brojem slu?ajeva.
+
+Zatim smo prvu vrijednost izvukli s LIMIT 1.
+
+Kada bi tražili mjesto s najmanjim brojem slu?ajeva, u 4. bi koraku umjesto silazno (DESC), slu?ajeve sortirali uzlazno (ASC).
+
+
+Prona?i policijskog službenika koji je vodio najviše slu?ajeva
+SELECT
+    Z.Id AS id_zaposlenika,
+    O.Ime_Prezime AS ime_prezime_zaposlenika,
+    COUNT(s.Id) AS broj_slucajeva
+FROM Zaposlenik Z
+JOIN Osoba O ON Z.id_osoba= O.Id
+LEFT JOIN Slucaj S ON S.id_voditelj = Z.Id
+GROUP BY Z.Id, O.Ime_Prezime
+HAVING COUNT(S.Id) = (
+    SELECT MAX(broj_slucajeva)
+    FROM (
+        SELECT COUNT(id) AS broj_slucajeva
+        FROM Slucaj
+        GROUP BY id_voditelj
+    ) AS max_voditelj
+);
+
+Koriste?i JOIN operaciju, u prvom smo koraku povezali tablice Zaposlenik i Osoba. Zatim smo pomo?u LEFT JOIN operacije povezali tablicu Slucaj i Zaposlenik. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_osoba iz tablice Zaposlenik uspore?uje s atributom id u tablici Osoba, i atribut id_voditelj u tablici Slucaj s atributom id u tablici Zaposlenik. Tablici Zaposlenik smo dodijelili alias Z, tablici Osoba alias O, a tablici Slucaj alias S.
+
+Dobivene smo podatke s GROUP BY klauzulom grupirali prema id-evima zaposlenika te njihovim imenima i prezimenima. 
+
+Prvi SELECT prikazuje id, ime i prezime zaposlenika, te koristi funkciju COUNT koja broji koliko redaka u tablici Slucaj pripada svakom zaposleniku, odnosno koliko slu?ajeva svaki zaposlenik vodi. Stupac koji predstavlja id zaposlenika nazvan je id_zaposlenika, a njegovo ime i prezime ime_prezime_zaposlenika. 
+
+SELECT COUNT(id) AS broj_slucajeva
+FROM Slucaj
+GROUP BY id_voditelj
+
+Prikazani SELECT ra?una broj slu?ajeva koje vodi svaki zaposlenik, grupiraju?i ih prema atributu id_voditelj.. 
+
+SELECT MAX(broj_slucajeva)
+FROM (
+prethodno opisani SELECT
+) AS max_voditelj);
+
+Koriste?i rezultate prethodnog koraka, upit pomo?u MAX funkcije pronalazi najve?i broj slu?ajeva me?u svim voditeljima.  AS max_voditelj dodaje privremeni alias rezultatima unutarnjeg upita koji sadrži broj slu?ajeva po voditelju.
+
+HAVING filtrira rezultate, uzimaju?i u obzir samo one retke gdje je broj slu?ajeva jednak broju slu?ajeva najboljeg zaposlenika voditelja.
+
+
+Ispiši sva mjesta gdje nema evidentiranih kaznjivih djela u slu?ajevima (ili uop?e nema slu?ajeva)
+SELECT M.Id, M.Naziv
+FROM Mjesto M
+LEFT JOIN Evidencija_dogadaja ED ON M.Id = ED.id_mjesto
+LEFT JOIN Slucaj S ON ED.id_slucaj= S.Id
+LEFT JOIN Kaznjiva_Djela_u_Slucaju KDS ON S.Id = KDS.id_slucaj
+WHERE KDS.id_slucaj IS NULL OR KDS.id_kaznjivo_djelo IS NULL
+GROUP BY M.Id, M.Naziv;
+
+U prvom smo koraku koriste?i operaciju LEFT JOIN povezali tablice Mjesto, Evidencija_dogadaja, Slucaj i Kaznjiva_djela. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Mjesto uspore?uje s atributom id_mjesto u tablici Evidencija_doga?aja, atribut id_slucaj iz tablice Evidencija_dogadaja s atributom id u tablici Slucaj i atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju. Tablici Mjesto dodijeljen je alias M, tablici Evidencija_dogadaja alias ED, tablici Slucaj alias S, a tablici Kaznjiva_djela_u_slucaju alias KDS.
+
+Postavlja se WHERE uvjet kojim se filtriraju samo oni redovi gdje ili id_slucaj ili id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju imaju NULL vrijednost kako bi dobili samo ona mjesta za koja nema povezanog slu?aja ili kažnjivog djela.
+
+Pomo?u GROUP BY klauzule, rezultati se grupiraju prema id-u i nazivu mjesta.
+
+U SELECT dijelu upita smo naveli atribute koji ?e biti prikazani u rezultatu upita, a ti atributi predstavljaju stupce koji se odnose na id i naziv pojedinog mjesta na kojima nema evidentiranih kažnjivih djela u slu?ajevima ili uop?e nema slu?ajeva.
+
+
+Pogledi 
+Ako je uz osumnji?enika povezano vozilo, onda se stvara pogled koji prati sve osumnji?enike i njihova vozila
+CREATE VIEW osumnjicenici_vozila AS
+SELECT
+	O.id AS id_osobe,
+	O.ime_prezime,
+	O.datum_rodenja,
+	O.oib,
+	O.spol,
+	O.adresa,
+	O.telefon,
+	O.email,
+	V.id AS id_vozila,
+	V.marka,
+	V.model,
+	V.registracija,
+	V.godina_proizvodnje
+FROM Osoba O
+RIGHT JOIN Vozilo V ON O.id = V.id_vlasnik
+INNER JOIN Slucaj S ON O.id = S.id_pocinitelj;
+
+Prvo smo koriste?i operaciju RIGHT JOIN tablicu Osoba povezali s tablicom Vozilo, a tablice Osoba i Slucaj koriste?i operaciju INNER JOIN . Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_vlasnik u tablici Vozilo, a u tablici Slucaj s atributom id_pocinitelj. Tablici Osoba je dodijeljen alias O, tablici Vozilo alias V, a tablici Slucaj alias S.
+
+U SELECT dijelu upita su iz tablice Osoba navedeni svi atributi, dok su iz tablice Vozilo navedeni atributi koji predstavljaju id pojedinog vozila, marku, model, registraciju i godinu proizvodnje. Kako bi jasno razlikovali identifikator obje tablice, svakom smo dodijelili alias. Id-u tablice Osoba dodijelili smo alias id_osobe, a id-u tablice Vozilo alias id_vozila.
+
+
+Prona?i sve policajce koji su vlasnici vozila koja su starija od 10 godina
+CREATE VIEW policijski_sluzbenici_stara_vozila AS
+SELECT O.Ime_Prezime AS Policajac, V.Marka, V.Model, V.Godina_proizvodnje
+FROM Osoba O
+JOIN Zaposlenik Z ON O.Id = Z.id_osoba
+JOIN Vozilo V ON O.Id = V.id_vlasnik
+WHERE Z.id_radno_mjesto= (SELECT Id FROM Radno_mjesto WHERE Vrsta = 'Policajac')
+AND V.Godina_proizvodnje <= YEAR(NOW()) - 10;
+
+Koriste?i operaciju JOIN, prvo smo povezali tablice Osoba, Zaposlenik i Vozilo. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_osoba u tablici Zaposlenik i atribut id iz tablice Osoba s atributom id_vlasnik u tablici Vozilo. Tablici Osoba smo dodijelili alias O, tablici Zaposlenik alias Z, a tablici Vozilo alias V.
+
+Pomo?u WHERE uvjeta filtriramo samo one zaposlenike koji su policajci i posjeduju vozila starija od 10 godina. Prvi WHERE uvjet provjerava je li osoba koja posjeduje vozilo policajac, dok drugi WHERE uvjet filtrira vozila koja su starija od 10 godina.
+
+YEAR(NOW()) – 10 od trenutne godine vra?a godinu umanjenu za 10
+
+SELECT prikazuje atribute koji ?e biti prikazani u rezultatu pogleda, a ti atributi predstavljaju ime i prezime svake osobe te marku, model i godinu proizvodnje vozila. Stupac koji predstavlja ime i prezime osobe, nazvali smo Policajac.
+
+
+Napravi pogled koji ?e prona?i sve osobe koje su po?inile kazneno djelo plja?ke i pri tome su koristili pištolj i nazovi pogled "Po?initelji oružane plja?ke"
+CREATE VIEW pocinitelji_oruzane_pljacke AS
+SELECT O.ime_prezime AS pocinitelj, KD.Naziv AS kazneno_djelo
+FROM Osoba O
+JOIN Slucaj S ON O.Id = S.id_pocinitelj
+JOIN Kaznjiva_Djela_u_Slucaju KDS ON S.Id = KDS.id_slucaj
+JOIN Kaznjiva_Djela KD ON KDS.id_kaznjivo_djelo	= KD.id
+JOIN Predmet P ON S.id_dokaz= P.id
+WHERE KD.Naziv = 'Plja?ka' AND P.naziv LIKE '%pištolj%';
+
+Koriste?i operaciju JOIN, povezali smo tablice Osoba, Slucaj, Kaznjiva_djela_u_slucaju, Kaznjiva_djela i Predmet. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_pocinitelj u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju, atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela i atribut id_dokaz iz tablice Slucaj s atributom id u tablici Predmet. Tablici Osoba dodijeljen je alias O, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, tablici Kaznjiva_djela alias KD, a tablici Predmet alias P.
+
+Koriste?i WHERE uvjet, dobivamo osobe koje su po?inile kažnjivo djelo plja?ke, a da su pri tome koristile pištolj.
+
+U SELECT dijelu upita odabiremo atribute koji predstavljaju stupce koji se odnose na ime i prezime po?initelja plja?ke i naziv kažnjivog djela. Stupac koji predstavlja ime i prezime osobe, nazvali smo pocinitelj, a stupac koji predstavlja naziv kažnjivog djela kazneno_djelo.
+
+
+Napravi pogled koji ?e izlistati sva evidentirana kaznena djela i njihov postotak pojavljivanja u slu?ajevima
+CREATE VIEW postotak_pojavljivanja_kaznjivih_djela AS
+SELECT
+    KD.Naziv AS 'kaznjivo_djelo',
+    COUNT(KDS.id_slucaj) AS 'broj_slucajeva',
+    COUNT(KDS.id_slucaj) / (SELECT COUNT(*) FROM Slucaj) * 100 AS 'postotak_pojavljivanja'
+FROM
+    Kaznjiva_Djela KD
+LEFT JOIN
+    Kaznjiva_Djela_u_Slucaju KDS
+ON
+    KD.ID = KDS.id_kaznjivo_djelo
+GROUP BY
+KD.Naziv;
+
+U prvom koraku smo operacijom LEFT JOIN povezali tablice Kaznjiva_djela i Kaznjiva_djela_u_slucaju. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Kaznjiva_djela uspore?uje s atributom id_kaznjivo_djelo u tablici Kaznjiva_djela_u_slucaju. Tablici Kaznjiva_djela smo dodijelili alias KD, a tablici Kaznjiva_djela_u_slucaju alias KDS.
+
+Zatim smo dobivene podatke klauzulom GROUP BY grupirali prema nazivu kažnjivog djela.
+
+COUNT(KDS.id_slucaj) / (SELECT COUNT(*) FROM Slucaj) * 100  ra?una postotak pojavljivanja kažnjivih djela u slu?ajevima, a taj smo stupac nazvali postotak_pojavljivanja. Cijeli izraz ra?una postotak pojavljivanja odre?enog kaznenog djela u odnosu na ukupan broj slu?ajeva.
+
+COUNT(KDS.id_slucaj) ra?una broj pojavljivanja kažnjivih djela u slu?ajevima te se zatim dobivena vrijednost dijeli s
+(SELECT COUNT(*) FROM Slucaj) koji predstavlja ukupan broj slu?ajeva u tablici Slucaj
+* 100 množi dobiveni rezultat dijeljenja prvog i drugo  sa 100 kako bi se dobio traženi postotak
+
+Kona?no, u SELECT-u smo, uz navedeno u prethodnom koraku, naveli nazive kažnjivih djela i broj njihovog pojavljivanja u slu?ajevima. Stupac koji predstavlja nazive kažnjivih djela smo nazvali kaznjivo_djelo, a stupac koji predstavlja broj njihovog pojavljivanja u slu?ajevima broj_slucajeva.
+
+
+Napravi pogled koji ?e izlistati sva evidentirana sredstva utvr?ivanja istine i broj slu?ajeva u kojima je svako od njih korišteno
+CREATE VIEW evidentirana_sredstva_utvrdivanja_istine AS
+SELECT SUI.Naziv AS 'sredstvo_utvrdivanja_istine',
+       COUNT(SS.Id_sui) AS 'broj_slucajeva'
+FROM Sredstvo_utvrdivanja_istine SUI
+LEFT JOIN Sui_slucaj SS ON SUI.id = SS.Id_sui
+GROUP BY SUI.id;
+
+Prvo, operacijom LEFT JOIN povezujemo tablice Sredstvo_utvrdivanja_istine i Sui_slucaj. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Sredstvo_utvrdivanja_istine uspore?uje s atributom id_sui u tablici Sui_slucaj. Tablici Sredstvo_utvrdivanja_istine dodijelili smo alias SUI, a tablici Sui_slucaj alias SS.
+
+U sljede?em smo koraku pomo?u GROUP BY klauzule podatke grupirali prema id-u sredstva utvr?ivanja istine.
+
+U SELECT dijelu upita se prikazuju nazivi evidentiranih sredstava i broj slu?ajeva u kojima je svako sredstvo korišteno, a taj se broj dobiva pomo?u agregacijske funkcije COUNT koja ra?una koliko se puta svako sredstvo pojavljuje u tablici Sui_slucaj unutar svake grupe koja je definirana s GROUP BY klauzulom. Stupac koji predstavlja nazive sredstva utvr?ivanja istine smo nazvali sredstvo_utvrdivanja_istine, a stupac koji prikazuje broj njihovog pojavljivanja broj_slucajeva.
+
+
+Napravi pogled koji ?e izlistati sve slu?ajeve i sredstva utvr?ivanja istine u njima, te izra?unati trajanje svakog od slu?ajeva
+CREATE VIEW slucajevi_sortirani_po_trajanju_sredstva AS
+SELECT S.*, 
+       TIMESTAMPDIFF(DAY, S.Pocetak, S.Zavrsetak) AS trajanje_u_danima, 
+       GROUP_CONCAT(SUI.Naziv ORDER BY SUI.Naziv ASC SEPARATOR ', ') AS sredstva_utvrdivanja_istine
+FROM Slucaj S
+LEFT JOIN Sui_slucaj SS ON S.ID = SS.Id_slucaj
+LEFT JOIN Sredstvo_utvrdivanja_istine SUI ON SS.Id_sui = SUI.id
+GROUP BY S.id
+ORDER BY trajanje_u_danima DESC;
+
+U prvom je koraku pomo?u operacije LEFT JOIN bilo potrebno spojiti tablicu Slucaj, Sui_slucaj i Sredstvo_utvrdivanja_istine. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Sui_slucaj i atribut id_sui iz tablice Sui_slucaj s atributom . Tablici Slucaj je dodijeljen alias S, tablici Sui_slucaj alias SUI_S, a tablici Sredstvo_utvrdivanja_istine alias SUI.
+
+Pomo?u klauzule GROUP BY, podatke smo grupirali prema id-u slu?ajeva.
+
+U SELECT-u smo odabrali sve stupce iz tablice Slucaj. Dodatno, pomo?u funkcije TIMESTAMPDIFF smo izra?unali trajanje svakog slu?aja u danima, a s GROUP_CONCAT sastavili niz naziva sredstava utvr?ivanja istine povezanih sa svakim slu?ajem. ORDER BY SUI.naziv ASC sortira nazive sredstava abecedno, dok SEPARATOR odre?uje kako ?e nazivi biti odvojeni u rezultiraju?em nizu, u ovom slu?aju zarezom i razmakom. Dobiveni rezultat trajanja svakog pojedinog slu?aja u danima smo nazvali trajanje_u_danima, a niz koji sadrži nazive sredstava povezanih sa svakom slu?ajem sredstva_utvrdivanja_istine.
+
+
+Napiši pogled koji ?e u jednu tablicu pohraniti sve izvještaje vezane uz pojedine slu?ajeve
+CREATE VIEW izvjestaji_za_slucajeve AS
+SELECT S.Naziv AS Slucaj, I.Naslov AS naslov_izvjestaja, I.Sadrzaj AS sadrzaj_izvjestaja, O.Ime_Prezime AS autor_izvjestaja
+FROM Izvjestaji I
+INNER JOIN Slucaj S ON I.id_slucaj	 = S.ID
+INNER JOIN Osoba O ON I.id_autor = O.Id;
+
+Operacijom INNER JOIN smo povezali tablice Izvjestaji, Slucaj i Osoba. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id_slucaj iz tablice Izvjestaji uspore?uje s atributom id u tablici Slucaj i atribut id_autor iz tablice Izvjestaji uspore?uje s atributom id u tablici Osoba. Tablici Izvjestaji dodijeljen je alias I, tablici Slucaj alias S, a tablici Osoba alias O.
+
+Kona?no, u SELECT dio upita smo naveli naziv slu?aja, naslov i sadržaj izvještaja te ime i prezime autora izvještaja. Stupac koji predstavlja naziv slu?aja nazvan je slucaj, stupac koji prikazuje naslov izvještaja naslov_izvjestaja, stupac koji prikazuje sadržaj izvještaja sadrzaj_izvjestaja, a stupac koji prikazuje ime i prezime autora izvještaja autor_izvjestaja.
+
+
+Napravi pogled koji ?e izlistati sve osobe i njihove odjele
+Ukoliko osoba nije policajac te nema odjel (odjel je NULL), neka se uz tu osobu napiše Osoba nije policijski službenik.
+
+CREATE VIEW osobe_odjeli AS
+SELECT O.ime_prezime AS ime_osobe,
+       CASE
+           WHEN Z.id_radno_mjesto
+           IS NOT NULL THEN OD.Naziv
+           ELSE 'Osoba nije policijski službenik'
+       END AS naziv_odjela
+FROM Osoba O
+LEFT JOIN Zaposlenik Z ON O.Id = Z.id_osoba
+LEFT JOIN Odjeli OD ON Z.id_odjel= OD.Id;
+
+U prvom smo koraku koriste?i operaciju LEFT JOIN povezali tablice Osoba, Zaposlenik i Odjeli. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_osoba u tablici Zaposlenik i atribut id_odjel iz tablice Zaposlenik s atributom id u tablici Odjel. Tablici Osoba smo dodijelili alias O, tablici Zaposlenik alias Z, a tablici Odjeli alias OD.
+
+U SELECT dijelu upita koristimo CASE izraz s kojim odre?ujemo vrijednost za stupac naziv_odjela ovisno o tome ima je li osoba policijski službenik. 
+
+WHEN Z.id_radno_mjesto IS NOT NULL THEN OD.naziv se izvršava ako je uvjet ispunjen - ako osoba ima definirano radno mjesto, koristi se naziv odjela iz tablice Odjeli
+
+ELSE 'Osoba nije policijski službenik' se izvršava ako uvjet nije ispunjen – ako osoba nema definirano radno mjesto, rezultat ?e biti Osoba nije policijski službenik
+
+
+Napravi pogled koji ?e ispisati sve voditelje slu?ajeva, ukupan broj slu?ajeva koje vode, ukupan broj riješenih slu?ajeva, ukupan broj neriješenih slu?ajeva i postotak riješenosti
+CREATE VIEW voditelji_slucajevi_pregled AS
+SELECT
+    O.ime_prezime AS voditelj,
+    COUNT(S.ID) AS ukupan_broj_slucajeva,
+    SUM(CASE WHEN S.Status = 'riješen' THEN 1 ELSE 0 END) AS ukupan_broj_rijesenih_slucajeva,
+    SUM(CASE WHEN S.Status = 'aktivan' THEN 1 ELSE 0 END) AS ukupan_broj_nerijesenih_slucajeva,
+    (SUM(CASE WHEN S.Status = 'riješen' THEN 1 ELSE 0 END) / COUNT(S.ID)) * 100 AS postotak_rjesenosti
+FROM
+    Osoba O
+LEFT JOIN
+    Slucaj S ON O.ID = S.id_voditelj
+GROUP BY
+Voditelj;
+
+Prvo smo operacijom LEFT JOIN spojili tablicu Osoba i Slucaj. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_voditelj u tablici Slucaj. Tablici Osoba dodijelili smo alias O, a tablici Slusaj alias S.
+
+Zatim smo pomo?u GROUP BY rezultate grupirali prema voditeljima.
+
+U SELECT dijelu upita prikazujemo ime i prezime svih voditelja i tom smo stupcu dodijelili naziv voditelj.  Agregacijska funkcija COUNT ra?una broj slu?ajeva koji su povezani s odre?enim voditeljem, a taj smo stupac nazvali ukupan_broj_slucajeva. 
+
+SUM(CASE WHEN S.Status = 'riješen' THEN 1 ELSE 0 END) broji ukupan broj riješenih slu?ajeva – stupac smo nazvali ukupan_broj_rijesenih_slucajeva
+
+SUM(CASE WHEN S.Status = 'aktivan' THEN 1 ELSE 0 END) broji ukupan broj neriješenih slu?ajeva, stupac smo nazvali ukupan_broj_nerijesenih_slucajeva
+
+(SUM(CASE WHEN S.Status = 'riješen' THEN 1 ELSE 0 END) / COUNT(S.ID)) * 100 AS postotak_rjesenosti ra?una postotak riješenosti slu?ajeva – stupac smo nazvali postotak_rjesenosti 
+
+
+Napravi pogled koji ?e prikazivati statistiku zapljena za svaku vrstu kažnjivog djela (prosjek, minimum, maksimum vrijednosti i broj predmeta)
+CREATE VIEW StatistikaZapljenaPoKaznenomDjelu AS
+SELECT
+    KD.Naziv AS 'vrsta_kaznjivog_djela',
+    AVG(Z.vrijednost) AS 'Prosje?na_vrijednost_zapljena',
+    MAX(Z.vrijednost) AS 'Najve?a_vrijednost_zapljena',
+    MIN(Z.vrijednost) AS 'Najmanja_vrijednost_zapljena',
+    COUNT(Z.id) AS 'Broj_zapljenjenih_predmeta'
+FROM Zapljene Z
+JOIN Slucaj S ON Z.id_slucaj = S.ID
+JOIN Kaznjiva_Djela_u_Slucaju KDS ON S.ID = KDS.id_slucaj
+JOIN Kaznjiva_Djela KD ON KDS.id_kaznjivo_djelo = KD.id
+GROUP BY KD.Naziv; 
+
+Koriste?i JOIN operaciju, povezali smo tablice Zapljene, Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_slucaj iz tablice Zapljene uspore?uje s atributom id u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Zapljene dodijelili smo alias Z, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+Koriste?i klauzulu GROUP BY, podatke smo grupirali prema nazivu kažnjivih djela.
+
+U SELECT dijelu upita smo prikazali nazive kažnjivih djela te izra?unali prosje?nu vrijednost zapljena za odre?enu vrstu kažnjivog djela koriste?i AVG funkciju, najve?u vrijednost koriste?i MAX i najmanju vrijednost zapljena koriste?i MIN funkciju. Tako?er, pomo?u agregacijske funkcije COUNT smo izra?unali broj zaplijenjena za svaku vrstu kažnjivog djela. Stupac koji predstavlja prosje?nu vrijednost zapljena nazvali smo Prosjecna_vrijednost_zapljena, stupac koji predstavlja najve?u vrijednost nazvali smo Najveca_vrijednost_zapljena,  stupac koji predstavlja najmanju Najmanja_vrijednost_zapljena, a stupac koji sadrži broj zapljena za svaku vrstu kažnjivog djela Broj_zapljenjenih_predmeta.
+
+
+Napravi pogled koji ?e za svaki slu?aj izra?unati ukupnu zatvorsku kaznu, uz ograni?enje da maksimalna zakonska zatvorska kazna u RH iznosi 50 godina
+CREATE VIEW ukupna_predvidena_kazna_po_slucaju AS
+SELECT S.ID AS 'slucaj_id',
+       S.Naziv AS 'naziv_slucaja',
+       CASE
+           WHEN SUM(KD.predvidena_kazna) > 50 THEN 50
+           ELSE SUM(KD.predvidena_kazna)
+       END AS 'ukupna_predvidena_kazna',
+       CASE
+           WHEN SUM(KD.Predvidena_kazna) > 50 THEN 'Maksimalna zakonska zatvorska kazna iznosi 50 godina'
+           ELSE NULL
+       END AS 'Napomena'
+FROM Slucaj S
+LEFT JOIN Kaznjiva_djela_u_slucaju KDS ON S.ID = KDS.id_slucaj
+LEFT JOIN Kaznjiva_djela KD ON KDS.id_kaznjivo_djelo	= KD.ID
+GROUP BY S.id, S.naziv; 
+
+Prvo smo pomo?u LEFT JOIN operacije povezali tablice Slucaj, Kaznjova_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Slucaj je dodijeljen alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+Zatim smo podatke koriste?i GROUP BY grupirali prema id-u i nazivu slu?aja.
+
+U SELECT-u se prikazuje id i naziv svakog slu?ajeva te koristimo dva CASE izraza s kojima odre?ujemo vrijednosti za stupce ukupna_predvidena_kazna i napomena ovisno o iznosu zatvorske kazne. Stupac koji predstavlja id slu?aja nazvan je slucaj_id, a slu?aj koji predstavlja njegov naziv naziv_slucaja.
+
+WHEN SUM(KD.predvidena_kazna) > 50 THEN 50
+ELSE SUM(KD.predvidena_kazna) provjerava sumu predvi?enih kazni – ako je kazna ve?a od 50, postavi vrijednost na 50, u suprotnom ostaje stvarna suma previ?enih kazni
+
+WHEN SUM(KD.Predvidena_kazna) > 50 THEN 'Maksimalna zakonska zatvorska kazna iznosi 50 godina'
+ELSE NULL tako?er provjerava sumu predvi?enih kazni – kada je suma kazni ve?a od 50, postavi vrijednost Maksimalna zakonska zatvorska kazna iznosi 50 godina, dok u suprotnom nema dodatne napomene
+
+
+Napiši pogled koji ?e za sve policijske službenike dohvatiti njihovu dob i godine staža
+Ukoliko je policijski službenik još aktivan, oduzimat ?emo od trenutne godine godinu zaposlenja, a ako je umirovljen, oduzimat ?e od godine umirovljenja godinu zaposlenja. Uz to, dodat stupac koji prati da li je umirovljen ili aktivan.
+
+SELECT * FROM pogled_policijskih_sluzbenika;
+CREATE VIEW pogled_policijskih_sluzbenika AS
+SELECT
+    O.Id AS zaposlenik_id,
+    O.Ime_Prezime AS ime_prezime_osobe,
+    O.datum_rodenja AS datum_rodenja_osobe,
+    TIMESTAMPDIFF(YEAR, Z.datum_zaposlenja, CURRENT_DATE) AS Godine_Staza,
+    CASE
+        WHEN Z.datum_izlaska_iz_sluzbe IS NOT NULL AND Z.Datum_izlaska_iz_sluzbe <= CURRENT_DATE THEN 'Da'
+        ELSE 'Ne'
+    END AS Umirovljen
+FROM Osoba O
+INNER JOIN Zaposlenik Z ON O.Id = Z.id_osoba; 
+
+Operacijom INNER JOIN smo povezali tablice Osoba i Zaposlenik. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_osoba u tablici Zaposlenik. Tablici Osoba dodijelili smo alias O, a tablici Zaposlenik alias Z.
+
+U SELECT dijelu upita se prikazuje id, ime, prezime i datum ro?enja svake osobe, koristimo funkciju DATEDIFF(CURRENT_DATE, Z.datum_zaposlenja) AS Godine_staza kako bi izra?unali razliku u godinama izme?u trenutnog datuma i datuma zaposlenja te CASE izraz s kojim odre?ujemo vrijednost stupca Umirovljen. Stupac koji predstavlja id osobe nazvali smo zaposlenik_id, stupac koji predstavlja ime i prezime osobe nazvali smo ime_prezime_osobe, a atribut koji predstavlja datum ro?enja datum_rodenja_osobe.
+
+WHEN Z.datum_izlaska_iz_sluzbe IS NOT NULL AND Z.Datum_izlaska_iz_sluzbe <= CURRENT_DATE THEN 'Da' se izvršava ako je uvjet ispunjen – ako postoji datum izlaska iz službe te ako je on manji od trenutnog datuma, postavlja se vrijednost Da 
+
+ELSE 'Ne' se izvršava ako uvjet nije ispunjen – ako datum izlaska iz službe nije postavljen, postavlja se vrijednost Ne
+
+
+Napravi pogled koji ?e dohva?ati sve osumnji?enike, zajedno s kažnjivim djelima za koja su osumnji?eni
+CREATE VIEW pogled_osumnjicene_osobe AS
+SELECT DISTINCT O.Ime_Prezime, KD.Naziv AS 'naziv_kaznjivog_djela'
+FROM Osoba O
+JOIN Slucaj S ON O.Id = S.id_pocinitelj
+JOIN Kaznjiva_djela_u_slucaju KDS ON S.Id = KDS.id_slucaj
+JOIN Kaznjiva_djela KD ON KDS.id_kaznjivo_djelo = KD.id; 
+
+U prvom smo koraku koriste?i INNER JOIN operaciju povezali tablice Osoba, Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_pocinitelj u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Osoba je dodijeljen alias O, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+Kona?no, SELECT prikazuje ime i prezime osumnji?ene osobe te naziv kaznenog djela. Stupac koji predstavlja naziv slu?aja nazvan je naziv_kaznjivog_djela. Kako bi osigurali da u rezultatu upita budu samo jedinstvene vrijednosti atributa, koristimo DISTINCT.
+
+
+Napravi pogled koji ?e izlistati sve pse i broj slu?ajeva na kojima je svaki od njih radio
+U poseban stupac dodaj broj riješenih slu?ajeva od onih na kojima su radili. Zatim izra?unaj postotak riješenosti slu?ajeva za svakog psa i to dodaj u novi stupac.
+
+CREATE VIEW pregled_pasa AS
+SELECT
+    PA.Id AS pas_id,
+    PA.Oznaka AS OznakaPsa,
+    O.Ime_Prezime AS Vlasnik,
+    COUNT(S.Id) AS broj_slucajeva,
+    SUM(CASE WHEN S.Status = 'Riješen' THEN 1 ELSE 0 END) AS broj_rijesenih,
+    (SUM(CASE WHEN S.Status = 'Riješen' THEN 1 ELSE 0 END) / COUNT(S.Id) * 100) AS postotak_rijesenosti
+FROM
+    Pas AS PA
+LEFT JOIN Slucaj AS S ON PA.Id = S.id_pas
+LEFT JOIN Osoba AS O ON PA.Id_trener = O.Id
+GROUP BY
+PA.Id; 
+
+Prvo smo koriste?i LEFT JOIN operaciju povezali tablice Pas, Slucaj i Osoba. LEFT JOIN omogu?ava da rezultat povezivanja sadrži sve retke iz tablice Pas, a da se podaci iz desnih tablica, Slucaj i Osoba, uklju?e samo ako postoji podudaranje. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Pas uspore?uje s atributom id_pas u tablici Slucaj i atribut id_trener iz tablice Pas s atributom id u tablici Osoba. Tablici Pas je dodijeljen alias PA, tablici Slucaj alias S, a tablici Osoba alias O.
+
+Podatke smo zatim pomo?u GROUP BY klauzule grupirali prema id-u svakog psa.
+
+SELECT prikazuje id svakog psa, njihovu oznaku, ime i prezime vlasnika, ukupan broj slu?ajeva, broj riješenih slu?ajeva i postotak riješenosti slu?ajeva u kojima je pas bio uklju?en.
+
+COUNT(S.Id) koristi COUNT funkciju za brojanje ukupnog broja slu?ajeva vezanih uz svakog psa. Stupac smo nazvali broj_slucajeva
+SUM(CASE WHEN S.Status = 'Riješen' THEN 1 ELSE 0 END) izra?unava ukupan broj slu?ajeva koji su ozna?eni statusom Završeno. Stupac smo nazvali broj_rijesenih
+SUM(CASE WHEN S.Status = 'Riješen' THEN 1 ELSE 0 END) / COUNT(S.Id) * 100 izra?unava postotak riješenih slu?ajeva u odnosu na ukupan broj slu?ajeva. Postotak riješenih slu?ajeva se ra?una dijeljenjem ukupnog broja riješenih slu?ajeva s ukupnim brojem slu?ajeva, a zatim se množi sa 100 kako bi se dobio postotak. Stupcu je dodijeljen naziv postotak_rijesenosti.
+
+Stupcu koji predstavlja id psa dan je naziv  pas_id, stupcu koji predstavlja oznaku OznakaPsa, a ime i prezime vlasnika Vlasnik.
+
+Nadogradi prethodni pogled tako da pronalazi najefikasnijeg psa, s najve?im postotkom riješenosti.
+
+CREATE VIEW najefikasniji_pas AS
+SELECT
+    pas_id,
+    OznakaPsa,
+    vlasnik,
+    broj_slucajeva,
+    broj_rijesenih,
+    postotak_rijesenosti
+FROM
+    pregled_pasa
+WHERE
+postotak_rijesenosti = (SELECT MAX(postotak_rijesenosti) FROM pregled_pasa); 
+
+Prvo smo u FROM dijelu odabrali pogled pregled_pasa.
+
+Zatim smo koriste?i WHERE uvjet filtrirali podatke na one gdje je postotak riješenosti u pogledu jednak maksimalnom postotku riješenosti.
+
+MAX(postotak_rijesenosti) FROM pregled_pasa je podupit koji vra?a najve?i postotak riješenosti koriste?i agregacijsku funkciju MAX
+WHERE postotak_rijesenosti = ograni?ava rezultate samo na one redove koji imaju najve?i postotak riješenosti
+
+Kona?no, SELECT dio upita prikazuje id i oznaku odabranog psa, ime i prezime njegovog vlasnika te broj riješenih slu?ajeva i postotak riješenosti slu?ajeva u kojima je taj pas bio uklju?en.
+
+
+Napravi pogled koji prikazuje broj kazni zbog brze vožnje u svakom gradu u proteklih mjesec dana
+CREATE VIEW brza_voznja_gradovi AS
+SELECT M.naziv, COUNT(*) AS broj_kazni_za_brzu_voznju
+	FROM Mjesto M
+	INNER JOIN Evidencija_dogadaja ED ON M.id = ED.id_mjesto
+	INNER JOIN Slucaj S ON ED.id_slucaj = S.id
+	WHERE S.naziv LIKE '%Brza voznja%' AND ED.datum_vrijeme >= (NOW()-INTERVAL 1 MONTH)
+	GROUP BY M.naziv;
+
+Koriste?i operaciju INNER JOIN, povezali smo tablicu Mjesto, Evidencija_dogadaja i Slucaj. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Mjesto uspore?uje s atributom id_mjesto u tablici Evidencija_doga?aja i atribut id_slucaj iz tablice Evidencija_doga?aja s atributom id u tablici Slucaj. Tablici Mjesto dodijeljen je alias M, tablici Evidendija_dogadaja alias ED, a tablici Slucaj alias S.
+
+S WHERE uvjetom smo podatke ograni?ili na one koji se odnose na slu?ajeve brze vožnje i one koji su se dogodili unutar posljednjih mjesec dana.
+
+S.naziv LIKE '% brza voznja%' koristi operator LIKE za pretraživanje naziva slu?ajeva i traži one koji sadrže izraz brza vožnja
+(NOW()-INTERVAL 1 MONTH) od trenutnog datuma oduzima jedan mjesec
+ED.datum_vrijeme >= osigurava da se u pogled uklju?uju samo oni slu?ajevi koji su se dogodili u proteklom mjesecu, odnosno ?iji je datum ve?i ili jednak rezultatu koji se dobije oduzimanjem jednog mjeseca od trenutnog datuma 
+
+Rezultate smo grupirali pomo?u GROUP BY klauzule prema nazivima mjesta.
+
+SELECT prikazuje nazive mjesta i koristi agregacijsku funkciju COUNT za brojanje kazni za brzu vožnju za svaki grad. Stupac koji sadrži vrijednosti koje predstavljaju ukupan broj kazni za pojedini grad smo nazvali broj_kazni_za_brzu_voznju. 
+
+
+Pomo?u upita ispiši grad u kojem je bilo najviše kazni zbog brze vožnje u proteklih mjesec dana.
+
+SELECT *
+FROM brza_voznja_gradovi
+ORDER BY broj_kazni_za_brzu_voznju DESC
+LIMIT 1; 
+
+Prvo smo u  FROM dijelu smo odabrali pogled brza_voznja_gradovi iz kojeg ?emo dohva?ati podatke.
+
+Podatke smo zatim pomo?u ORDER BY klauzule sortirali silazno (DESC).
+
+U zadnjem smo koraku s LIMIT 1 postavili ograni?enje na broj redaka koji ?e biti vra?eni u rezultatu, u ovom slu?aju, dobit ?emo prvi redak koji predstavlja najve?i broj kazni.
+
+
+Napravi pogled koji prikazuje sve osobe koje su skrivile više od 2 prometne nesre?e u posljednjih godinu dana
+CREATE VIEW osoba_prometna_nesreca AS
+SELECT O.*, COUNT(*) AS broj_prometnih_nesreca
+FROM osoba O
+INNER JOIN slucaj S ON O.id = S.id_pocinitelj
+INNER JOIN evidencija_dogadaja ED ON S.id = ED.id_slucaj
+WHERE ED.datum_vrijeme >= (NOW() - INTERVAL 1 YEAR) AND S.naziv LIKE '%prometna nesreca%'
+GROUP BY O.id
+HAVING broj_prometnih_nesreca > 2; 
+
+Prvo je bilo potrebno pomo?u INNER JOIN operacije povezati tablice Osoba, Slucaj i Evidencija_dogadaja. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_pocinitelj u tablici Slucaj i atribut id iz tablice Slucaj s atributom id_slucaj u tablici Evidencija_dogadaja. Tablici Osoba je dodijeljen alias O, tablici Slucaj alias S, a tablici Evidencija_dogadaja alias ED.
+
+Koriste?i WHERE klauzulu, ograni?avamo rezultat upita na doga?aje koji su se dogodili unutar protekle godine i koji su povezani s prometnim nesre?ama.
+
+(NOW() - INTERVAL 1 YEAR) od trenutnog datuma oduzima jednu godinu
+ED.datum_vrijeme >= osigurava da se u pogled uklju?uju samo oni slu?ajevi koji su se dogodili u proteklih godinu dana, odnosno ?iji je datum manji ili jednak rezultatu koji se dobije oduzimanjem jedne godine od trenutnog datuma 
+S.naziv LIKE filtrira slu?ajeve ?iji naziv sadrži prometna nesreca
+
+Dobivene smo podatke s GROUP BY grupirali prema id-u tablice Osoba.
+
+
+SELECT dio upita odabire sve stupce iz tablice Osoba i koristi agregacijsku funkciju COUNT kojom se ra?una broj prometnih nesre?a za svaku osobu. Novi stupac koji sadrži vrijednosti koje predstavljaju broj prometnih nesre?a za svaku osobu smo nazvali broj_prometnih_nesreca.
+
+Kona?no, HAVING filtrira rezultate tako da uklju?uje samo one osobe koje su skrivile više od 2 prometne nesre?e,
+
+
+Napravi upit koji ?e prikazati osobu koja je skrivila najviše prometnih nesre?a u posljednjih godinu dana.
+
+SELECT *
+FROM osoba_prometna_nesreca
+ORDER BY broj_prometnih_nesreca DESC
+LIMIT 1; 
+
+U FROM dijelu smo odabrali pogled brza_voznja_gradovi iz kojeg dohva?amo tražene podatke.
+
+Koriste?i ORDER BY smo podatke sortirali silazno (DESC), od najve?eg broja kazni prema najmanjem.
+
+LIMIT 1 vra?a samo jedan redak, odnosno redak s najve?im brojem kazni za brzu vožnju.
+
+
+Napravi pogled koji ?e prona?i sva kažnjiva djela koja su se doga?ala u slu?ajevima
+CREATE VIEW kaznjiva_djela_na_mjestu AS
+SELECT ED.id_mjesto, KD.Naziv, KD.Opis
+FROM Kaznjiva_djela_u_slucaju KDS
+JOIN Kaznjiva_Djela KD ON KDS.id_kaznjivo_djelo = KD.ID
+JOIN Evidencija_Dogadaja ED ON KDS.id_slucaj = ED.id_slucaj; 
+
+Prvo smo koriste?i JOIN operaciju povezali tablice Kaznjiva_djela_u_slucaju, Kaznjiva_djela i Evidencija_doga?aja. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_kaznjivo djelo iz tablice Kaznjiva_djela_u_slucaju uspore?uje s atributom id u tablici Kaznjiva_djela i atribut id_slucaj iz tablice Kaznjiva_djela_u_slucaju s atributom id_slucaj u tablici Evidencija_doga?aja. Tablici Kaznjiva_djela_u_slucaju smo dodijelili alias KDS, tablici Kaznjiva_djela alias KD, a tablici Evidencija_dogadaja alias ED.
+
+U posljednjem koraku, u SELECT dijelu upita smo naveli stupce koje želimo da pogled prikaže, a ti stupci predstavljaju nazive i opise kažnjivih djela prisutnih na nekom mjestu te id mjesta iz evidencije doga?aja.
+
+
+Napravi upit kojim ?emo mo?i pronalaziti kažnjiva djela za odre?eno mjesto po id-u
+
+SELECT * FROM Kaznjiva_Djela_Na_Mjestu WHERE id_mjesto = 4; 
+
+U FROM dijelu smo odabrali pogled Kaznjiva_Djela_Na_Mjestu iz kojeg dohva?amo tražene podatke.
+
+Koriste?i WHERE uvjet, podaci se filtriraju prema id-u željenog grada.
+
+
+Napravi pogled koji ?e dohvatiti sve osobe, slu?ajeve koje su po?inili i KD u njima
+CREATE VIEW osobe_kaznjiva_djela AS
+SELECT DISTINCT O.Ime_Prezime, KD.Naziv, S.id, S.opis AS id_slucaj
+FROM Osoba O
+JOIN Slucaj S ON O.Id = S.id_pocinitelj
+JOIN Kaznjiva_djela_u_slucaju KDS ON S.Id = KDS.id_slucaj
+JOIN Kaznjiva_djela KD ON KDS.id_kaznjivo_djelo = KD.id; 
+
+Prvo smo koriste?i JOIN operaciju povezali tablice Osoba, Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom id_pocinitelj u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Osoba smo dodijelili alias O, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+U SELECT dijelu upita smo naveli stupce koji predstavljaju imena i prezimena osoba, id i opis slu?aja te naziv id kažnjivog djela, a koje ?e pogled prikazati kao rezultat.
+
+
+Svi slu?ajevi i evidentirani doga?aji za osobe
+CREATE VIEW slucajevi_dogadaji_osoba AS
+SELECT S.Naziv AS 'Naziv slu?aja', ED.opis_dogadaja, ED.datum_vrijeme, ED.id_mjesto, O.Ime_Prezime
+FROM Slucaj S
+JOIN Evidencija_dogadaja ED ON S.Id = ED.id_slucaj
+JOIN Osoba O ON O.Id = S.id_pocinitelj; 
+
+Pomo?u JOIN operacije, u prvom smo koraku povezali tablice Slucaj, Evidencija_dogadaja i Osoba. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Evidencija_dogadaja i atribut id iz tablice Osoba s atributom id_pocinitelj u tablici Slucaj. Tablici Slucaj smo dodijelili alias S, tablici Evidencija_dogadaja alias ED, a tablici Osoba alias O.
+
+SELECT dio upita prikazuje naziv slu?aja, opis, datum i vrijeme doga?aja, identifikator mjesta doga?aja te ime i prezime po?initelja. Stupac koji predstavlja nazive slu?ajeva smo nazvali Naziv slu?aja.
+
+
+Slu?ajevi i evidencije za odre?enu osobu (osumnji?enika).
+
+SELECT *
+	FROM slucajevi_dogadaji_osoba
+	WHERE ime_prezime = 'Pero Peri?';
+
+Prvo smo u  FROM dijelu smo odabrali pogled slucajevi_dogadaji_osoba iz kojeg ?emo dohva?ati podatke.
+
+Zatim ih filtriramo pomo?u WHERE uvjeta prema željenom imenu i prezimenu osobe.
+
+Napravi pogled koji ?e dohva?ati sve doga?aje koji su vezani za slu?ajeve koji sadrže odre?eno kažnjivo djelo
+CREATE VIEW Dogadaji_Kaznjiva_Djela AS
+SELECT ED.Opis_Dogadaja, ED.Datum_Vrijeme, KD.Naziv AS 'Naziv kaznjivog djela'
+FROM Evidencija_Dogadaja ED
+JOIN Slucaj S ON ED.id_slucaj = S.Id
+JOIN Kaznjiva_Djela_u_Slucaju KDS ON S.Id = KDS.id_slucaj
+JOIN Kaznjiva_Djela KD ON KDS.id_kaznjivo_djelo = KD.Id; 
+
+Pomo?u JOIN operacije smo povezali tablice Evidencija_dogadaja, Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id_slucaj iz tablice Evidencija_dogadaja uspore?uje s atributom id u tablici Slucaj, atribut id iz tablice Slucaj s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. Tablici Evidencija_dogadaja dodijeljen je alias ED, tablici Slucaj alias S, tablici Kaznjiva_djela_u_slucaju alias KDS, a tablici Kaznjiva_djela alias KD.
+
+SELECT dio upita prikazuje opis, datum i vrijeme evidentiranog doga?aja te naziv kažnjivog djela. Stupac koji predstavlja nazive kažnjivih djela smo nazvali Naziv kaznjivog djela.
+
+
+Napravi pogled koji ?e dohva?ati sve slu?ajeve u posljednjih N dana
+Filtriramo rezultate tako da po?etak slu?aja bude u intervalu od danas unazad odre?eni broj dana koji možemo sami odrediti (ovdje je 10000, ali može se mijenjati).
+
+CREATE VIEW Slucajevi_u_posljednjih_n_dana AS
+SELECT 
+    S.ID AS id_slucaj,
+    S.Naziv AS Naziv_slucaja,
+    S.Status,
+    S.id_voditelj,
+    O.ime_prezime AS ime_i_prezime_voditelja
+FROM 
+    Slucaj S
+JOIN 
+    Zaposlenik Z ON S.id_voditelj = Z.id
+JOIN 
+    Osoba O ON O.id = Z.id_osoba
+WHERE 
+S.Pocetak BETWEEN CURDATE() - INTERVAL 10000 DAY AND CURDATE(); 
+
+Prvo smo koriste?i JOIN operaciju povezali tablice Slucaj, Zaposlenik i Osoba. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_voditelj iz tablice Slucaj uspore?uje s atributom id u tablici Zaposlenik i atribut id u tablici Osoba s atributom id_osoba u tablici Zaposlenik. Tablici Slucaj dodijelili smo alias S, tablici Zaposlenik alias Z, a tablici Osoba alias O. 
+
+Zatim, postavljamo WHERE uvjet za filtriranje slu?ajeva prema datumu po?etka. Prikazat ?e se samo oni slu?ajevi ?iji je po?etak unutar zadnjih 10000 dana. CURDATE() funkcija vra?a trenutni datum te se od nje se oduzima INTERVAL 10000 DAY, odnosno 10000 dana od trenutnog datuma.
+
+SELECT odabire stupce koje želimo uklju?iti u pogled, a to su id, naziv, status slu?aja te id, ime i prezime voditelja slu?aja. Stupac koji predstavlja id slu?aja smo preimenovali u id_slucaj, stupac koji predstavlja naziv slu?aja u Naziv_slucaja, a koji predstavlja ime i prezime voditelja u ime_i_prezime_voditelja.
+ 
+
+Napiši pogled koji ?e dohva?ati slu?ajeve koji sadrže odre?eno kazneno djelo i sortirati ih po vrijednosti zapljene silazno
+CREATE VIEW Slucajevi_po_kaznjivom_djelu AS
+SELECT
+    Slucaj.id AS SlucajID,
+    Slucaj.naziv AS NazivSlucaja,
+    ukupna_vrijednost_zapljena AS UkupneZapljene
+FROM
+    Slucaj
+JOIN
+    Kaznjiva_djela_u_slucaju ON Slucaj.id = Kaznjiva_djela_u_slucaju.id_slucaj
+JOIN
+    Kaznjiva_djela ON Kaznjiva_djela_u_slucaju.id_kaznjivo_djelo = Kaznjiva_djela.id
+LEFT JOIN
+    Zapljene ON Slucaj.id = Zapljene.id_slucaj
+GROUP BY
+    Slucaj.id, Slucaj.naziv
+ORDER BY
+UkupneZapljene DESC; 
+
+Pomo?u JOIN operacije smo povezali tablice Slucaj, Kaznjiva_djela_u_slucaju i Kaznjiva_djela, Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Kaznjiva_djela_u_slucaju i atribut id_kaznjivo_djelo u tablici Kaznjiva_djela_u_slucaju s atributom id u tablici Kaznjiva_djela. LEFT JOIN operacija povezuje tablicu Slucaj s tablicom Zapljene prema identifikatoru slu?aja kako bismo uklju?ili sve slu?ajeve, ?ak i one koji nemaju zapljene. 
+
+Rezultate smo grupirali prema identifikatoru i nazivu slu?aja kako bismo dobili to?ne vrijednosti zapljena za svaki pojedini slu?aj.
+
+Selektiramo id i naziv slu?aja, te stupac s ukupnom vrijednosti zapljena koji se puni preko trigera, a nazvali smo ga UkupneZapljene. Taj se stupac puni preko trigera nakon svake unesene zapljene za taj slu?aj, ne mijenjamo ga ru?no.
+
+Kona?no, sortiramo rezultate silazno prema vrijednosti stupca UkupneZapljene, ?ime dobivamo pregled slu?ajeva prema ukupnim vrijednostima zapljena.
+
+
+Napiši pogled koja ?e ispisati sve slu?ajeve i za svaki slu?aj ispisati voditelja i ukupan iznos zapljena
+CREATE VIEW Podaci_o_slucajevima_zapljenama AS
+
+SELECT
+    Slucaj.id AS Slucaj_ID,
+    Osoba.ime_prezime AS Voditelj_ime_prezime,
+    COALESCE(SUM(Zapljene.Vrijednost), 0) AS Ukupan_iznos_zapljena
+FROM
+    Slucaj
+JOIN
+    Zaposlenik ON Slucaj.id_voditelj = Zaposlenik.id
+JOIN
+    Osoba ON Zaposlenik.id_osoba = Osoba.id
+LEFT JOIN
+    Zapljene ON Slucaj.id = Zapljene.id_slucaj
+GROUP BY
+    Slucaj.id, Osoba.ime_prezime;
+
+Operacijom JOIN smo povezali tablice Slucaj i Osoba. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id_osoba iz tablice Zaposlenik povezuje s atributom id u tablici Osoba. S LEFT JOIN operacijom povezujemo tablicu Slucaj s tablicom Zapljene, zato što svaki slu?aj ne mora imati zapljene. Ovdje se atribut id iz tablice Slucaj uspore?uje s atributom id_slucaj u tablici Zaposlenik. 
+
+Pomo?u GROUP BY klauzule, rezultate grupiramo prema identifikatoru slu?aja te imenu i prezimenu voditelja slu?aja. 
+
+SELECT uklju?uje stupac id iz tablice Slucaj te stupac ime_prezime iz tablice Osoba. Stupac koji ozna?ava id slu?aja smo nazvali Slucaj_ID, a stupac koji ozna?ava ime i prezime voditelja Voditelj_ime_prezime. SUM(Zapljene.Vrijednost) predstavlja ukupan iznos zapljena za svaki slu?aj, a COALESCE osigurava da ?e se ?ak i ako nema zapljena za odre?eni slu?aj prikazati 0 kao rezultat. Kao alias za izra?unatu vrijednost, funkcija COALESCE koristi naziv Ukupan_iznos_zapljena.
+
+
+
+Procedure 
+Procedura za unos novog vozila
+Proceduru smo nazvali Dodaj_Novo_Vozilo. Ulazni parametri su p_marka, p_model, p_registracija, p_godina_proizvodnje, p_sluzbeno_vozilo i p_id_vlasnik. p_marka i p_model su tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, dok je parametar p_registracija VARCHAR s unosom od 20. p_godina_proizvodnje, p_sluzbeno_vozilo i p_id_vlasnik su tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE Dodaj_Novo_Vozilo(
+    IN p_marka VARCHAR(255),
+    IN p_model VARCHAR(255),
+    IN p_registracija VARCHAR(20),
+    IN p_godina_proizvodnje INT,
+    IN p_sluzbeno_vozilo INT, -- 1 za službeno, 0 za privatno
+    IN p_id_vlasnik INT
+)
+BEGIN
+    IF NOT EXISTS (
+        SELECT * 
+        FROM INFORMATION_SCHEMA.COLUMNS 
+        WHERE TABLE_NAME = 'Vozilo' AND COLUMN_NAME = 'napomena'
+    ) THEN
+        ALTER TABLE Vozilo ADD COLUMN napomena VARCHAR(255);
+    END IF;
+    
+    IF p_sluzbeno_vozilo = 1 THEN
+        SET @napomena = 'Vlasnik MUP';
+    ELSE
+        SET @napomena = NULL;  
+    END IF;
+
+    INSERT INTO Vozilo (marka, model, registracija, godina_proizvodnje, id_vlasnik, napomena)
+    VALUES (p_marka, p_model, p_registracija, p_godina_proizvodnje, p_id_vlasnik, @napomena);
+END //
+
+DELIMITER ;
+
+Prvo provjeravamo postoji li ve? stupac napomena u tablici Vozilo. Ako ne postoji, dodaje se koriste?i ALTER TABLE.
+
+Ako je vrijednost parametra p_sluzbeno_vozilo jednaka 1, to zna?i da je vozilo ozna?eno kao službeno. U suprotnom, smatra se privatnim te se postavlja na NULL (nije potrebna neka posebna napomena).
+
+Na kraju, unosimo vozilo koriste?i predane parametre.
+
+
+Napiši proceduru koja ?e kreirati novu privremenu tablicu u kojoj ?e se prikazati svi psi i broj slu?ajeva na kojima su radili
+Dodatno, dodati ?e novi stupac tablici pas i u njega upisati nagra?eni pas kod svih pasa koji su radili na više od 15 slu?ajeva.
+
+Proceduru smo nazvali Godisnje_nagra?ivanje_pasa.
+
+DELIMITER //
+CREATE PROCEDURE Godisnje_nagra?ivanje_pasa()
+BEGIN
+    
+    CREATE TEMPORARY TABLE IF NOT EXISTS Temp_Psi (id_pas	INT, BrojSlucajeva INT);
+
+    
+    INSERT INTO Temp_Psi (id_pas, BrojSlucajeva)
+    SELECT id_pas, COUNT(*) AS BrojSlucajeva
+    FROM Slucaj
+    GROUP BY id_pas;
+    
+    UPDATE Pas
+    SET Status = 'nagra?eni pas'
+    WHERE Id IN (SELECT	id_pas  FROM Temp_Psi WHERE BrojSlucajeva > 15);
+    
+    
+    DROP TEMPORARY TABLE Temp_Psi;
+END //
+DELIMITER ;
+
+Stvorili smo privremenu tablicu Temp_psi sa stupcima id_pas i BrojSlucajeva, te smo ju popunili s podacima o broju slu?ajeva za svakog psa.
+
+Za svakog psa koji je odradio više od 15 slu?ajeva, postavlja se status nagra?eni pas.
+
+
+Napiši proceduru za godišnje nagra?ivanje zaposlenika (ovo je nova procedura po uzoru na gornju)
+Proceduru smo nazvali Godisnje_nagra?ivanje_zaposlenika, a po uzoru je na gornju.
+
+DELIMITER //
+CREATE PROCEDURE Godisnje_nagra?ivanje_zaposlenika()
+BEGIN
+    CREATE TEMPORARY TABLE IF NOT EXISTS Temp_Zaposlenici (id_zaposlenik INT, broj_rijesenih_slucajeva INT);
+
+    INSERT INTO Temp_Zaposlenici (id_zaposlenik, broj_rijesenih_slucajeva)
+    SELECT id_voditelj, COUNT(*) AS broj_rijesenih_slucajeva
+    FROM Slucaj
+    WHERE status = 'riješen'
+    GROUP BY id_voditelj;
+
+    UPDATE Zaposlenik
+    SET Status = 'nagra?eni zaposlenik'
+    WHERE id IN (SELECT id_zaposlenik FROM Temp_Zaposlenici WHERE broj_rijesenih_slucajeva > 2); 
+
+    DROP TEMPORARY TABLE IF EXISTS Temp_Zaposlenici;
+END //
+DELIMITER ;
+
+Prvo smo stvorili privremenu tablicu Temp_zaposlenici. Zatim se ona popunjava s podacima o broju riješenih slu?ajeva za svakog voditelja.
+
+Ažurira se tablica Zaposlenik i postavlja se status nagra?eni zaposlenik za svakog voditelja koji je riješio više od 2 slu?ajeva. 
+
+
+Napiši proceduru koja ?e za odre?enu osobu kreirati potvrdu o nekažnjavanju
+To ?e napraviti samo u slu?aju da osoba stvarno nije evidentirana niti u jednom slu?aju kao po?initelj. Ukoliko je osoba kažnjavana i za to ?emo dobiti odgovaraju?u obavijest. Tako?er, ako uspješno izdamo potvrdu, neka se prikaže i datum izdavanja.
+
+Proceduru smo nazvali ProvjeriNekažnjavanje. Njezin je ulazni parametar osoba_id koji je tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE ProvjeriNekažnjavanje(IN osoba_id INT)
+BEGIN
+DECLARE po?initelj_count INT;
+DECLARE osoba_ime_prezime VARCHAR(255);
+DECLARE obavijest VARCHAR(255);
+DECLARE izdavanje_datum DATETIME;
+
+SET izdavanje_datum = NOW();
+
+SELECT Ime_Prezime INTO osoba_ime_prezime FROM Osoba WHERE Id = osoba_id;
+
+SELECT COUNT(*) INTO po?initelj_count
+FROM Slucaj
+WHERE id_pocinitelj	= osoba_id;
+
+IF po?initelj_count > 0 THEN
+SET obavijest = 'Osoba je kažnjavana';
+SELECT obavijest AS Poruka;
+ELSE
+INSERT INTO Izvjestaji (Naslov, sadrzaj, id_autor, id_slucaj)
+VALUES ('Potvrda o nekažnjavanju', CONCAT('Osoba ', osoba_ime_prezime, ' nije kažnjavana. Izdana ', DATE_FORMAT(izdavanje_datum, '%d-%m-%Y %H:%i:%s')), osoba_id, 999);
+SELECT CONCAT('Potvrda za ', osoba_ime_prezime) AS Poruka;
+END IF;
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijablu po?initelj_count koja je tipa INTEGER, varijable osoba_ime_prezime i obavijest koje su tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova te varijablu izdavanje_datuma tipa DATETIME.
+
+Postavljamo datum izdavanja potvrde na trenutni datum i vrijeme.
+
+Dohva?amo ime i prezime osobe sa zadanim id-om, a rezultat se sprema u varijablu osoba_ime_prezime.
+
+SELECT broji slu?ajeve u kojima je osoba po?initelj i rezultat sprema u varijablu pocinitelj_count.
+
+Uvjetna naredba provjerava status osobe. Ako je osoba kažnjavana, postavlja se obavijest Osoba je kažnjavana. Ako osoba nije kažnjavana, izdaje se potvrda o nekažnjavanju i vra?a poruka o izdavanju potvrde za odre?enu osobu.
+
+
+Napiši proceduru koja ?e omogu?iti da za odre?enu osobu izmijenimo kontakt informacije (email i/ili broj telefona)
+Procedura se naziva IzmjeniKontaktInformacije, a ulazni su parametri procedure id_osoba tipa INTEGER, novi_email koji je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova i novi_telefon s duljinom od 20 znakova.
+
+DELIMITER //
+
+CREATE PROCEDURE IzmjeniKontaktInformacije(
+    IN id_osoba INT,
+    IN novi_email VARCHAR(255),
+    IN novi_telefon VARCHAR(20)
+)
+BEGIN
+    DECLARE br_osoba INT;
+    SELECT COUNT(*) INTO br_osoba FROM Osoba WHERE Id = id_osoba;
+    
+    IF br_osoba > 0 THEN
+        UPDATE Osoba
+        SET Email = novi_email, Telefon = novi_telefon
+        WHERE Id = id_osoba;
+        
+        SELECT 'Kontakt informacije su uspješno izmijenjene' AS Poruka;
+    ELSE
+        SELECT 'Osoba s navedenim ID-jem ne postoji' AS Poruka;
+    END IF;
+END //
+
+DELIMITER ;
+
+Prvo smo deklarirali varijablu br_osoba koja je tipa INTEGER.
+
+SELECT broji koliko redaka u tablici Slucaj ima zadani id (id_osoba) te taj rezultat sprema u varijablu br_osoba.
+
+Uvjetna naredba provjerava je li prona?ena barem jedna osoba sa zadanim id-om. Ako osoba postoji, UPDATE naredba ažurira email i telefon te osobe prema zadanim vrijednostima, koriste?i id osobe. Tako?er, vra?a se poruka koja potvr?uje uspješnost izmjene podataka. U suprotnom, vra?a se poruka da ne postoji osoba s navedenim id-om.
+
+
+Napiši proceduru koja ?e za odre?eno KD mo?i smanjiti ili pove?ati predvi?enu kaznu tako što ?e za argument primiti naziv KD i broj godina za koji želimo izmijeniti kaznu
+Proceduru smo nazvali izmjeni_kaznu. Ulazni parametri ove procedure su naziv_djela, koji je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, i iznos, tipa INTEGER.
+
+DELIMITER //
+CREATE PROCEDURE izmjeni_kaznu(IN naziv_djela VARCHAR(255), IN iznos INT)
+BEGIN
+    DECLARE kazna INT;
+    
+    SELECT predvidena_kazna INTO kazna
+    FROM Kaznjiva_djela
+    WHERE naziv = naziv_djela;
+    
+    IF kazna IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Traženo KD ne postoji u bazi';
+    END IF;
+    
+    SET kazna = kazna + iznos;
+    
+    UPDATE Kaznjiva_djela
+    SET predvidena_kazna = kazna
+    WHERE naziv = naziv_djela;
+END //
+DELIMITER ;
+
+SELECT dio dohva?a trenutnu predvi?enu kaznu za zadano kažnjivo djelo i vrijednost pohranjuje u varijablu kazna.
+
+Uvjetna naredba provjerava postoji li kažnjivo djelo sa zadanom nazivom. Ako djelo ne postoji, signalizira se greška s porukom Traženo KD ne postoji u bazi.
+
+Trenutnoj se kazni dodaje iznos, odnosno vrijednost koja se proslje?uje kao argument proceduri, a predstavlja broj godina za koji se želi izmijeniti kazna. Ako želimo smanjiti kaznu, za argument ?emo proslijediti negativan broj.
+
+Kona?no, ažurira se predvi?ena kazna za odre?eno kažnjivo djelo. 
+
+
+Napravi sli?nu proceduru za promjenu nov?ane kazne
+Procedura se naziva izmjeni_kaznu_n. Ulazni su parametri procedure naziv_djela, koji je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, i iznos, koji je tipa INTEGER.
+
+DELIMITER //
+CREATE PROCEDURE izmjeni_kaznu_n(IN naziv_djela VARCHAR(255), IN iznos INT)
+BEGIN
+    DECLARE kazna INT;
+    
+    SELECT predvidena_novcana_kazna INTO kazna
+    FROM Kaznjiva_djela
+    WHERE naziv = naziv_djela;
+    
+    IF kazna IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Traženo KD ne postoji u bazi';
+    END IF;
+    
+    SET kazna = kazna + iznos;
+    
+    UPDATE Kaznjiva_djela
+    SET predvidena_novcana_kazna = kazna
+    WHERE naziv = naziv_djela;
+END //
+DELIMITER ;
+
+Prvo, SELECT dohva?a trenutnu predvi?enu nov?anu kaznu za zadano kažnjivo djelo i tu vrijednost sprema u varijablu kazna.
+
+Uvjetna naredba provjerava postoji li kažnjivo djelo s navedenim nazivom. Ako ne postoji, procedura generira grešku s porukom Traženo KD ne postoji u bazi. 
+
+Ako kažnjivo djelo postoji, izvršava se operacija kojom se trenutna nov?ana kazna pove?ava za iznos koji je proslije?en kao ulazni argument proceduri.
+
+Tablica Kažnjiva_djela se ažurira i postavlja se iznos kazne na novu zadanu vrijednost za traženo djelo.
+
+
+Napiši proceduru koja ?e služiti za unaprje?enje policijskih službenika na novo radno mjesto
+Proceduru smo nazvali UnaprijediPolicijskogSluzbenika. Ulazni su parametri p_id_osoba i p_novo_radno_mjesto_id koji su tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE UnaprijediPolicijskogSluzbenika(
+    IN p_id_osoba INT, 
+    IN p_novo_radno_mjesto_id INT
+)
+BEGIN
+    DECLARE stari_radno_mjesto_id INT;
+    DECLARE stari_nadredeni_id INT;
+    DECLARE radno_mjesto_nadredenog INT;
+
+    SELECT id_radno_mjesto, id_nadre?eni INTO stari_radno_mjesto_id, stari_nadredeni_id
+    FROM Zaposlenik
+    WHERE id_osoba = p_id_osoba
+    LIMIT 1;
+
+    SELECT id_radno_mjesto INTO radno_mjesto_nadredenog
+    FROM Zaposlenik
+    WHERE id_osoba = stari_nadredeni_id
+    LIMIT 1;
+
+    IF radno_mjesto_nadredenog = p_novo_radno_mjesto_id THEN
+        UPDATE Zaposlenik
+        SET id_nadre?eni = NULL
+        WHERE id_osoba = p_id_osoba;
+    ELSE
+        UPDATE Zaposlenik
+        SET id_radno_mjesto = p_novo_radno_mjesto_id
+        WHERE id_osoba = p_id_osoba;
+    END IF;
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijable stari_radno_mjesto_id, stari_nadredeni_id i radno_mjesto_nadredenog. Sve su varijable tipa INTEGER.
+
+SELECT dio dohva?a trenutno radno mjesto i nadre?enog za odre?enu osobu. Dobivenu vrijednost sprema u varijable stari_radno_mjesto i stari_nadredeni_id.
+
+Drugi SELECT dohva?a radno mjesto od policijskog službenika koji je nadre?eni zaposleniku kojeg želimo unaprijediti.
+
+Zatim, uvjetna naredba provjerava je li novo radno mjesto zaposlenika jednako trenutnom radnom mjestu nadre?enog policijskog službenika. Ako jest, tom zaposleniku nadre?enog postavlja na NULL, što zna?i da zaposlenik više nema nadre?enog. Ako nije, ažurira se trenutno radno mjesto na novo radno mjesto.
+
+
+Napravi procedure koja ?e svakom zatvoreniku dodati broj dana u zatvoru provjeravati je li zatvorska kazna istekla
+Prvo smo u tablicu Osoba dodali stupac broj_dana_u_zatvoru koji pohranjuje cijele brojeve. Proceduru smo nazvali AzurirajPodatkeZatvor.
+ 
+DELIMITER //
+
+CREATE PROCEDURE ProvjeriIstekZatvorskeKazne()
+BEGIN
+	DECLARE done INT DEFAULT 0;
+    DECLARE osoba_id INT;
+    DECLARE datum_zavrsetka_slucaja DATETIME;
+    DECLARE ukupna_kazna INT;
+    DECLARE danas DATETIME;
+    
+    DECLARE cur CURSOR FOR
+    SELECT O.Id, S.zavrsetak
+    FROM Osoba O
+    JOIN Slucaj S ON O.id = S.id_pocinitelj
+    WHERE S.status = 'Zavrsen';
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    IF NOT EXISTS (
+        SELECT * FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_NAME = 'Osoba' AND COLUMN_NAME = 'obavijest'
+    ) THEN
+        ALTER TABLE Osoba
+        ADD COLUMN obavijest VARCHAR(50);
+    END IF;
+
+    
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO osoba_id, datum_zavrsetka_slucaja;
+
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+        SET ukupna_kazna = (
+            SELECT COALESCE(SUM(K.predvidena_kazna), 0)
+            FROM Slucaj S
+            LEFT JOIN Kaznjiva_djela_u_slucaju KS ON S.id = KS.id_slucaj
+            LEFT JOIN Kaznjiva_djela K ON KS.id_kaznjivo_djelo = K.id
+            WHERE S.id_pocinitelj = osoba_id
+        );
+
+        SET danas = NOW();
+        IF DATE_ADD(datum_zavrsetka_slucaja, INTERVAL ukupna_kazna DAY) <= danas THEN
+            UPDATE Osoba
+            SET obavijest = 'Kazna je istekla'
+            WHERE Id = osoba_id;
+        END IF;
+    END LOOP;
+
+    
+    CLOSE cur;
+
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijable done, osoba_id i ukupna_kazna koje su tipa INTEGER, a varijable datum_zavrsetka_slucaja i danas su tipa DATETIME. Inicijalna vrijednost varijable done je postavljena na 0.
+
+Deklarirali smo kursor koji se koristi za iteraciju kroz rezultate upita koji dohva?a id osobe i datum završetka slu?aja za sve zatvorene slu?ajeve.
+
+Kada kursor do?e do kraja i nema više redova za hvatanje, varijablu, koja ozna?ava završetak obrade podatka, handler postavlja na 1.
+
+LOOP petlja ?e se izvršavati sve dok ima novih redaka koje treba dohvatiti iz rezultata kursora. Svaku put kada se izvrši fetch, provjerava se uvjet done i ako nema više redaka, petlja se prekida.
+
+U varijablu ukupna_kazna se postavlja vrijednost koja se dobiva zbrajanjem predvi?enih kazni za sva kažnjiva djela u kojima je osoba bila po?initelj. Ta se varijabla koristi za pohranu ukupnog iznosa kazne za odre?enu osobu.
+
+Vrijednost varijable danas postavljamo na trenutni datum i vrijeme.
+
+Uvjetna naredba uspore?uje datum završetka slu?aja povezanog s osobom i trenutni datum. Ako je rezultiraju?i datum manji ili jednak današnjem datumu, tada je zatvorska kazna istekla. Ako je uvjet iz prethodnog koraka zadovoljen, tada se izvršava UPDATE naredba koja postavlja obavijest stupca tablice Osoba na Kazna je istekla za odre?enu osobu ?ija je zatvorska kazna istekla. 
+
+DATE_ADD funkcija dodaje odre?eni broj dana na datum završetka slu?aja
+
+
+Event koji vrti tu proceduru svaki dan.
+
+DELIMITER //
+
+CREATE EVENT IF NOT EXISTS `ProvjeraIstekaKazniEvent`
+ON SCHEDULE EVERY 1 DAY
+DO
+BEGIN
+    CALL ProvjeriIstekZatvorskeKazne();
+END //
+
+DELIMITER ;
+
+
+Procedura (naziv "nagodba") koja ?e za po?initelja (p_id_pocinitelj) pozatvarati sve njegove otvorene slu?ajeve i postaviti sve potrebne vrijednosti na odgovaraju?a mjesta što god treba
+Proceduru smo nazvali nagodba i njezin je ulazni parametar p_id_pocinitelj, tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE nagodba(p_id_pocinitelj INT)
+BEGIN
+    DECLARE ukupna_kazna INT;
+    
+    -- Izra?unaj ukupnu kaznu za po?initelja
+    SELECT SUM(kd.predvidena_kazna) INTO ukupna_kazna
+    FROM Kaznjiva_djela_u_slucaju kds
+    JOIN Kaznjiva_djela kd ON kds.id_kaznjivo_djelo = kd.id
+    WHERE kds.id_slucaj IN (SELECT id FROM Slucaj WHERE id_pocinitelj = p_id_pocinitelj);
+
+    -- Provjeri ukupnu kaznu
+    IF ukupna_kazna > 7 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Ukupna kazna prelazi 7 godina, nagodba nije mogu?a.';
+    ELSE
+        UPDATE Slucaj
+        SET 
+            opis = CONCAT(opis, ' (zaklju?en nagodbom)'),
+            zavrsetak = NOW(),
+            status = 'Zatvoren nagodbom'
+        WHERE id_pocinitelj = p_id_pocinitelj AND status = 'aktivan';
+        
+    END IF;
+END //
+DELIMITER ;
+
+Prvo smo deklarirali varijablu ukupna_kazna koja je tipa INTEGER.
+Pomo?u SELECT naredbe dohva?amo ukupnu zatvorsku kaznu za odre?enog po?initelja, a dobivena se vrijednost pohranjuje u varijablu ukupna_kazna. 
+
+Uvjetna naredba provjerava je li dobivena vrijednost, odnosno ukupna kazna sumiranih vrijednosti, ve?a od 7 godina. Ako je ve?a, procedura generira grešku s porukom da ukupna kazna prelazi 7 godina te da nagodba nije mogu?a. U suprotnom, ažurira opis slu?aja po?initelja koji je trenutno aktivan, te ozna?ava kao Zatvoren nagodbom,  a datum i vrijeme završetka slu?aja ?e se postaviti na trenutni datum i vrijeme. 
+
+
+Procedura koja stvara novi stupac u tablici Zgrada gdje ?e biti prikazan broj zapljena koje se nalaze u odre?enoj zgradi
+Naziv procedure je broj_zapljena_u_zgradi. Ulazni je parametar p_id_zgrada koji je tipa INTEGER. 
+
+DELIMITER //
+
+CREATE PROCEDURE broj_zapljena_u_zgradi (p_id_zgrada INT)
+BEGIN
+    DECLARE broj_zapljena INT;
+
+    SELECT COUNT(*) INTO broj_zapljena
+    FROM Zapljene INNER JOIN Slucaj ON zapljene.id_slucaj=slucaj.id
+         INNER JOIN Zaposlenik ON slucaj.id_voditelj=zaposlenik.id
+	 INNER JOIN Zgrada ON zaposlenik.id_zgrada=zgrada.id
+    WHERE zgrada.id=p_id_zgrada;
+
+ALTER TABLE Zgrada ADD COLUMN kolicina_zapljena INT;
+UPDATE Zgrada SET kolicina_zapljena = broj_zapljena WHERE zgrada.id = p_id_zgrada;
+
+
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijablu broj_zapljena koja je tipa INTEGER.
+
+
+Stvaranje procedure koja ?e umiroviti zaposlenika
+Naziv ove procedure je umirovi_sluzbenika. Njezin je ulazni parametar p_zaposlenik koji je tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE umirovi_sluzbenika(
+    IN p_zaposlenik_id INT
+)
+BEGIN
+
+UPDATE Zaposlenik SET datum_izlaska_iz_sluzbe = CURRENT_DATE 
+	WHERE id = p_zaposlenik_id;
+	
+END //
+
+DELIMITER ;
+
+Izvršava se UPDATE naredba koja postavlja datum izlaska iz službe na trenutni datum za zaposlenika s id-om koji je proceduri predan kao parametar.
+
+
+Napravi proceduru koja ?e zabraniti da se zaposli osoba koja je evidentirana kao po?initelj na aktivnim slu?ajevima ili na slu?ajevima koji su završili u zadnjih 10 godina
+Proceduru smo nazvali Provjeri_okrivljenika. Ulazni je parametar procedure p_osoba_id, tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE Provjeri_Okrivljenika(IN p_osoba_id INT)
+BEGIN
+    DECLARE okrivljenik_count INT;
+
+    SELECT COUNT(*)
+    INTO okrivljenik_count
+    FROM Osoba O
+    JOIN Slucaj S ON O.id = S.id_pocinitelj
+    WHERE O.id = p_osoba_id AND (S.status = 'Aktivan' OR S.zavrsetak >= DATE_SUB(NOW(), INTERVAL 10 YEAR));
+
+    IF okrivljenik_count > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Osoba nije podobna za zapošljavanje u policiji jer je nedavno bila okrivljenik.';
+    ELSE
+        SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Osoba koju smo provjerili je podobna. Unos je dozvoljen.';
+    END IF;
+
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijablu okrivljenik_count koja je tipa INTEGER.
+
+SELECT upit broji koliko ima slu?ajeva u kojima je osoba identificirana kao po?initelj, a koji su aktivni ili završili u posljednjih 10 godina. 
+
+Uvjetna naredba provjerava broj takvih slu?ajeva. Ako postoji i jedan takav, osoba nije podobna za zapošljavanje u policiji jer je nedavno bila okrivljenik. U tom se slu?aju javlja greška s porukom Osoba nije podobna za zapošljavanje u policiji jer je nedavno bila okrivljenik. U suprotnom, osoba je podobna za zapošljavanje i unos je dozvoljen. 
+
+
+Procedura koja ?e primati id_vozila, izra?unati trenutnu starost vozila te ako je starije od 15 godina i službeno, onda ?e ga postaviti na neslužbeno 
+Proceduru smo nazvali Izracunaj_starost_vozila, a njezin je ulazni parametar p_id, tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE Izracunaj_starost_vozila(IN p_id INT)
+BEGIN
+    DECLARE vozilo_starost INT;
+
+    SELECT YEAR(NOW()) - godina_proizvodnje INTO vozilo_starost
+    FROM Vozilo
+    WHERE id = p_id;
+
+    ALTER TABLE Vozilo ADD COLUMN  starost_vozila INT;
+
+    UPDATE Vozilo SET starost_vozila = vozilo_starost WHERE id = p_id;
+
+     IF (SELECT sluzbeno_vozilo FROM Vozilo WHERE id = p_id) = 1 THEN
+        IF vozilo_starost > 15 THEN
+            UPDATE Vozilo SET sluzbeno_vozilo = 0 WHERE id = p_id;
+        END IF;
+    END IF;
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijablu vozilo_starost koja je tipa INTEGER.
+
+Izvršava se SELECT upit koji ra?una starost vozila u godinama – vra?a rezultat oduzimanja godine proizvodnje vozila od trenutne godine i rezultat sprema u varijablu vozilo_starost.
+
+Ako ve? ne postoji, dodaje se stupac starost_vozila u tablicu Vozilo.
+
+Zatim se ažurira redak u tablici Vozilo i postavlja se vrijednost stupca starost_vozilo na izra?unatu starost vozila.
+
+Provjerava se uvjet. Ako je vozilo službeno i starost prelazi 15 godina, status službenog vozila se ažurira na neslužbeno.
+
+
+Procedura koja premješta završene slu?ajeve iz tablice Slucaj u tablicu Arhiva
+Prvo smo kreirali tablicu Arhiva koja sadržava atribut id_slucaj kao strani klju? koji referencira id iz tablice Slucaj. Proceduru smo nazvali Oznaci_Slucaj_Arhiva, a njezin je ulazni parametar p_slucaj_id koji je tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE Oznaci_Slucaj_Arhiva(IN p_slucaj_id INT)
+BEGIN
+    DECLARE slucaj_status VARCHAR(20);
+
+    SELECT status INTO slucaj_status
+    FROM Slucaj
+    WHERE id = p_slucaj_id;
+
+    IF slucaj_status IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Slu?aj s navedenim ID-om ne postoji.';
+    ELSEIF slucaj_status <> 'riješen' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Slu?aj nije riješen i ne može biti premješten u arhivu.';
+    ELSE
+        # Premjesti slu?aj iz Slucaj u Arhiva i obrišemo ga iz slucaj
+        INSERT INTO Arhiva (id_slucaj) VALUES (slucaj_id);
+    END IF;
+END;
+
+//
+
+DELIMITER ;
+
+Deklarirali smo varijablu slucaj_status koja je tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova. 
+
+SELECT dohva?a status slu?aja s id-om koji odgovara ulaznom argumentu p_slucaj_id i dodjeljuje ga varijabli slucaj_status.
+
+Uvjetna naredba provjerava je li varijabla slucaj_status prazna, odnosno je li slu?aj s navedenim id-om prona?en. Ako ne postoji, procedura generira grešku s porukom Slu?aj s navedenim ID-om ne postoji. Dodatno, provjerava je li status slu?aja razli?it od riješen. Ako nije, procedura generira grešku s porukom Slu?aj nije riješen i ne može biti premješten u arhivu.
+
+S INSERTOM ubacujemo redak s id-om slu?aja u tablicu Arhiva. 
+
+
+Napravi proceduru koja ?e provjeravati da isti voditelj može voditi nove slu?ajeve protiv istog po?initelja ukoliko su neki od njih riješeni
+Proceduru smo nazvali Provjera_voditelja_po_pocinitelju. Njezini su ulazni argumenti p_id_voditelj i p_id_pocinitelj, tipa INTEGER, a izlazni je p_poruka, tipa VARCHAR s maksimalnom duljinom unosa od 1999 znakova.
+
+DELIMITER //
+
+CREATE PROCEDURE Provjera_voditelja_po_pocinitelju(
+    IN p_id_voditelj INT,
+    IN p_id_pocinitelj INT,
+    OUT p_poruka VARCHAR(1999)
+)
+BEGIN
+    DECLARE broj_neaktivnih_slucajeva INT;
+
+    SELECT 
+        COUNT(CASE WHEN status = 'Riješen' THEN 1 END) INTO broj_neaktivnih_slucajeva
+    FROM Slucaj
+    WHERE id_pocinitelj = p_id_pocinitelj AND id_voditelj = p_id_voditelj;
+
+    IF broj_neaktivnih_slucajeva > 0 THEN
+        SET p_poruka = 'Voditelj ne može voditi nove slu?ajeve protiv istog po?initelja jer postoji barem jedan riješen slu?aj.';
+    ELSE
+        SET p_poruka = 'Provjera uspješna, slu?aj može biti otvoren.';
+    END IF;
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijablu broj_neaktivnih_slucajeva koja je tipa INTEGER i koja se koristi za pohranu rezultata upita.
+
+SELECT izra?unava broj slu?ajeva koji su riješeni, a u kojima sudjeluju zajedno isti voditelj i po?initelj koji su predani ulaznim argumentom. Taj se rezultat sprema u varijablu broj_neaktivnih_slu?ajeva.
+
+Uvjetna naredba provjerava koliko je takvih slu?ajeva. Ako postoji barem jedan riješeni slu?aj, postavlja poruku  koja sprje?ava otvaranje novih slu?ajeva, ina?e postavlja poruku da je provjera uspješna.
+
+
+Procedura zapakirana u okida?.
+
+DELIMITER //
+	
+CREATE TRIGGER BI_Slucaj_procedura
+BEFORE INSERT ON Slucaj
+FOR EACH ROW
+BEGIN
+    DECLARE poruka VARCHAR(1999);
+    CALL Provjera_voditelja_po_pocinitelju(NEW.id_voditelj, NEW.id_pocinitelj, poruka);
+    IF poruka != 'Provjera uspješna, slu?aj može biti otvoren.' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = poruka;
+    END IF;
+END;
+
+//
+DELIMITER;
+
+Deklarirali smo varijablu poruka koja je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, a u koju se pohranjuje rezultat procedure.
+
+Poziva se procedura Provjera_voditelja_po_pocinitelju s odgovaraju?im parametrima. Dobiveni se rezultat sprema u poruku. 
+
+Uvjetna naredba provjerava je li poruka razli?ita od Provjera uspješna, slu?aj može biti otvoren. Ako je, okida? generira grešku s dobivenom porukom pohranjenom u varijablu poruka. 
+
+
+Procedura za osiguranje nužnog broja poligrafskog ispitivanja
+Proceduru smo nazvali PostaviNaPoligraf. Ulazni je parametar ove procedure p_id_pocinitelj koji je tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE PostaviNaPoligraf(p_id_pocinitelj INT)
+BEGIN
+    DECLARE broj_poligrafa INT;
+    
+    -- Broj poligrafa koje je po?initelj ve? prošao
+    SELECT COUNT(*) INTO broj_poligrafa
+    FROM Sui_slucaj
+    WHERE id_slucaj IN (SELECT id FROM Slucaj WHERE id_pocinitelj = p_id_pocinitelj);
+
+    -- Ako po?initelj nije prošao barem dva puta poligraf, dodajte ga
+    WHILE broj_poligrafa < 2 DO
+        INSERT INTO Sui_slucaj (id_sui, id_slucaj)
+        VALUES (1, (SELECT id FROM Slucaj WHERE id_pocinitelj = p_id_pocinitelj LIMIT 1));
+
+        SET broj_poligrafa = broj_poligrafa + 1;
+    END WHILE;
+END;
+
+
+DELIMITER ;
+
+Prvo smo deklarirali varijablu broj_poligrafa koja je tipa INTEGER, a koristi se za pohranu broja poligrafa koje je po?initelj ve? prošao.
+
+SELECT dio broji koliko je po?initelj ve? prošao poligrafa. Rezultat sprema u varijablu broj_poligrafa. 
+
+Pomo?u WHILE petlje se provjerava broj poligrafa koje je po?initelj ve? prošao. Ako je taj broj manji od 2, procedura koristi INSERT INTO naredbu kako bi dodala po?initeljev slu?aj u tablicu Sui_slucaj, ozna?avaju?i da je prošao poligraf. Ovaj postupak se ponavlja sve dok po?initelj ne pro?e poligraf najmanje dva puta.
+
+Naredba SET broj_poligrafa = broj_poligrafa + 1 pove?ava vrijednost varijable broj_poligrafa za 1 u svakoj iteraciji petlje. Ova varijabla služi kao broja?, pra?enje koliko puta je po?initelj prošao poligrafsko ispitivanje.
+
+
+Stvaranje procedura za provjeru kazne i postavljanje po?initelja na poligraf
+Procedura se naziva Provjera_kazna_poligraf. Ulazni parametri ove procedure su p_id_pocinitelj i p_status, oba tipa INTEGER.
+
+DELIMITER //
+
+CREATE PROCEDURE Provjera_kazna_poligraf(
+    IN p_id_pocinitelj INT,
+    IN p_status VARCHAR(20)
+)
+BEGIN
+    DECLARE ukupna_kazna INT;
+    
+    SELECT SUM(kd.predvidena_kazna) INTO ukupna_kazna
+    FROM Kaznjiva_djela_u_slucaju kds
+    JOIN Kaznjiva_djela kd ON kds.id_kaznjivo_djelo = kd.id
+    WHERE kds.id_slucaj IN (SELECT id FROM Slucaj WHERE id_pocinitelj = p_id_pocinitelj);
+
+    IF ukupna_kazna < 25 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Ukupna kazna po?initelju manja od 25 godina. Po?initelj ne mora pro?i poligraf barem dva puta.';
+    ELSE
+        CALL PostaviNaPoligraf(p_id_pocinitelj);
+    END IF;
+END;
+
+Prvo smo deklarirali varijablu ukupna_kazna koja je tipa INTEGER i koja ?e se koristiti za pohranu izra?unate ukupne kazne. 
+
+SELECT ra?una ukupnu zatvorsku kaznu za odre?enog po?initelja koji je proceduri predan kao argument.
+
+Uvjetna naredba provjerava je li ukupna kazna manja od 25 godina. Ako je, procedura generira grešku s porukom koja obavještava da po?initelj ne mora pro?i poligraf barem dva puta. Ako uvjet nije ispunjen, procedura poziva drugu pohranjenu proceduru – PostaviNaPoligraf(p_id_pocinitelj).
+
+
+Pozovi proceduru za provjeru kazne i postavi po?initelja na poligraf.
+
+DELIMITER //
+CREATE TRIGGER Bi_slucaj_Provjera_Kazne
+BEFORE INSERT  ON Slucaj
+FOR EACH ROW
+BEGIN
+    CALL Provjera_kazna_poligraf(NEW.id_pocinitelj, NEW.status);
+END;
+
+DELIMITER ;
+
+Okida? smo nazvali Bi_slucaj_Provjera_Kazne, a aktivirati ?e se prije nego što se izvrši INSERT naredba u tablici Slucaj.
+
+
+Promjena radnog mjesta (zgrade) zaposlenika
+Naziv ove procedure je Provjera_promjene_zgrade. Njezini su ulazni parametri p_id_zaposlenik i p_nova_zgrada koji tu tipa INTEGER, a izlazni je p_poruka tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova.
+
+DELIMITER //
+
+CREATE PROCEDURE Provjera_promjene_zgrade(
+    IN p_id_zaposlenik INT,
+    IN p_nova_zgrada INT,
+    OUT p_poruka VARCHAR(255)
+)
+BEGIN
+    DECLARE trenutno_podrucje_uprave INT;
+    DECLARE novo_podrucje_uprave INT;
+
+    SELECT M.id_podrucje_uprave INTO trenutno_podrucje_uprave
+    FROM Zaposlenik Z
+    JOIN Zgrada ZG ON Z.id_zgrada = ZG.id
+    JOIN Mjesto M ON ZG.id_mjesto = M.id
+    WHERE Z.id = p_id_zaposlenik;
+
+    SELECT id_podrucje_uprave INTO novo_podrucje_uprave
+    FROM Zgrada
+    WHERE id = p_nova_zgrada;
+
+    IF trenutno_podrucje_uprave != novo_podrucje_uprave THEN
+        SET p_poruka = 'Zaposlenik ne može mijenjati zgradu izvan trenutnog podrucja uprave.';
+    ELSE
+        SET p_poruka = 'Provjera uspješna, zaposlenik može promijeniti zgradu.';
+    END IF;
+END //
+
+DELIMITER ;
+
+Prvo smo deklarirali varijable trenutno_podrucje_uprave i novo_podrucje_uprave koje su tipa INTEGER.
+
+SELECT dohva?a trenutno podru?je uprave zaposlenika koji je predani kao ulazni argument. 
+
+Drugi SELECT dohva?a podru?je uprave za novu zgradu (radno mjesto) zaposlenika, Tako?er prema vrijednosti koja je predana kao ulazni argument proceduri.
+
+Uvjetna naredba uspore?uje trenutno podru?je uprave zaposlenika s podru?jem uprave nove zgrade. Ako su razli?ita, postavlja se poruka da zaposlenik ne može mijenjati zgradu izvan trenutnog podru?ja uprave.
+
+
+Okida? koji koristi proceduru za provjeru promjene zgrade za zaposlenika prije nego što se ažurira u bazi podatka.
+
+DELIMITER //
+
+CREATE TRIGGER ProvjeraPromjeneZgrade_Trigger
+BEFORE UPDATE ON Zaposlenik
+FOR EACH ROW
+BEGIN
+    DECLARE poruka VARCHAR(255);
+
+    CALL ProvjeraPromjeneZgrade(NEW.id, NEW.id_zgrada, poruka);
+
+    IF poruka = 'Zaposlenik ne može mijenjati zgradu izvan trenutnog podrucja uprave.' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = poruka;
+    ELSE
+        UPDATE Zaposlenik SET id_zgrada = NEW.id_zgrada WHERE id = NEW.id;
+    END IF;
+END;
+
+DELIMITER ;
+
+Okida? smo nazvali ProvjeraPromjeneZgrade_Triggr, a aktivirati ?e se prije nego što se ažurira redak u tablici Zaposlenik.
+
+Poziva proceduru ProvjeraPRomjeneZgrade s argumentima. 
+
+Provjerava poruku dobivenu iz procedure. Ako je jednaka Zaposlenik ne može mijenjati zgradu izvan trenutnog podrucja uprave, okida? izaziva grešku s porukom. U suprotnom se ažurira zgrada zaposlenika.
+
+
+
+Funkcije 
+Napiši funkciju koja kao argument prima naziv kaznenog djela i vra?a naziv KD, predvi?enu kaznu i broj pojavljivanja KD u slu?ajevima
+Funkciju smo nazvali kaznjivo_djelo_info, a argument funkcije je p_naziv_kaznjivog_djela koji je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova. Kao rezultat, funkcija vra?a tip podataka TEXT.
+
+DELIMITER //
+CREATE FUNCTION KDInfo(p_naziv_kaznjivog_djela VARCHAR(255)) RETURNS TEXT
+DETERMINISTIC
+BEGIN
+	
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijable  f_predvidena_kazna i broj_pojavljivanja koje su tipa podataka INTEGER.
+
+DECLARE f_predvidena_kazna INT;
+DECLARE broj_pojavljivanja INT;
+
+Prvi SELECT dohva?a predvi?enu vremensku kaznu za kažnjivo djelo na temelju ulazne vrijednosti funkcije, odnosno naziva djela,  a rezultat upita ?e se dodijeliti varijabli f_predvidena_kazna.
+
+SELECT predvidena_kazna INTO f_predvidena_kazna
+FROM Kaznjiva_djela
+	WHERE Naziv = p_naziv_kaznjivog_djela; 
+
+Drugi SELECT broji koliko se puta odre?eno kažnjivo djelo pojavljuje u slu?ajevima, a rezultat pohranjuje u varijablu broj_pojavljivanja.
+
+Prvo se izvršava podupit koji dohva?a id kažnjivog djela iz tablice Kaznjiva_djela gdje je naziv jednak ulaznoj vrijednosti funkcije, odnosno nazivu traženog kažnjivog djela. 
+
+	(SELECT ID FROM Kaznjiva_djela WHERE Naziv = 	p_naziv_kaznjivog_djela); 
+
+Zatim, vanjski upit koristi rezultat podupita i prebrojava koliko redaka u tablici Kaznjiva_djela_u_slucaju ima id kažnjivog djela jednak id-u dobivenom u podupitu.
+
+SELECT COUNT(*) INTO broj_pojavljivanja
+FROM Kaznjiva_Djela_u_Slucaju
+    	WHERE id_kaznjivo_djelo=
+
+Funkcija pomo?u CONCAT-a vra?a tekstualni rezultat koji uklju?uje naziv kažnjivog djela te njegovu predvi?enu kaznu i broj pojavljivanja.
+
+	RETURN CONCAT('Kaznjivo djelo: ', p_naziv_kaznjivog_djela, 	'\nPredvi?ena kazna: ', f_predvidena_kazna, '\nBroj pojavljivanja: ', 	broj_pojavljivanja);
+
+
+Napiši upit koji ?e koriste?i ovu funkciju izlistati sva kaznena djela koja su se dogodila u 2023. godini (ili nekoj drugoj) i njihov broj pojavljivanja.
+
+	SELECT
+    	KDInfo(KD.Naziv) AS KaznjivoDjeloInfo
+FROM Kaznjiva_Djela_u_Slucaju KS
+INNER JOIN Kaznjiva_djela KD ON KS.id_kaznjivo_djelo = KD.ID
+INNER JOIN Slucaj S ON KS.id_slucaj = S.ID
+WHERE YEAR(S.Pocetak) = 2023
+GROUP BY KD.Naziv; 
+
+Prvo smo koriste?i INNER JOIN operaciju povezali tablice Kaznjiva_djela_u_slucaju, Kaznjiva_djela i Slucaj. Spajanje se vrši na uvjetu jednakosti, gdje se atribut id_kaznjivo_djelo iz tablice Kaznjiva_djela_u_slucaju uspore?uje s atributom id u tablici Kaznjiva_djela i atribut id_slucaj iz tablice Kaznjiva_djela_u_slucaju s atributom id u tablici Slucaj.
+
+Zatim smo s WHERE klauzulom filtrirali redove koji se odnose na slu?ajeve ?iji je datum po?etka u 2023. godini.
+
+Dobiveni smo rezultat s GROUP BY grupirali prema nazivu kažnjivog djela.
+
+SELECT poziva funkciju kaznjivo_djelo_info s nazivom kažnjivog djela kao argumentom. Rezultat te funkcije se dodjeljuje novom stupcu koji se naziva KaznjivoDjeloInfo. 
+
+
+Napiši funkciju koja ?e vratiti informacije o osobi prema broju telefona
+Funkcija se zove InformacijeOOsobiPoTelefonu. Ulazni je argument broj_telefona koji je tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova. Kao rezultat, funkcija vra?a tip podataka TEXT.
+
+DELIMITER //
+CREATE FUNCTION InformacijeOOsobiPoTelefonu(broj_telefona VARCHAR(20)) RETURNS TEXT
+DETERMINISTIC
+BEGIN
+
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijablu osoba_info koja je tipa TEXT.
+
+DECLARE osoba_info TEXT;
+
+Na temelju ulazne vrijednosti koja predstavlja telefonski broj, upit dohva?a informacije o osobi iz tablice Osoba i pohranjuje ih u varijablu osoba_info, a za stvaranje teksta koji uklju?uje ime i prezime, datum ro?enja i email osobe, koristi funkciju CONCAT.
+
+SELECT CONCAT('Ime i prezime: ', Ime_Prezime, '\nDatum ro?enja: ', Datum_rodenja, '\nAdresa: ', adresa, '\nEmail: ', Email)INTO osoba_info
+FROM Osoba
+WHERE Telefon = broj_telefona;
+
+Ako su informacije uspješno dohva?ene, funkcija vra?a informacije o osobi. U suprotnom vra?a napomenu da osoba s navedenim brojem telefona nije prona?ena.
+
+IF osoba_info IS NOT NULL THEN
+	RETURN osoba_info;
+ELSE
+	RETURN 'Osoba s navedenim brojem telefona nije prona?ena.';
+END IF;
+
+
+Napiši upit koji ?e izlistati sve brojeve telefona i informacije o tim osobama, ali samo ako te osobe nisu policijski službenici
+
+SELECT
+Telefon,
+InformacijeOOsobiPoTelefonu(Telefon) AS OsobaInfo
+FROM Osoba
+WHERE Osoba.id NOT IN(SELECT id_osoba FROM Zaposlenik); 
+
+Podaci se dohva?aju iz tablice Osoba, te joj je dodijeljen alias.
+
+WHERE uvjetna naredba filtrira osobe koje nisu zaposlenici, odnosno policijski službenici.
+
+Na kraju, SELECT dohva?a telefonske brojeve i rezultat funkcije InformacijeOOsobiPoTelefonu, koji sadrži informacije o osobi na temelju telefonskog broja, za osobe koje nisu policijski službenici. 
+
+
+Napiši funkciju koja ?e za odre?eni predmet vratiti slu?aj u kojem je taj predmet dokaz i osobu koja je u tom slu?aju osumnji?ena
+Funkciju smo nazvali dohvati_slucaj_i_osobu. Ulazni je argument funkcije id_predmet koji je tipa podataka INT, a kao rezultat vra?a VARCHAR s maksimalnom duljinom unosa od 512 znakova.
+
+DELIMITER //
+
+CREATE FUNCTION DohvatiSlucajIOsobu(p_id_predmet INT) 
+RETURNS VARCHAR(512)
+DETERMINISTIC
+BEGIN
+
+END //
+
+DELIMITER ;
+
+Deklarirali smo dvije varijable. Varijabla slucaj_naziv i osoba_ime_prezime su tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova, a varijabla rezultat s maksimalnom duljinom od  512 znakova.
+
+DECLARE slucaj_naziv VARCHAR(255);
+DECLARE osoba_ime_prezime VARCHAR(255);
+DECLARE rezultat VARCHAR(512);
+
+Prvi upit dohva?a naziv slu?aja iz tablice Slucaj gdje je vrijednost atributa id_dokaz jednaka ulaznoj vrijednosti funkcije, odnosno identifikatoru predmeta. Korištenjem LIMIT 1 osiguravamo da se odabere samo prvi rezultat upita. Dohva?eni se naziv sprema u varijablu slucaj_naziv.
+
+SELECT Slucaj.Naziv INTO slucaj_naziv
+FROM Slucaj
+WHERE Slucaj.id_dokaz= p_id_predmet
+LIMIT 1;
+
+Drugi upit dohva?a ime i prezime osobe koja je povezana s odre?enim slu?ajem, pri ?emu se id svakog dokaza uspore?uje s ulaznim argumentom funkcije, odnosno id-om predmeta. S LIMIT 1 dohva?amo samo prvi rezultat upita. Rezultat se zatim sprema u varijablu osoba_ime_prezime. 
+
+SELECT Osoba.Ime_Prezime INTO osoba_ime_prezime
+FROM Osoba
+INNER JOIN Slucaj ON Osoba.Id = Slucaj.id_pocinitelj
+WHERE Slucaj.id_dokaz = p_id_predmet
+LIMIT 1;
+
+Izraz SET koristi funkciju CONCAT za spajanje niza teksta u jedan tekstualni zapis, uklju?uju?i naziv slu?aja te ime i prezime osumnji?ene osobe. Taj se zapis sprema u varijablu rezultat.
+
+SET rezultat = CONCAT('Odabrani je predmet dokaz u slu?aju: ', slucaj_naziv, ', gdje je osumnji?ena osoba: ', osoba_ime_prezime);
+
+Kona?no, funkcija kao rezultat vra?a varijablu rezultat.
+
+RETURN rezultat;
+
+
+Napiši upit koji izdvaja informacije o odre?enom predmetu, uklju?uju?i naziv predmeta, naziv povezanog slu?aja i ime i prezime osumnji?enika u tom slu?aju, koriste?i funkciju DohvatiSlucajIOsobu za dobijanje dodatnih detalja za taj predmet 
+
+SELECT
+	Predmet.ID AS PredmetID,
+	Predmet.Naziv AS NazivPredmeta,
+	Slucaj.Naziv AS NazivSlucaja,
+	Osoba.Ime_Prezime AS ImePrezimeOsumnjicenika,
+	DohvatiSlucajIOsobu(Predmet.ID) AS InformacijeOPredmetu
+FROM Predmet
+INNER JOIN Slucaj ON Predmet.ID = Slucaj.id_dokaz
+INNER JOIN Osoba ON Slucaj.id_pocinitelj = Osoba.ID
+WHERE Predmet.ID = 5; 
+
+Tablice Predmet, Slucaj i Osoba smo povezali koriste?i INNER JOIN operaciju. Spajanje se vrši na temelju uvjeta jednakosti, gdje se atribut id iz tablice Predmet uspore?uje s atributom id_dokaz u tablici Slucaj i atribut id_pocinitelj iz tablice Slucaj s atributom id u tablici Osoba. 
+
+Postavlja se WHERE uvjet filtriranja koji odabire samo onaj redak gdje je id predmeta jednak broju 5.
+
+SELECT dio upita dohva?a id i naziv zadanog predmeta, naziv slu?aja te ime i prezime osobe osumnji?enika. U ovom upitu koristi se funkcija DohvatiSlucajIOsobu koja uzima id predmeta kao argument i vra?a tekstualne informacije o predmetu i povezanim osobama.
+
+
+Napravi funkciju koja ?e za argument primati sredstvo utvr?ivanja istine 
+Dodatno, prebrojiti ?e u koliko je slu?ajeva to sredstvo korišteno, prebrojit ?e koliko je slu?ajeva od tog broja riješeno, te ?e na temelju ta 2 podatka izra?unati postotak riješenosti slu?ajeva gdje se odabrano sredstvo koristi
+
+Funkcija se zove IzracunajPostotakRjesenosti. Ulazni je argument funkcije sredstvo_id tipa INTEGER, a kao rezultat vra?a DECIMAL koji ozna?ava decimalni broj s ukupno 5 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke.
+
+DELIMITER //
+CREATE FUNCTION IzracunajPostotakRjesenosti (
+	sredstvo_id INT
+) RETURNS DECIMAL(5,2)
+DETERMINISTIC
+BEGIN
+
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijable ukupno i koristeno koje su tipa INTEGER te varijablu postotak tipa DECIMAL koji ozna?ava decimalni broj s ukupno 5 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke.
+
+DECLARE ukupno INT;
+DECLARE koristeno INT;
+DECLARE postotak DECIMAL(5,2);
+
+Prvi SELECT broji ukupan broj slu?ajeva povezanih s odre?enim sredstvom utvr?ivanja istine i broj sprema u varijablu ukupno.
+
+	SELECT COUNT(*) INTO ukupno FROM Sui_slucaj WHERE Id_sui = 	sredstvo_id;
+
+Drugi upit filtrira retke koji pripadaju traženom sredstvu utvr?ivanja istine i gdje je u tablici Slucaj vrijednost stupca status Riješen.
+
+SELECT COUNT(*) INTO koristeno FROM Sui_slucaj s
+INNER JOIN Slucaj c ON s.Id_slucaj = c.Id
+	WHERE s.Id_sui = sredstvo_id AND c.Status = 'Riješen';
+
+Ako je vrijednost varijable ukupno ve?a od 0, broj korištenih sredstva se dijeli s ukupnim brojem sredstva i množi sa 100 kako bi se dobio postotak. U suprotnom, vrijednost varijable se postavlja na 0.
+
+IF ukupno IS NOT NULL AND ukupno > 0 THEN
+	SET postotak = (koristeno / ukupno) * 100;
+ELSE
+	SET postotak = 0.00;
+END IF;
+
+Kao rezultat, funkcija vra?a vrijednost varijable postotak.
+
+RETURN postotak;
+
+
+Koriste?i gornju funkciju prikaži sredstva koja imaju rješenost ve?u od 50% (riješeno je više od 50% slu?ajeva koja koriste to sredstvo).
+
+SELECT
+	Sredstvo_utvrdivanja_istine.ID AS id_sredstvo,
+Sredstvo_utvrdivanja_istine.Naziv AS Naziv_Sredstva,
+IzracunajPostotakRjesenosti(Sredstvo_utvrdivanja_istine.ID) AS postotak
+FROM Sredstvo_utvrdivanja_istine
+WHERE IzracunajPostotakRjesenosti(Sredstvo_utvrdivanja_istine.ID) > 50.00;
+
+Podatke dohva?amo iz tablice Sredstvo_utvrdivanja_istine. 
+
+U WHERE dijelu filtriramo redove s obzirom na postotak riješenosti, a u rezultat ulaze samo oni redove s postotkom ve?im od 50.
+
+SELECT dio upita dohva?a id sredstva utvr?ivanja istine i njegov naziv. Stupac koji predstavlja id nazvan je id_sredstvo, a naziv Naziv_Sredstva. Zatim se koristi funkcija IzracunajPostotakRjesenosti za izra?un postotka riješenosti za odabrano sredstvo. Stupac koji sadrži izra?unate vrijednosti postotka smo nazvali postotak.
+
+
+Napiši funkciju koja ?e za argument primati registarske tablice vozila
+Funkciju smo nazvali provjera_vozila. Ulazni je argument funkcije registracija koji je tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova, a kao rezultat vra?a VARHCAR s maksimalnom duljinom od 100 znakova.
+
+DELIMITER //
+CREATE FUNCTION Provjera_vozila(p_registracija VARCHAR(20)) 
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+
+END //
+DELIMITER ;
+
+Deklarirali smo dvije varijable. Varijabla result tipa je VARCHAR s maksimalnom duljinom unosa od 100 znakova, a pojavljivanja tipa INTEGER.
+
+DECLARE result VARCHAR(100);
+DECLARE pojavljivanja INT;
+
+Podupit traži id vlasnika vozila prema zadanoj registraciji, odnosno prema ulaznom argumentu funkcije.
+
+	(SELECT id_vlasnik FROM Vozilo WHERE registracija = p_registracija);
+
+Vanjski upit koristi rezultat podupita kako bi prebrojao koliko se puta vlasnik pojavljuje kao po?initelj. Rezultat sprema u varijablu count.
+
+SELECT COUNT(*) INTO pojavljivanja
+FROM Slucaj
+	WHERE id_pocinitelj IN
+
+Ako je broj pojavljivanja vozila ve?i od 0, u varijablu rezultat se pohranjuje poruka koja sadrži informaciju o broju pojavljivanja vozila. U suprotnom, vra?a Vozilo se nije pojavljivalo u slu?ajevima.
+ 
+IF pojavljivanja > 0 THEN
+        SET result = CONCAT('Vozilo se pojavljivalo u slu?ajevima (', pojavljivanja, ' puta)');
+    ELSE
+        SET result = 'Vozilo se nije pojavljivalo u slu?ajevima';
+END IF;
+
+RETURN vra?a rezultat funkcije s obzirom na izvršenu uvjetnu naredbu.
+
+RETURN result;
+
+
+Koriste?i funkciju prikažite vozila koja se pojavljuju iznad prosjeka (u iznadprosje?nom broju).
+
+CREATE VIEW View_Provjera_Vozila AS
+SELECT 
+    V.Registracija, 
+    Provjera_vozila(V.Registracija) AS StatusVozila
+FROM 
+    Vozilo V
+INNER JOIN (
+    SELECT 
+        Vozilo.Registracija, 
+        COUNT(*) AS count
+    FROM 
+        Slucaj
+    INNER JOIN 
+        Vozilo ON Slucaj.id_pocinitelj = Vozilo.id_vlasnik
+    GROUP BY 
+        Vozilo.Registracija
+) AS Podupit ON V.Registracija = Podupit.Registracija
+WHERE 
+    Podupit.count > (
+        SELECT 
+            AVG(count) AS Prosjek
+        FROM (
+            SELECT 
+                COUNT(*) AS count
+            FROM 
+                Slucaj
+            INNER JOIN 
+                Vozilo ON Slucaj.id_pocinitelj = Vozilo.id_vlasnik
+            GROUP BY 
+                Vozilo.Registracija
+        ) AS Podupit1
+);
+
+Povezuje se tablica Vozilo s podupitom (Podupit) koji izra?unava broj slu?ajeva za svaku registraciju vozila. 
+
+Dobiveni se rezultat filtrira tako da se uklju?uju samo vozila koja imaju više slu?ajeva od prosjeka. Ovo se postiže usporedbom broja slu?ajeva za svako vozilo (Podupit.count) s prosje?nim brojem slu?ajeva (AVG(count)) koji se izra?unava pomo?u podupita Podupit1.
+
+
+Funkcija koja za argument prima id podrucja uprave i vra?a broj mjesta u tom podru?ju te naziv svih mjesta u 1 stringu
+Funkciju smo nazvali Podaci_O_Podrucju. Ulazni je argument funkcije id_podrucje koji je tipa INTEGER, a vra?a tip podataka TEXT.
+
+DELIMITER //
+CREATE FUNCTION Podaci_O_Podrucju(id_podrucje INT) RETURNS TEXT
+DETERMINISTIC
+BEGIN
+	
+END //
+DELIMITER ;
+
+Deklarirali smo varijable broj_mjesta i mjesta. Varijabla broj_mjesta je tipa INTEGER, a varijabla mjesta tipa TEXT.
+
+DECLARE broj_mjesta INT;
+DECLARE mjesta TEXT;
+
+Prvi SELECT broji koliko mjesta pripada odre?enom podru?ju uprave. Taj se rezultat sprema u varijablu broj_mjesta.
+
+SELECT COUNT(*) INTO broj_mjesta
+FROM Mjesto
+	WHERE id_podrucje_uprave = id_podrucje;
+
+Drugi upit koristi funkciju GROUP_CONCAT kako bi spojio nazive svih mjesta povezanih s odre?enim podru?jem uprave, odvojenih znakom ;, a rezultat sprema u varijablu mjesta.
+
+SELECT GROUP_CONCAT(naziv SEPARATOR ';') INTO mjesta
+	FROM Mjesto
+	WHERE id_podrucje_uprave = id_podrucje;
+
+Funkcija kao rezultat vra?a tekstualni zapis koji sadrži naziv podru?ja uprave, broj mjesta povezanih s tim podru?jem i popis mjesta.
+
+RETURN CONCAT('Podru?je: ', (SELECT naziv FROM Podrucje_uprave WHERE id = id_podrucje), ', Broj mjesta: ', broj_mjesta, ', Mjesta: ', mjesta);
+
+
+Napravi funkciju koje ?e za slu?ej predan preko id-ja dohvatiti broj kažnjivih djela u njemu
+Ime funkcije je broj_kaznjivih_djela_u_slucaju i tipa je INTEGER, te isto vra?a tip podataka INTEGER.
+
+DELIMITER //
+CREATE FUNCTION Broj_Kaznjivih_Djela_U_Slucaju(id_slucaj INT) RETURNS INT
+DETERMINISTIC
+BEGIN
+
+END;
+
+//
+DELIMITER ;
+
+Deklarirali smo varijablu broj_kaznjivih_djela koja je tipa podataka INTEGER.
+
+DECLARE broj_kaznjivih_djela INT;
+
+Upit broji koliko redaka ima u tablici Kaznjiva_djela_u_slucaju gdje je id_slucaj jednak ulaznom argumentu funkcije, koji predstavlja id traženog slu?aja. Rezultat se pohranjuje u varijablu broj_kaznjivih_djela.
+
+SELECT COUNT(*) INTO broj_kaznjivih_djela
+FROM Kaznjiva_djela_u_slucaju
+	WHERE id_slucaj = id_slucaj;
+
+Funkcija kao rezultat vra?a vrijednost pohranjenu u varijabli broj_kaznjivih_djela koja predstavlja broj kažnjivih djela povezanih sa željenim slu?ajem.
+
+RETURN broj_kaznjivih_djela;
+
+
+Koriste?i gornju funkciju napiši upit koji ?e na?i slu?aj s najviše kažnjivih djela.
+
+SELECT
+S.ID AS id_slucaj,
+S.Naziv AS Naziv_Slucaja,
+Broj_Kaznjivih_Djela_U_Slucaju(S.ID) AS Broj_Kaznjivih_Djela
+FROM Slucaj S
+GROUP BY id_slucaj, Naziv_Slucaja
+ORDER BY Broj_Kaznjivih_Djela DESC LIMIT 1;
+
+Prvo dohva?amo podatke iz tablice Slucaj kojoj smo dodijelili alias S. 
+
+Zatim smo dobiveni rezultat grupirali s GROUPY BY klauzulom prema identifikatoru i nazivu slu?aja.
+
+U SELECT-u dohva?amo id i naziv slu?aja. Stupac koji predstavlja identifikator slu?aja smo nazvali id_slucaj, a naziv Naziv_Slucaja. Koriste?i agregacijsku funkciju MAX ra?unamo maksimalni broj kažnjivih djela povezanih sa svakim slu?ajem. Kao argument funkcije se koristi S.Id, a rezultat se prikazuje kao stupac s imenom Broj_Kaznjivih_Djela.
+
+
+Funkcija koje ?e za argument primati status slu?ajeva i vratiti ?e broj slu?ajeva sa tim statusom
+Funkciju smo nazvali broj_slucajeva_po_statusu. Argument funkcije je status, tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova, a vra?a tip podataka INTEGER.
+
+DELIMITER //
+CREATE FUNCTION broj_slucajeva_po_statusu(status VARCHAR(20)) RETURNS INT
+DETERMINISTIC
+BEGIN
+	
+END;
+
+//
+DELIMITER ;
+
+Deklarirali smo varijablu broj_slucajeva koja je tipa podataka INTEGER.
+
+DECLARE broj_slucajeva INT;
+
+Uvjetna naredba provjerava status slu?aja. Ako je status jednak NULL vrijednosti, varijablu broj_slucajeva postavlja na 0. U suprotnom se izvršava upit koji broji sve slu?ajeve u tablici Slucaj gdje je status jednak zadanoj vrijednosti statusa. Rezultat sprema u varijablu broj_slucajeva. 
+
+IF status IS NULL THEN
+	SET broj_slucajeva = 0;
+ELSE
+		SELECT COUNT(*) INTO broj_slucajeva
+		FROM Slucaj
+		WHERE status = status;
+	END IF;
+
+Kao rezultat, funkcija vra?a vrijednost varijable broj_slucajeva.
+
+RETURN broj_slucajeva;
+
+
+Koriste?i gornju funkciju napravi upit koji ?e dohvatiti sve statuse koji vrijede za više od 5 slu?ajeva (ili neki drugi broj).
+
+SELECT
+	Status,
+COUNT(*) AS broj_slucajeva
+FROM
+    Slucaj
+GROUP BY
+    Status
+HAVING
+broj_slucajeva_po_statusu(Status) > 5;
+
+Dohva?amo podatke iz tablice Slucaj.
+
+Dobivene podatke pomo?u GROUP BY grupiramo prema statusu slu?aja.
+
+SELECT dohva?a status iz tablice Slucaj i broji koliko puta se svaki status pojavljuje koriste?i agregacijsku funkciju COUNT, a rezultat zbrajanja je prikazan u stupcu koji smo nazvali broj_slucajeva. 
+
+HAVING klauzula koristi funkciju broj_slucajeva_po_statusu te filtrira samo one statuse koji  imaju više od 5 slu?ajeva povezanih s njima.
+
+
+Funkcija koja za argument prima id_slucaj i ra?una njegovo trajanje
+Ako je završen, onda trajanje od po?etka do završetka, a ako nije, onda trajanje od po?etka do poziva funkcije.
+
+Funkciju smo nazvali informacije_o_slucaju. Funkcija kao ulazni argument prima id_slucaj koji je tipa INTEGER, a vra?a TEXT.
+
+DELIMITER //
+CREATE FUNCTION Informacije_o_slucaju(id_slucaj INT) RETURNS TEXT
+DETERMINISTIC
+BEGIN
+
+END;
+//
+DELIMITER ;
+
+Prvo smo deklarirali dvije varijable, status_slucaja tipa VARCHAR s maksimalnom duljinom unosa od 20 znakova i trajanje_slucaja tipa INT.
+
+	DECLARE status_slucaja VARCHAR(20);
+	DECLARE trajanje_slucaja INT;
+
+Unutar SELECT naredbe, iz tablice Slucaj dohva?amo podatke iz stupca koji predstavlja status slu?aja.
+	
+S WHERE klauzulom se postavlja uvjet da se odabir odnosi samo na redak u kojem je id jednak vrijednosti atributa id_slucaj koji je predan kao argument funkciji.
+
+	SELECT 
+        		Status,
+        	CASE
+            	WHEN Zavrsetak IS NULL THEN DATEDIFF(NOW(), Pocetak)
+            	ELSE DATEDIFF(Zavrsetak, Pocetak)
+        	END AS trajanje
+ INTO
+        	status_slucaja, trajanje_slucaja
+   	FROM 
+        	Slucaj
+    	WHERE 
+        		id = id_slucaj;
+
+CASE izraz ovisno o uvjetima odre?uje trajanje slu?aja. Ako je završetak jednak NULL, što zna?i da slu?aj još nije završen, koristi se funkcija DATEDIFF(NOW(), Pocetak) za izra?un trajanja slu?aja od trenutnog vremena do po?etka slu?aja. U suprotnom se koristi DATEDIFF(Zavrsetak, Pocetak) kojom se ra?una trajanje slu?aja od njegovog završetka do po?etka. 
+
+AS trajanje se koristi za dodjeljivanje naziva stupcu rezultata CASE izraza, a INTO status_slucaja, trajanje_slucaja se koristi za pohranu vrijednosti dobivenih iz SELECT upita. status_slucaja ?e sadržavati vrijednost atributa status, dok ?e trajanje_slucaja sadržavati vrijednost dobivenu iz CASE izraza, odnosno trajanje slu?aja.
+
+Funkcija kao rezultat pomo?u CONCAT funkcije vra?a tekst koji sadrži informacije o statusu i trajanju slu?aja.
+
+	RETURN CONCAT('Status slu?aja: ', status_slucaja, '\nTrajanje slu?aja: ', 	trajanje_slucaja, ' dana');
+
+
+Napiši upit koji ?e dohvatiti sve slu?ajeve i pomo?u funkcije iš?itati njihove statuse i trajanja.
+
+SELECT 
+Id AS 'ID slu?aja',
+Naziv AS 'Naziv slu?aja',
+Informacije_o_slucaju(Id) AS 'Informacije o slu?aju'
+FROM 
+	Slucaj;
+
+Dohva?amo podatke iz tablice Slucaj.
+
+SELECT prikazuje identifikacijski broj i naziv slu?aja. Stupac koji prikazuje id naziva ID slu?aja, a stupac koji prikazuje naziv Naziv slu?aja. Dodatno, poziva funkciju informacije_o_slucaju s ulaznim argumentom id. Rezultat ove funkcije pruža dodatne informacije o statusu i trajanju svakog slu?aja, a prikazuje se u stupcu pod nazivom informacije o slu?aju.
+
+
+Napiši funckiju koja ?e za zaposlenika definiranog parametron p_id_zaposlenik izbrojiti broj slu?ajeva na kojima je on bio voditelj i izra?unati
+Naziv funkcije je zaposlenik_slucaj. Ulazni argument funkcije je p_id_zaposlenik koji je tipa podataka INTEGER, a vra?a VARCHAR s maksimalnom duljinom unosa od 30 znakova.
+
+DELIMITER //
+CREATE FUNCTION zaposlenik_slucaj(p_id_zaposlenik INT) RETURNS VARCHAR
+DETERMINISTIC
+BEGIN
+	
+END//
+DELIMITER ;
+
+Deklarirali smo varijable l_broj i l_broj_rijeseni koje su tipa INTEGER i l_postotak tipa DECIMAL. Varijabla l_postotak ozna?ava decimalni broj s ukupno 5 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke.
+
+DECLARE l_broj INT;
+DECLARE l_broj_rijeseni INT;
+DECLARE l_postotak DECIMAL(5, 2);
+
+Prvi upit na temelju ulaznog argumenta p_id_zaposlenik broji slu?ajeve u kojima je zaposlenik voditelj i rezultat sprema u varijablu l_broj.
+
+SELECT COUNT(*) INTO l_broj
+FROM slucaj
+WHERE id_voditelj=p_id_zaposlenik;
+
+Drugi upit broji sve riješene slu?ajeve u kojima je zaposlenik voditelj, a rezultat sprema u varijablu l_broj_rijeseni. 
+
+SELECT COUNT(*) INTO l_broj_rijeseni
+FROM slucaj
+WHERE id_voditelj=p_id_zaposlenik AND status='Riješen';
+
+Vrijednost varijable l_postotak pokazuje koliki postotak od ukupnog broja slu?ajeva koje je zaposlenik vodio ?ini broj riješenih slu?ajeva. Dobiva se dijeljenjem vrijednosti varijable l_broj_rijeseni s vrijednosti varijable l_broj, a rezultat se zatim pomnoži sa 100. 
+
+SET l_postotak=(l_broj_rijeseni/l_broj) * 100;
+
+Na temelju dobivenog postotka, odre?uje se je li zaposlenik uspješan. Zaposlenik je uspješan ako je postotak riješenih slu?ajeva ve?i ili jednak 50%, a neuspješan ako je postotak manji ili jednak od 50%. Kao rezultat, funkcija vra?a tekstualni rezultat koji ozna?ava uspješnost zaposlenika u vo?enju slu?ajeva.
+
+IF l_postotak<=49
+THEN RETURN "neuspješan";
+ELSE RETURN "uspješan";
+END IF;
+
+
+Upit koji ?e za svakog zaposlenika pozvati funkciju uspješnosti i vratiti rezultat, osim ako nije vodio slu?ajeve, onda ?e vratiti odgovaraju?u obavijest.
+
+SELECT
+Z.Id AS 'ID zaposlenika',
+O.Ime_Prezime AS 'Ime i prezime zaposlenika',
+CASE
+	WHEN (SELECT COUNT(*) FROM slucaj WHERE id_voditelj = Z.Id) > 0
+        	THEN zaposlenik_slucaj(Z.Id)
+       	ELSE 'Zaposlenik nije vodio slu?ajeve'
+END AS 'Uspješnost'
+FROM
+Zaposlenik Z
+JOIN
+	Osoba O ON Z.id_osoba = O.id;
+
+Dohva?amo podatke iz tablice Zaposlenik, kojoj smo dodijelili alias Z.
+
+SELECT dohva?a id i ime zaposlenika. Stupac koji predstavlja id smo nazvali ID zaposlenika, a stupac koji predstavlja ime i prezime smo nazvali Ime i prezime zaposlenika. 
+
+Zatim slijedi CASE izraz koji se koristi za provjeru uvjeta. Unutar njega se nalazi drugi SELECT koji broji slu?ajeve koje je odre?eni zaposlenik vodio. Ako je rezultat ovog podupita ve?i od 0, poziva se funkcija zaposlenik_slucaj s ulaznim argumentom Z.Id. Ako uvjet nije zadovoljen, postavlja se poruka 'Zaposlenik nije vodio slu?ajeve' END AS 'Uspješnost' ozna?ava završetak CASE izraza i naziv stupca u rezultatu upita koji ?e sadržavati rezultat CASE izraza.
+
+
+Napiši funkciju koja ?e za osobu definiranu parametrom p_id_osoba vratiti "DA" ako je barem jednom bila ošte?enik u nekom slu?aju, a u protivnom ?e vratiti "NE"
+Naziv funkcije je osoba_ostecenik. Njezin je argument o_id_osoba tipa INTEGER, a vra?a tip podataka CHAR s maksimalnom duljinom unosa od 2 znaka.
+
+DELIMITER //
+CREATE FUNCTION osoba_ostecenik(p_id_osoba INT) RETURNS CHAR(2)
+DETERMINISTIC
+BEGIN
+	
+END//
+DELIMITER ;
+
+Deklarirali smo varijablu l_broj koja je tipa INTEGER.
+
+DECLARE l_broj INT;
+
+SELECT broji koliko redaka ima u tablici Slucaj gdje je id_ostecenik jednak ulaznog argumentu funkcije te dobiveni rezultat sprema u varijablu l_broj.
+
+SELECT COUNT(*) INTO l_broj
+FROM slucaj
+WHERE id_ostecenik=p_id_osoba;
+
+Uvjetna naredba provjerava vrijednost varijable. Ako je broj ve?i od 0, što zna?i da osoba ima ulogu ošte?enika u barem jednom slu?aju, funkcija vra?a DA. U suprotnom, vra?a NE.
+
+IF l_broj > 0
+THEN RETURN "DA"';
+ELSE RETURN " NE";
+END IF;
+
+
+Prikaži sve osobe koje su ošte?ene više od 3 puta
+
+SELECT
+O.Id AS 'ID osobe',
+O.Ime_Prezime AS 'Ime i prezime osobe'
+FROM
+Osoba O
+WHERE
+osoba_ostecenik(O.Id) = 'DA'
+GROUP BY
+O.Id, O.Ime_Prezime
+HAVING
+	COUNT(*) > 3;
+
+Podatke dohva?amo iz tablice Osoba, kojoj smo dodijelili alias O.
+
+Koriste?i WHERE klauzule filtriramo one osobe koje imaju ulogu ošte?enika u barem jednom slu?aju. Funkcija osoba_ostecenik provjerava je li broj slu?ajeva gdje je osoba ošte?enik ve?i od 0, što zna?i  da je uloga ošte?enika evidentirana barem jednom.
+
+Nakon filtriranja, podaci se pomo?u GROUP BY klauzule grupiraju prema id-u, imenu i prezimenu osobe.
+
+SELECT dio upita dohva?a id, ime i prezime osobe. Stupac koji predstavlja id se zove ID osobe, a koji predstavlja ime i prezime Ime i prezime osobe.
+
+Nakon primjene GROUP BY klauzule, HAVING filtrira rezultat tako da zadržava samo one osobe ošte?enike koje imaju ?etiri ili više slu?ajeva.
+
+
+Napiši funkciju koja ?e za osobu odre?enu predanim id_jem odrediti sve uloge koje je ta osoba imala u slu?ajevima
+Funkciju smo nazvali Uloge_Osobe_U_Slucajevima. Ulazni argument funkcije je osoba_id koji je tipa INTEGER, a vra?a VARCHAR s maksimalnom duljinom unosa od 255 znakova.
+
+DELIMITER //
+CREATE FUNCTION Uloge_Osobe_U_Slucajevima(osoba_id INT) RETURNS VARCHAR(255)
+DETERMINISTIC
+BEGIN
+
+END //
+
+DELIMITER ;
+
+Prvo smo deklarirali varijablu uloge tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova.
+
+	DECLARE uloge VARCHAR(255);
+
+Prvi SELECT koriste?i LEFT JOIN operaciju povezuje tablice Slucaj i Osoba. Spajanje se vrši na temelju jednakosti, gdje se atribut id iz tablice Osoba uspore?uje s atributom osoba_id u tablici Slucaj.
+
+S WHERE klauzulom rezultate filtriramo prema identifikatorima osoba koje su povezane s odre?enim slu?ajem, a LIMIT 1 ograni?ava rezultat na samo jedan redak.
+
+Zatim se pomo?u CONCAT funkcije i CASE izraza kombiniraju razli?ite uloge osoba u slu?ajevima. Ako osoba ima barem jednu od uloga u nekom slu?aju, rezultat se sprema u varijablu uloge. 
+
+	SELECT 
+       		CONCAT('Osoba je u slu?ajevima bila: ',
+            		CASE WHEN os.id = s.id_pocinitelj THEN 'pocinitelj ' ELSE '' 	END,
+            		CASE WHEN os.id = s.id_izvjestitelj THEN 'izvjestitelj ' ELSE '' 	END,
+            		CASE WHEN os.id = s.id_voditelj THEN 'voditelj ' ELSE '' END,
+            		CASE WHEN os.id = s.id_svjedok THEN 'svjedok ' ELSE '' END,
+            		CASE WHEN os.id = s.id_ostecenik THEN 'ostecenik ' ELSE '' 	END) INTO uloge
+    	FROM Slucaj s
+    	LEFT JOIN Osoba os ON os.id = osoba_id
+    	WHERE os.id IN (s.id_pocinitelj, s.id_izvjestitelj, s.id_voditelj, 		s.id_svjedok, s.id_ostecenik)
+    	LIMIT 1;
+
+Drugi SELECT je sli?an prvom, ali uz uvjet koji osigurava da osoba nije bila u istoj ulozi u kojoj je bila u prethodnom. To sprje?ava dupliciranje istih uloga.
+
+	SELECT 
+        		CONCAT('Osoba je u slu?ajevima bila: ',
+            		CASE WHEN os.id = s.id_pocinitelj THEN 'pocinitelj ' ELSE '' 	END,
+            		CASE WHEN os.id = s.id_izvjestitelj THEN 'izvjestitelj ' ELSE '' 	END,
+            		CASE WHEN os.id = s.id_voditelj THEN 'voditelj ' ELSE '' END,
+            		CASE WHEN os.id = s.id_svjedok THEN 'svjedok ' ELSE '' END,
+            		CASE WHEN os.id = s.id_ostecenik THEN 'ostecenik ' ELSE '' 	END)  INTO 	uloge
+    	FROM Slucaj s
+    	LEFT JOIN Osoba os ON os.id = osoba_id
+    	WHERE os.id IN (s.id_pocinitelj, s.id_izvjestitelj, s.id_voditelj, 	s.id_svjedok, 	s.id_ostecenik)AND os.id != s.id_pocinitelj AND os.id != 	s.id_izvjestitelj AND os.id != s.id_voditelj AND os.id != s.id_svjedok AND 	os.id != s.id_ostecenik;
+
+Uvjetna naredba provjerava je li varijabla uloge NULL. Ako jest, postavlja se tekstualna poruka koja ukazuje da osoba nije imala uloge u slu?ajevima.
+
+	IF uloge IS NULL THEN 
+		SET uloge = 'Osoba nije bila u niti jednom slu?aju';
+	END IF;
+
+Na kraju, funkcija vra?a rezultat pohranjen u varijabli uloge.
+
+	RETURN uloge;
+
+
+Upit koji ?e dohvatiti sve osobe i njhove uloge u slu?ajevima.
+
+SELECT id, ime_prezime, Uloge_Osobe_U_Slucajevima(id) AS uloge
+FROM Osoba;
+
+Podatke uzimamo iz tablice Osoba.
+
+SELECT prikazuje stupce koji predstavljaju id te ime i prezime svake osobe. Dodatno, poziva funkciju Uloge_Osobe_U_Slucajevima s ulaznim argumentom id. Funkcija zatim vra?a uloge u slu?ajevima za odre?enu osobu, a rezultat prikazuje u stupcu nazvanom uloge.
+ 
+
+Funkcija koja ?e vratiti je li osoba sumnjiva (ve? je osumnji?ena na nekim slu?ajevima) ili nije sumnjiva
+Funkciju smo nazvali sumnjivost_osobe. Argument je funkcije osoba_id tipa INTEGER, a vra?a VARCHAR s maksimalnom duljinom unosa od 50 znakova.
+
+DELIMITER 
+
+CREATE FUNCTION Sumnjivost_Osobe(osoba_id INT) RETURNS VARCHAR(50)
+DETERMINISTIC //
+BEGIN
+
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijablu broj_slucajeva koja je tipa INTEGER i varijablu sumnjivost koja je tipa VARCHAR s maksimalnom duljinom unosa od 50 znakova.
+
+	DECLARE broj_slucajeva INT;
+	DECLARE sumnjivost VARCHAR(50);
+
+Upit pomo?u agregacijske funkcije COUNT broji koliko redaka ima u tablici Slucaj gdje je id_pocinitelj jednak ulaznom argumentu p_osoba_id. Rezultat se pohranjuje u varijablu broj_slucajeva.
+
+	SELECT COUNT(*) INTO broj_slucajeva
+	FROM Slucaj
+	WHERE id_pocinitelj = osoba_id;
+
+Na temelju broja slu?ajeva, uvjetna varijabla odre?uje sumnjivost osobe. Ako je broj slu?ajeva ve?i od 10, osoba je jako sumnjiva. Ako je broj slu?ajeva ve?i od 0, ali manji 10, osoba je umjereno sumnjiva. U suprotnom, osoba nije sumnjiva.
+ 
+IF broj_slucajeva > 10 THEN
+	SET sumnjivost = 'Jako sumnjiva';
+ELSEIF broj_slucajeva > 0 THEN AND broj_slucajeva <10 THEN
+	SET sumnjivost = 'Umjereno sumnjiva';
+ELSE
+	SET sumnjivost = 'Nije sumnjiva';
+END IF;
+
+Kao rezultat, funkcija vra?a vrijednost varijable sumnjivost.
+
+RETURN sumnjivost;
+
+
+Napiši upit koji ?e dohvatiti sve osobe, pa i policajce; nije nemogu?e da policajac bude kriminalac :) i podatke o njihovoj sumnjivosti.
+
+SELECT id, ime_prezime, Sumnjivost_Osobe(id) AS sumnjivost
+FROM Osoba;
+
+Podatke dohva?amo iz tablice Osoba.
+
+Unutar SELECT izraza, ovaj upit koristi funkciju Sumnjivost_Osobe kako bi odredio razinu sumnjivosti za svaku osobu. Dohva?a id, ime i prezime svake osobe, a stupac koji sadrži rezultate ove funkcije naziva se sumnjivost.
+
+
+Napiši funkciju koja ?e za dani odjel definiran id-jem koji joj proslje?ujemo za argument vratiti broj zaposlenih na tom odjelu u zadnjih 6 mjeseci
+Funkciju smo nazvali Broj_zaposlenih_6mj. Njezin je ulazni argument odjel_id koji je tipa INTEGER te isto vra?a tip podataka INTEGER.
+
+DELIMITER //
+
+CREATE FUNCTION Broj_zaposlenih_6mj(odjel_id INT) RETURNS INT
+DETERMINISTIC
+BEGIN
+
+END //
+DELIMITER ;
+
+Deklarirali smo varijablu broj_zaposlenih koja je tipa INTEGER.
+
+	DECLARE broj_zaposlenih INT;		
+
+SELECT pomo?u agregacijske funkcije COUNT broji koliko redaka ima u tablici Zaposlenik gdje je id_odjel jednak zadanoj vrijednosti odjel_id i gdje je datum zaposlenja zaposlenika unutar posljednjih 6 mjeseci. Rezultat sprema u varijablu broj_zaposlenih.
+
+	SELECT COUNT(*) INTO broj_zaposlenih
+	FROM Zaposlenik
+	WHERE id_odjel = odjel_id
+		AND datum_zaposlenja >= CURDATE() - 	INTERVAL 6 MONTH;
+
+Funkcija kao rezultat vra?a varijablu broj_zaposlenih.
+
+	RETURN broj_zaposlenih;
+
+
+Napiši upit koji ?e vratiti id i naziv odjela koji je imao  najve?i broj zaposlenih u zadnjih 6 mjeseci.
+
+SELECT id, naziv, Broj_zaposlenih_6mj(id) AS Broj_zaposlenih
+FROM odjeli
+ORDER BY Broj_zaposlenih DESC
+LIMIT 1;
+
+SELECT dio upita dohva?a id i naziv svakog odjela iz tablice Odjeli. Dodatno, koristi funkciju Broj_zaposlenih_6mj kako bi dohvatili broj zaposlenika na svakom odjelu u posljednjih 6 mjeseci. Stupac koji sadrži rezultat funkcije smo nazvali Broj_zaposlenih.
+
+ORDER BY rezultate sortira prema broju zaposlenih silazno (DESC). To zna?i da ?e prvi redak sadržavati informacije o odjelu s najviše zaposlenih.
+
+Upit koristi LIMIT 1 kako bi ograni?io broj redaka koji ?e biti vra?eni te osigurava da ?e rezultat sadržavati samo jedan redak, odnosno informacije o odjelu s najviše zaposlenih.
+
+
+Napiši funkciju koja ?e za odjel definiran proslje?enim id-jem dohvatiti broj zaposlenih i broj slu?ajeva
+Dodatno, ra?unati ?e koliko prosje?no ima slu?ajeva po osobi na tom odjelu.
+
+Funkcija se naziva Avg_Slucaj_Osoba_Odjel. Ulazni je argument funkcije odjel_id koji je tipa INTEGER, a vra?a DECIMAL koji ozna?ava decimalni broj s ukupno 5 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke.
+
+DELIMITER //
+
+CREATE FUNCTION Avg_Slucaj_Osoba_Odjel(odjel_id INT) RETURNS DECIMAL(10, 2)
+DETERMINISTIC
+BEGIN
+		
+END //
+
+DELIMITER ;
+
+Deklarirali smo varijable broj_zaposlenih i broj_slucajeva koje su tipa INTEGER i varijablu prosjecan_broj_slucajeva koja je tipa podataka DECIMAL, koji ozna?ava decimalni broj s ukupno 10 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke.
+
+	DECLARE broj_zaposlenih INT;
+	DECLARE broj_slucajeva INT;
+	DECLARE prosje?an_broj_slucajeva DECIMAL(10, 2);
+
+Prvi upit broji koliko redaka ima u tablici Zaposlenik gdje je id_odjel jednak ulaznom argumentu koji predstavlja traženi odjel. Rezultat se pohranjuje u varijablu broj_zaposlenih.
+
+	SELECT COUNT(*) INTO broj_zaposlenih
+	FROM Zaposlenik
+	WHERE id_odjel = odjel_id;
+
+Drugi upit broji koliko redaka ima u tablici Slucaj gdje je voditelj slu?aja prisutan u popisu zaposlenika traženog odjela, a rezultat sprema u varijablu broj_slucajeva.
+
+	SELECT COUNT(*) INTO broj_slucajeva
+	FROM Slucaj
+	WHERE id_voditelj IN(SELECT id_osoba FROM Zaposlenik WHERE id_odjel 	= odjel_id);
+
+Uvjetna naredba provjerava je li broj zaposlenih na odre?enom odjelu ve?i od 0. Ako je broj ve?i od 0, ra?una se prosje?an broj slu?ajeva i pohranjuje u varijablu prosjecan_broj_slucajeva. U suprotnom se vrijednost postavlja na 0.
+
+IF broj_zaposlenih > 0 THEN
+	SET prosjecan_broj_slucajeva = broj_slucajeva / broj_zaposlenih;
+ELSE
+        	SET prosjecan_broj_slucajeva = 0;
+  END IF;
+
+Kao rezultat, funkcija vra?a vrijednost varijable prosjecan_broj_slucajeva.
+
+RETURN prosjecan_broj_slucajeva; 
+
+
+Koriste?i ovu funkciju napiši upit za pronalaženje odjela s ispodprosje?nim brojem slu?ajeva po osobi.
+
+SELECT naziv AS Nazivi_Ispodprosje?nih_odjela
+FROM Odjeli
+WHERE Avg_Slucaj_Osoba_Odjel(id) < 
+	(SELECT AVG(Avg_Slucaj_Osoba_Odjel(id)) FROM Odjeli);
+
+Dohva?amo podatke iz tablice Osoba.
+
+Unutar WHERE-a je postavljen uvjet koji filtrira odjele ?iji je prosje?an broj slu?ajeva po zaposleniku manji od ukupnog prosjeka za sve odjele. Unutarnji podupit ra?una ukupni prosjek prosje?nog broja slu?ajeva po zaposleniku za sve odjele. Vanjski SELECT uspore?uje prosje?an broj slu?ajeva po zaposleniku za svaki odjel s ukupnim prosjekom. Tako?er, vanjski SELECT prikazuje naziv odjela s ispod prosje?nim brojem slu?ajeva po osobi, a stupac koji sadrži vrijednost rezultata funkcije smo nazvali Nazivi_Ispodprosje?nih_Odjela.
+
+Kada bi tražili odjel s iznad prosje?nim brojem slu?ajeva po osobi, koristili bi znak manje >. U tom slu?aju, WHERE uvjet filtrira odjel ?iji je prosje?an broj slu?ajeva po zaposleniku ve?i od ukupnog prosjeka za sve odjele.
+
+
+
+Okida?i 
+Okida? I
+Okida? koji ?e onemogu?iti da za slu?aj koji u sebi ima odre?ena kažnjiva djela koristimo psa koji nije zadužen za ta ista djela u slu?aju.
+
+Okida? smo nazvali bi_pas_slucaj_djelo. Aktivirati ?e se prije nego što se izvrši INSERT operacija na tablici Slucaj, odnosno prije nego što se unese novi redak.
+
+DELIMITER //
+
+CREATE TRIGGER bi_pas_slucaj_KD
+BEFORE INSERT ON kaznjiva_djela_u_slucaju
+FOR EACH ROW
+BEGIN 
+
+END;
+
+//
+DELIMITER ;
+
+Prvo smo deklarirali varijablu id_kaznjivo_djelo_psa koja je tipa INTEGER.
+
+	DECLARE id_kaznjivo_djelo_psa INT;
+
+SELECT dohva?a identifikator kažnjivog djela. Dohva?anje se vrši za redak gdje je identifikator psa jednak identifikatoru psa povezanom sa slu?ajem ?iji je identifikator jednak NEW.id_slucaj. Dobiveni identifikator kaznenog djela se pohranjuje u varijablu id_kaznjivo_djelo_psa.
+
+	SELECT id_kaznjivo_djelo INTO id_kaznjivo_djelo_psa
+	FROM Pas
+	WHERE id = (SELECT id_pas FROM slucaj WHERE id = NEW.id_slucaj);
+
+Ako pas nije zadužen za odre?eno kažnjivo djelo ili je djelo razli?ito od navedenog, okida? izaziva grešku s SQLSTATE kodom 45000 i postavlja poruku greške Pas nije zadužen za kažnjiva djela u ovom slu?aju.
+
+	IF id_kaznjivo_djelo_psa IS NULL OR id_kaznjivo_djelo_psa != 	NEW.id_kaznjivo_djelo THEN
+		SIGNAL SQLSTATE '45001'
+        		SET MESSAGE_TEXT = 'Pas nije zadužen za kažnjiva djela u ovom 	slu?aju.';
+    	END IF;
+
+
+Okida? II
+Okida? koji ?e
+	a) ako u podru?ju uprave više od 5 mjesta, zabraniti brisanje uz obavijest Podru?je uprave s više od 5 mjesta ne smije biti obrisano
+    	b) ako u podru?ju uprave ima manje od 5 mjesta, dopustiti da se podru?je uprave obriše, ali ?e se onda u mjestima koja referenciraju to podru?je uprave pojaviti obavijest Prvotno podru?je uprave je obrisano, povežite mjesto s novim podru?jem.
+
+Iako postoji opcija kaskadnog brisanja u SQL-u, ovdje ?emo u nekim slu?ajevima pomo?u okida?a htjeti zabraniti brisanje, pošto je važno da neki podaci ostanu zabilježeni. U iznimnim slu?ajevima možemo ostavljati obavijest da je neka vrijednost obrisana iz baze. Tako?er, u ve?ini slu?ajeva nam opcija kaskadnog brisanja nikako ne bi odgovarala, zato što je u radu policije važna kontinuirana evidencija.
+
+Okida? se zove bd_podrucje_uprave, a aktivirat ?e se prije nego što se izvrši DELETE naredbe na tablici Podrucje_uprave.
+
+DELIMITER //
+CREATE TRIGGER bd_podrucje_uprave
+BEFORE DELETE ON Podrucje_uprave
+FOR EACH ROW
+BEGIN
+
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijablu count_mjesta koja je tipa INTEGER.
+
+	DECLARE count_mjesta INT;
+
+Upit broji koliko redaka postoji u tablici Mjesto gdje je id_podrucje_uprave jednak starom id-u podru?ja uprave, a rezultat pohranjuje u varijablu count_mjesta.
+
+	SELECT COUNT(*) INTO count_mjesta FROM Mjesto WHERE 	id_podrucje_uprave = OLD.id;
+
+Zatim, uvjetna naredba provjerava broj mjesta povezanih s podru?jem uprave.  Ako je taj broj ve?i od 5, okida? ?e izazvati grešku s porukom Podru?je uprave s više od 5 mjesta ne smije biti obrisano. 
+
+IF count_mjesta > 5 THEN
+       	SIGNAL SQLSTATE '45000'
+	SET MESSAGE_TEXT = 'Podru?je uprave s više od 5 mjesta ne smije biti obrisano.';
+
+Ako broj mjesta nije ve?i od 5, izvršava se UPDATE nad tablicom Mjesto i postavlja se id_podrucje_uprave na NULL vrijednost za mjesta koja su bila povezana sa starim identifikatorom podru?ja uprave (starim id-om podru?ja koje se briše). Nakon toga, okida? izaziva grešku s porukom  Prvotno podru?je uprave je obrisano, povežite mjesto s novim podru?jem. 
+
+ELSE
+        UPDATE Mjesto
+        SET id_podrucje_uprave = NULL
+        WHERE id_podrucje_uprave = OLD.id;
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Prvotno podru?je uprave je obrisano, povežite mjesto s novim podru?jem.';
+	END IF;
+
+
+Okida? III
+Okida? koji ?e
+	a) sprije?iti brisanje osobe ako je ona zaposlenik koji je još u službi (datum izlaska iz službe nije NULL) uz obavijest Osoba koju pokušavate obrisati je zaposlenik, prvo ju obrišite iz tablice zaposlenika
+    	b) obrisati osobu i iz tablice zaposlenika i iz tablice osoba.
+
+Ukoliko datum_izlaska_iz_službe ima neku vrijednost što ukazuje da osoba više nije zaposlena.
+
+Okida? smo nazvali bd_osoba, a aktivirat ?e se prije nego što se izvrši DELETE naredba na tablici Osoba. 
+
+DELIMITER //
+CREATE TRIGGER bd_osoba
+BEFORE DELETE ON Osoba
+FOR EACH ROW
+BEGIN
+
+END;
+//
+DELIMITER ;
+
+Prvo smo deklarirali varijablu is_zaposlenik tipa BOOLEAN.
+
+	DECLARE is_zaposlenik BOOLEAN;
+
+Ako postoji zaposlenik s odre?enim id-om osobe koja se briše i ako datum izlaska iz službe nije NULL, vrijednost varijable is_zaposlenik se postavlja na TRUE.
+
+	SET is_zaposlenik = EXISTS (SELECT 1 FROM Zaposlenik WHERE id_osoba = 	OLD.id AND datum_izlaska_iz_sluzbe IS NULL);
+
+Ako je is_zaposlenik postavljen na TRUE, okida? izaziva SQL grešku s porukom Osoba koju pokušavate obrisati je zaposlenik, prvo ju obrišite iz tablice zaposlenika. 
+
+IF is_zaposlenik = TRUE THEN
+	SIGNAL SQLSTATE '45000'
+		SET MESSAGE_TEXT = 'Osoba koju pokušavate obrisati je 	zaposlenik, prvo ju obrišite iz tablice Zaposlenik.;
+
+U suprotnom, provjerava se postoji li ta osoba u tablici Zaposlenik. Ako postoji, odgovaraju?i se redak briše.
+
+	ELSE
+		IF EXISTS (SELECT 1 FROM Zaposlenik WHERE id_osoba = OLD.id) 	THEN
+			DELETE FROM Zaposlenik WHERE id_osoba = OLD.id;
+		END IF;
+	END IF;
+
+
+Okida? IV
+Okida? koji ?e, u slu?aju da se kažnjivo djelo obriše iz baze, postaviti id_kaznjivo_djelo kod psa na NULL, ukoliko je on prije bio zadužen za upravo to kažnjivo djelo koje smo obrisali.
+
+Definirali smo okida? naziva ad_pas koji ?e se aktivirati nakon brisanja redaka iz tablice Kaznjiva_djela.. 
+
+DELIMITER //
+CREATE TRIGGER ad_pas
+AFTER DELETE ON Kaznjiva_djela
+FOR EACH ROW
+BEGIN    
+
+END;
+//
+DELIMITER ;
+
+Naredba UPDATE ažurira tablicu Pas postavljaju?i id_kaznjivo_djelo na NULL. Ažuriranje je ograni?eno na redove gdje je vrijednost atributa  id_kaznjivo_djelo jednaka vrijednosti id-u retka koji je upravo obrisan iz tablice Kaznjiva_djela.
+
+	UPDATE Pas
+        	SET id_kaznjivo_djelo = NULL
+        	WHERE id_kaznjivo_djelo = OLD.id;
+
+
+Okida? V
+Okida? koji ?e zabraniti da iz tablice obrišemo predmete koji služe kao dokazi u aktivnim slu?ajevima (status im nije Riješen, te se ne nalaza u arhivi) uz obavijest Ne možete obrisati dokaze za aktivan slu?aj.
+
+Naziv okida?a je bd_dokaz. Okida? ?e  se aktivirati nakon brisanja redaka iz tablice Predmet.
+
+DELIMITER //
+CREATE TRIGGER bd_dokaz
+BEFORE DELETE ON Predmet
+FOR EACH ROW
+BEGIN   
+
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijablu aktivan koja je tipa podataka INTEGER.
+
+	DECLARE aktivan INT;
+	
+Izvršava se upit koji broji redove u tablici Slucaj gdje je id_dokaz jednak identifikatoru trenutno brišu?eg dokaza i gdje je status razli?it od Riješen.
+
+	SELECT COUNT(*) INTO aktivan FROM Slucaj WHERE id_dokaz = OLD.id 	AND status != 'Riješen';
+
+Ako je broj aktivnih slu?ajeva ve?i od 0, okida? generira SQLSTATE 45000 što zna?i da ?e biti izazvana greška, a poruka o grešci postavljena je na Ne možete obrisati dokaze za aktivni slu?aj. To sprje?ava brisanje dokaza povezanih s aktivnim slu?ajem.
+
+	 IF aktivan > 0 
+		 THEN SIGNAL SQLSTATE '45005'
+        		SET MESSAGE_TEXT = 'Ne možete obrisati dokaze za aktivni slu?aj.';
+  	  END IF;
+
+
+Okida? VI
+Okida? koji ?e zabraniti da iz tablice obrišemo osobe koje su evidentirane kao po?initelji u aktivnim slu?ajevima.
+
+Okida? smo nazvali bd_osoba_2. Taj se okida? aktivira prije nego što se izvrši brisanje retka u tablici Osoba.
+
+DELIMITER //
+CREATE TRIGGER bd_osoba_2
+BEFORE DELETE ON Osoba
+FOR EACH ROW
+BEGIN
+    
+END;
+//
+DELIMITER ;
+
+Deklarirana je varijabla je_pocinitelj koja je tipa INTEGER.
+
+	DECLARE je_pocinitelj INT
+
+SELECT pomo?u agregacijske funkcije COUNT broji koliko aktivnih slu?ajeva koristi osobu koja se trenutno briše kao po?initelj. Dodatno, uvjet status != 'Riješen' osigurava da je status razli?it od Riješen, odnosno broje se samo slu?ajevi koji nisu riješeni. Rezultat se sprema u varijablu je_pocinitelj. 
+
+   	 SELECT COUNT(*) INTO je_pocinitelj FROM Slucaj WHERE id_pocinitelj = OLD.id AND status != 'Riješen';
+
+Ako je vrijednost varijable je_pocinitelj ve?a od 0, tada postoji aktivan slu?aj u kojem je trenutno brišu?a osoba evidentirana kao po?initelj. Okida? izaziva grešku s porukom da se ne može obrisati osoba koja je evidentirana kao po?initelj. 
+
+	IF je_pocinitelj > 0 THEN
+       		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Ne možete obrisati osobu koja je 		evidentirana kao po?initelj.';
+    	END IF;
+
+
+Okida? VII
+Okida? koji ?e zabraniti brisanje bilo kojeg izvještaja kreiranog za slu?ajeve koji nisu završeni (završetak je NULL), ili im je završetak noviji od 10 godina (ne smijemo brisati izvještaje za aktivne slu?ajeve, i za slu?ajeve koji su završili pred manje od 10 godina).
+
+Okida? je nazvan bd_izvjestaj, a aktivirat ?e se prije nego što se izvrši DELETE naredba na tablici Izvjestaji.
+
+DELIMITER //
+CREATE TRIGGER bd_izvjestaj
+BEFORE DELETE ON Izvjestaji
+FOR EACH ROW
+BEGIN
+    
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijablu slucaj_zavrsen koja je tipa DATETIME.
+
+	DECLARE slucaj_zavrsen DATETIME;
+	
+Upit dohva?a vrijednosti atributa zavrsetak iz tablice Slucaj gdje je id jednak vrijednosti id_slucaj retka koji se trenutno briše iz tablice Izvjestaji.
+
+	SELECT zavrsetak INTO slucaj_zavrsen FROM Slucaj WHERE id = 	OLD.id_slucaj;
+
+Uvjetna naredba provjerava je li slu?aj aktivan ili ako je datum završetka slu?aja ve?i od trenutnog datuma umanjenog za 10 godina. Ako je uvjet ispunjen, okida? izaziva grešku s SQLSTATE kodom 45000 i postavlja poruku na grešku Ne možete obrisati izvještaj za aktivan slu?aj ili za slu?aj koji je završio unutar posljednjih 10 godina.
+
+	IF slucaj_zavrsen IS NULL OR slucaj_zavrsen > DATE_SUB(NOW(), INTERVAL 	10 YEAR) THEN
+		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Ne možete obrisati izvještaj za aktivan slu?aj ili za slu?aj koji je završio unutar posljednjih 10 godina.';
+	END IF;
+
+
+Okida? VIII
+Okida? koji osigurava da pri unosu spola osobe možemo staviti samo muški ili ženski spol.
+
+Okida? se zove bi_osoba, a aktivirati ?e se prije nego što se izvrši INSERT naredba na tablici Osoba, odnosno prije nego što se unese novi redak.
+
+DELIMITER //
+CREATE TRIGGER bi_osoba
+BEFORE INSERT ON Osoba
+FOR EACH ROW
+BEGIN
+
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijablu validan_spol koja je tipa podataka BOOLEAN.
+
+	DECLARE validan_spol BOOLEAN;
+
+Zatim postavljamo vrijednost atributa spol nove osobe na malena slova.
+
+	SET NEW.Spol = LOWER(NEW.Spol);
+
+Uvjetna naredba provjerava je li nova vrijednost atributa spol jedna od ispravnih vrijednosti. Ako je uvjet ispunjen, postavljamo vrijednost varijable validan_spol na TRUE. U suprotnom, vrijednost postavljamo na FALSE.
+
+IF NEW.spol IN ('muski', 'zenski', 'muški', 'ženski', 'm', 'ž') THEN 
+	SET validan_spol = TRUE;
+   	ELSE
+       	SET validan_spol = FALSE;
+   	END IF;
+
+Druga uvjetna naredba provjerava je li vrijednost varijable validan_spol FALSE, što zna?i d spol nije u ispravnom formatu. Ako vrijednost postavljena na FALSE, okida? izaziva grešku s porukom Spol nije valjan. Ispravni formati su: muski, zenski, m, ž, muški, ženski.
+
+	IF NOT validan_spol THEN
+		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Spol nije valjan. Ispravni formati su: muski, 	zenski, m, ž, muški, ženski';
+    	END IF;
+
+
+Okida? IX
+Okida? koji kreira stupac ukupna_vrijednost_zapljena u tablici slu?aj i ažurira ga nakon svake nove unesene zapljene u tom slu?aju.
+
+Okida? se naziva ai_zapljena, a aktivira se nakon što se unese nova zapljena u tablici Zapljene. 
+
+DELIMITER //
+CREATE TRIGGER ai_zapljena
+AFTER INSERT ON Zapljene
+FOR EACH ROW
+BEGIN
+    
+END;
+
+//
+DELIMITER ;
+
+Prvo smo deklarirali varijablu ukupno koja je tipa DECIMAL koji ozna?ava decimalni broj s 10 znamenki lijevo od decimalne to?ke i 2 znamenke desno od decimalne to?ke. 
+
+	DECLARE ukupno DECIMAL(10, 2);
+
+Izvršavamo upit koji koriste?i agregacijsku funkciju SUM ra?unua ukupnu vrijednosti zapljena. Rezultat sumiranja se pohranjuje u varijablu ukupno.
+
+	SELECT SUM(Z.vrijednost) INTO ukupno
+	FROM Zapljene Z
+	WHERE Z.id_slucaj = NEW.id_slucaj;
+
+Kona?no, vrijednost atributa ukupna_vrijednost_zapljena u tablici Slucaj se ažurira s izra?unatom ukupnom vrijednosti zapljena. 
+
+    	UPDATE Slucaj
+	SET ukupna_vrijednost_zapljena = ukupno
+	WHERE id = NEW.id_slucaj;
+
+
+Okida? XI
+Okida? koji provjera da osoba nije nadre?ena sama sebi.
+
+Ovaj smo okida? nazvali bi_zaposlenik, a aktivira se prije umetanja novog retka u tablicu Zaposlenik.
+
+DELIMITER //
+CREATE TRIGGER bi_zaposlenik
+BEFORE INSERT ON Zaposlenik
+FOR EACH ROW
+BEGIN
+
+END;
+//
+DELIMITER ;
+
+Prvo se izvršava uvjetna naredba. Ako je uneseni zaposlenik ozna?en s nadre?enim (ima postavljen (id_nadredeni) i ako je taj nadre?eni ista osoba kao i zaposlenik (identifikatori su jednaki), okida? ?e ozna?iti grešku. 
+
+	IF NEW.id_nadredeni IS NOT NULL AND NEW.id_nadredeni = NEW.id THEN 		SIGNAL SQLSTATE '45000'
+       		 SET MESSAGE_TEXT = 'Nadre?eni ne može biti ista osoba kao i 	podre?eni.';
+    	END IF;
+
+
+Okida? XII
+Okida? koji provjera da su datum po?etka i završetka slu?aja razli?iti i da je datum završetka od datuma po?etka.
+
+Okida? smo nazvali bi_slucaj i izvršava se prije umetanja novog retka u tablicu Slucaj.
+
+DELIMITER //
+
+CREATE TRIGGER bi_slucaj
+BEFORE INSERT ON Slucaj 
+FOR EACH ROW
+BEGIN
+    
+END;
+//
+DELIMITER ;
+
+Prvo se provjerava uvjet da vrijednost atributa pocetak mora biti manja od vrijednosti atributa zavrsetak. Ako je vrijednost ve?a, okida? ?e ozna?iti grešku s porukom Datum završetka slu?aja mora biti ve?i od datuma po?etka.
+
+	IF NEW.Pocetak >= NEW.Zavrsetak THEN
+		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Datum završetka slu?aja mora biti ve?i od 	datuma po?etka';
+    	END IF;
+
+
+Okida? XIII
+Ako postavimo psu drugu godinu ro?enja i preko nje ispada da je stariji od 10 godina, onda ga ?asno umirovimo.
+
+Naziv ovog okida?a je bu_pas, a aktivira se prije umetanja novog retka u tablicu Pas.
+
+DELIMITER //
+
+CREATE TRIGGER bu_pas
+BEFORE INSERT ON Pas 
+FOR EACH ROW
+BEGIN
+    
+END;
+//
+DELIMITER ;
+
+Prvo smo deklarirali varijablu nova_dob koja je tipa INTEGER.
+
+	DECLARE nova_dob INTEGER;
+
+Novu dob psa izra?unavamo oduzimanjem njegove godine ro?enja od trenutne godine.
+
+	SET nova_dob = YEAR(NOW()) - NEW.godina_ro?enja;
+
+Uvjetna naredba provjerava je li nova dob psa ve?a ili jednaka 10 godina i je li došlo do promjene godine ro?enja. Ako uvjet vrijedni, postavlja se novi status psa na ?asno umirovljen.
+
+IF nova_dob >= 10 AND OLD.godina_ro?enja <> NEW.godina_ro?enja THEN
+	SET NEW.status = '?asno umirovljen';
+    	END IF; 
+
+
+Okida? XIV
+Okida? koji ?e, u slu?aju da je pas ?asno umirovljen koriste?i okida? (ili ru?no), onemogu?iti da ga koristimo u novim slu?ajevima.
+
+Nazvali smo okida? bi_slucaj_pas, a aktivira se prije nego što se unese novi redak u tablicu Slucaj.
+
+DELIMITER //
+CREATE TRIGGER bi_slucaj_pas
+BEFORE INSERT ON Slucaj 
+FOR EACH ROW
+BEGIN
+    
+END; 
+//
+DELIMITER ;
+
+Deklarirali smo varijablu pas_status koja je tipa VARCHAR s maksimalnom duljinom unosa od 255 znakova.
+
+	DECLARE Pas_Status VARCHAR(255);
+
+Izvršava se upit koji dohva?a status psa iz tablice Pas gdje je identifikator psa jednak vrijednosti NEW.id_pas, odnosno identifikatoru povezanog psa sa slu?ajem koji se trenutno unosi. Rezultat upita se pohranjuje u varijablu Pas_Status.
+
+	SELECT Status INTO Pas_Status FROM Pas WHERE Id = NEW.id_pas;
+
+Slijedi uvjetna naredba koja provjerava vrijednost varijable Pas_Status. Ako je status psa ?asno umirovljen, okida? generira grešku s SQLSTATE kodom 45000 i postavlja poruku greške na Pas kojeg pokušavate koristiti na slu?aju je umirovljen, odaberite drugog.
+
+	IF pas_status = '?asno umirovljen' THEN 
+		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Pas kojeg pokušavate koristiti na slu?aju je 	umirovljen, odaberite drugog.';
+   	END IF;
+
+
+Okida? XV
+Okida? koji ?e, u slu?aju da je osoba mla?a od 18 godina (godina današnjeg datuma - godina ro?enja daju broj manji od 18), pri dodavanju te osobe u slu?aj dodati poseban stupac s napomenom Po?initelj je maloljetan - slu?aj nije otvoren za javnost.
+
+Nazvali smo okida? bi_slucaj_maloljetni_pocinitelj, a aktivira se prije nego što se unese novi redak u tablicu Slucaj,
+
+ALTER TABLE Slucaj
+ADD COLUMN Napomena VARCHAR(255);
+
+DELIMITER //
+
+CREATE TRIGGER bi_slucaj_maloljetni_pocinitelj
+BEFORE INSERT ON Slucaj 
+FOR EACH ROW
+BEGIN
+  
+END //
+
+DELIMITER ;
+
+Prvo smo deklarirali tri varijable: datum_rodjenja tipa DATE, te godina_danas i godina_rodjenja koje su tipa INTEGER. 
+
+	DECLARE datum_rodjenja DATE;
+	DECLARE godina_danas INT;
+   	DECLARE godina_rodjenja INT;
+
+Zatim izvla?imo datum ro?enja po?initelja pomo?u SELECT upita iz tablice Osoba i spremamo ga u varijablu datum_rodjenjar.
+
+SELECT Osoba.Datum_rodenja INTO datum_rodjenja
+FROM Osoba
+	WHERE Osoba.Id = NEW.id_pocinitelj; 
+
+Varijablu godina_danas smo postavili na trenutnu godinu, a varijablu godina_rodjenja na godinu ro?enja po?initelja. 
+
+	SET godina_danas = YEAR(NOW());
+
+    	SET godina_rodjenja = YEAR(datum_rodjenja);
+
+Koriste?i uvjetnu naredbu, provjeravamo ako razlika izme?u trenutne godine i godine po?initelja nije ve?a od 18. Tada postavljamo napomenu da je po?initelj maloljetan te da slu?aj nije otvoren za javnost. Ina?e, postavljamo napomenu da je po?initelj punoljetan i javnost smije prisustvovati slu?aju.
+
+	IF (godina_danas - godina_rodjenja) < 18 THEN
+		SET NEW.Napomena = 'Po?initelj je maloljetan - slu?aj nije 	otvoren za javnost';
+    	ELSE
+        		SET NEW.Napomena = 'Po?initelj je punoljetan - javnost smije 	prisustvovati slu?aju';
+    	END IF;
+
+
+Okida? XVI
+Okida? koji ?e onemogu?iti da maloljetnik bude vlasnik vozila.
+
+Okida? smo nazvali bi_vozilo_punoljetnost. Istoimeni se okida? aktivira prije nego što se unese novi redak u tablicu Vozilo,
+
+DELIMITER //
+CREATE TRIGGER bi_vozilo_punoljetnost
+BEFORE INSERT ON Vozilo FOR EACH ROW 
+BEGIN
+    
+END;
+//
+DELIMITER ;
+
+Deklarirali smo varijablu vlasnik_godine koja je tipa podataka INTEGER.
+
+	DECLARE vlasnik_godine INT;
+
+Zatim se izvršava upit koji ra?una razliku u godinama izme?u trenutnog datuma i datuma ro?enja vlasnika vozila. Dobivena se vrijednost pohranjuje u varijablu vlasnik_godine.
+
+    	SELECT TIMESTAMPDIFF(YEAR, (SELECT Datum_rodenja FROM Osoba 	WHERE Id = NEW.id_vlasnik), CURDATE()) INTO vlasnik_godine; 
+
+Ako je dob vlasnika vozila manja od 18 godina, tada okida? izaziva grešku s porukom da vlasnik nije punoljetan i ne može posjedovati vozilo.
+
+	IF vlasnik_godine < 18 THEN 
+		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Vlasnik vozila je maloljetan i ne može 	posjedovati vozilo!';
+	END IF;
+
+
+Okida? XVII
+Okida? koji ?e, u slu?aju da postavljamo status slu?aja na Riješeno, postaviti datum završetka na današnji ako mi eksplicitno ne navedemo neki drugi datum, ali ?e dozvoliti da ga izmijenimo ako želimo.
+
+Ovaj okida? ima naziv bu_slucaj i aktivira se prije nego što do?e do ažuriranja retka u tablici Slucaj.
+
+DELIMITER //
+CREATE TRIGGER bu_slucaj
+BEFORE UPDATE ON Slucaj 
+FOR EACH ROW
+BEGIN
+    
+END //
+DELIMITER ;
+
+Uvjetna naredba ispituje je li novi status slu?aja postavljen na Riješen, prethodni status bio razli?it od Riješen i novi datum završetka slu?aja postavljen na NULL. Ako su uvjeti zadovoljeni, datum završetka se postavlja na trenutni datum.
+
+	IF NEW.Status = 'Riješen' AND OLD.status != 'Riješen' AND NEW.Zavrsetak 	IS NULL THEN 
+		SET NEW.Zavrsetak = CURRENT_DATE();
+   	 END IF;
+	
+
+Okida? XVIII
+Okida? koji ?e prije unosa provjeravati jesu li u slu?aju po?initelj i svjedok razli?ite osobe.
+
+Ovaj smo okida? nazvali bi_slucaj i aktivira se prije umetanja novog retka u tablicu Slucaj.
+
+DELIMITER //
+CREATE TRIGGER bi_slucaj
+BEFORE INSERT ON Slucaj
+FOR EACH ROW
+BEGIN
+	
+END//
+DELIMITER ;
+
+Uvjetna naredba provjerava jesu li id-evi po?initelja i svjedoka isti. Ukoliko jesu, okida? izaziva grešku s SQLSTATE kodom 40000 i postavlja poruku Po?initelj ne može istovremeno biti svjedok.
+
+	IF new.id_pocinitelj = new.id_svjedok
+	THEN SIGNAL SQLSTATE '40000'
+	SET MESSAGE_TEXT = 'Po?itelj ne može istovremeno biti svjedok!';
+	END IF;
+
+
+Okida? XIX
+Okida? koji provjerava je li email dobre strukture.
+
+Okida? se naziva bi_osoba, a aktivira se prije umetanja novog retka u tablicu Slucaj.
+
+DELIMITER //
+CREATE TRIGGER bi_osoba_mail
+BEFORE INSERT ON osoba 
+FOR EACH ROW
+BEGIN
+	
+END//
+DELIMITER ;
+
+Prvo, uvjetna naredba provjerava sadrži li nova adresa znak @. Ako je uvjet istinit, odnosno ako nova adresa ne sadrži znak @, okida? izaziva grešku s SQLSTATE kodom 40000 i postavlja poruku na Neispravan email.
+
+	IF new.email NOT LIKE '%@%'
+	THEN SIGNAL SQLSTATE '40000'
+	SET MESSAGE_TEXT = 'Neispravan email';
+	END IF;
+
+
+Okida? XX
+Okida? koji ?e ograni?iti da isti zaposlenik ne smije istovremeno voditi više od 5 aktivnih slu?ajeva kako ne bi bio preoptere?en.
+
+Ovaj smo okida? nazvali ogranicenje_broja_slucajeva. Taj se okida? aktivira prije nego što se izvrši operacija umetanja u tablicu Slucaj.
+
+DELIMITER //
+
+CREATE TRIGGER Ogranicenje_broja_slucajeva
+BEFORE INSERT ON Slucaj 
+FOR EACH ROW
+BEGIN
+
+END //
+DELIMITER ;
+
+Prvo smo deklarirali varijablu broj_slucajeva koja je tipa INTEGER.
+
+	DECLARE broj_slucajeva INT
+
+SELECT koristi agregacijsku funkciju COUNT kojom se broje redovi koji zadovoljavaju uvjete upita, a rezultat sprema u varijablu broj_slucajeva. Broje se samo oni redovi u kojima je voditelj slu?aja jednak voditelju koji se dodaje u novi red, a drugi uvjet osigurava da se broje samo oni slu?ajevi koji su ozna?eni kao aktivni. 
+
+SELECT COUNT(*)
+INTO broj_slucajeva
+FROM Slucaj
+	WHERE id_voditelj = NEW.id_voditelj AND status = 'Aktivan'; 
+
+IF uvjet provjerava je li broj aktivnih slu?ajeva koje vodi odre?eni zaposlenik ve?i ili jednak 5. Ako je uvjet ispunjen, što zna?i da zaposlenik vodi 5 ili više aktivnih slu?ajeva, javlja se greška s porukom Zaposlenik ne može voditi više od 5 aktivnih slu?ajeva istovremeno kako ne bi bio preoptere?en.
+
+	IF broj_slucajeva >= 5 THEN 
+		SIGNAL SQLSTATE '45000'
+        		SET MESSAGE_TEXT = 'Zaposlenik ne može voditi više od 5 aktivnih 	slu?ajeva istovremeno kako ne bi bio preoptere?en.';
+   	END IF;
+
+Transakcije
+Kreiramo transakciju koja, uzimaju?i u obzir trenuta?nu aktivnost pasa, dodjeljuje psa s najmanje slu?ajeva novom aktivnom slu?aju
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+
+SELECT Pas.id, COUNT(Slucaj.id) AS broj_slucajeva
+FROM Pas
+LEFT JOIN Slucaj ON Pas.id = Slucaj.id_pas
+WHERE Pas.status = 'Aktivan' AND Slucaj.status = 'Aktivan'
+GROUP BY Pas.id
+FOR UPDATE;
+
+SELECT Pas.id
+FROM Pas
+LEFT JOIN Slucaj ON Pas.id = Slucaj.id_pas
+WHERE Pas.status = 'Aktivan' AND Slucaj.status = 'Aktivan'
+GROUP BY Pas.id
+ORDER BY COUNT(Slucaj.id) ASC
+LIMIT 1;
+
+INSERT INTO Slucaj (naziv, pocetak, status, id_pas)
+SELECT 'Novi slucaj', NOW(), 'Aktivan', Pas.id
+FROM Pas
+LEFT JOIN Slucaj ON Pas.id = Slucaj.id_pas
+WHERE Pas.status = 'Aktivan' AND Slucaj.status = 'Aktivan'
+GROUP BY Pas.id
+ORDER BY COUNT(Slucaj.id) ASC
+LIMIT 1;
+
+COMMIT;
+
+Ova transakcija pronalazi psa koji je bio dodijeljen najmanjem broju slu?ajeva te ga potom dodjeljuje prvom novom aktivnom slu?aju. Za izolacijski nivo smo koristili REPEATABLE READ, što je manje strože od SERIALIZABLE, a omogu?uje dosljednost podataka unutar transakcije.
+
+
+Transakcija koja ?e omogu?iti pra?enje broja izvještaja za svaki slu?aj
+Prva transakcija za dodavanje stupca broj_izvjestaja u tablicu Slucaj.
+
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+
+ALTER TABLE Slucaj
+ADD COLUMN broj_izvjestaja INT DEFAULT 0;
+
+COMMIT;
+
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+
+SET @id_autor = (SELECT id FROM Osoba WHERE ime_prezime = 'Ime_Prezime' LIMIT 1);
+
+SET @id_slucaj = (SELECT id FROM Slucaj WHERE naziv = 'NazivSlucaja' LIMIT 1);
+
+CREATE TEMPORARY TABLE IF NOT EXISTS TempBrojIzvjestaja (
+    id_slucaj INT,
+    broj_izvjestaja INT
+);
+
+INSERT INTO TempBrojIzvjestaja (id_slucaj, broj_izvjestaja)
+VALUES (@id_slucaj, 0)
+ON DUPLICATE KEY UPDATE broj_izvjestaja = broj_izvjestaja;
+
+UPDATE TempBrojIzvjestaja
+SET broj_izvjestaja = broj_izvjestaja + 1
+WHERE id_slucaj = @id_slucaj;
+
+UPDATE Slucaj
+SET broj_izvjestaja = (SELECT broj_izvjestaja FROM TempBrojIzvjestaja WHERE id_slucaj = @id_slucaj)
+WHERE id = @id_slucaj;
+
+DROP TEMPORARY TABLE IF EXISTS TempBrojIzvjestaja;
+
+COMMIT;
+
+
+Izraditi SQL transakciju koja ?e analizirati doga?aje u evidenciji (tablica Evidencija_dogadaja) i stvoriti tri nove tablice doga?aja prema godinama
+Novo kreirane tablice trebaju sadržavati doga?aje koji su se dogodili u 2023., 2022. i 2021. godini.
+
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+
+# Kreiranje tablice za doga?aje u 2023. godini
+CREATE TABLE IF NOT EXISTS Doga?aji_2023 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_slucaj INT,
+    opis_dogadaja TEXT NOT NULL,
+    datum_vrijeme DATETIME NOT NULL,
+    id_mjesto INT NOT NULL,
+    FOREIGN KEY (id_slucaj) REFERENCES Slucaj(id),
+    FOREIGN KEY (id_mjesto) REFERENCES Mjesto(id)
+);
+
+INSERT INTO Doga?aji_2023 (id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto)
+SELECT id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto
+FROM Evidencija_dogadaja
+WHERE YEAR(datum_vrijeme) = 2023;
+
+# Kreiranje tablice za doga?aje u 2022. godini
+CREATE TABLE IF NOT EXISTS Doga?aji_2022 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_slucaj INT,
+    opis_dogadaja TEXT NOT NULL,
+    datum_vrijeme DATETIME NOT NULL,
+    id_mjesto INT NOT NULL,
+    FOREIGN KEY (id_slucaj) REFERENCES Slucaj(id),
+    FOREIGN KEY (id_mjesto) REFERENCES Mjesto(id)
+);
+
+INSERT INTO Doga?aji_2022 (id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto)
+SELECT id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto
+FROM Evidencija_dogadaja
+WHERE YEAR(datum_vrijeme) = 2022;
+
+# Kreiranje tablice za doga?aje u 2021. godini
+CREATE TABLE IF NOT EXISTS Doga?aji_2021 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_slucaj INT,
+    opis_dogadaja TEXT NOT NULL,
+    datum_vrijeme DATETIME NOT NULL,
+    id_mjesto INT NOT NULL,
+    FOREIGN KEY (id_slucaj) REFERENCES Slucaj(id),
+    FOREIGN KEY (id_mjesto) REFERENCES Mjesto(id)
+);
+
+INSERT INTO Doga?aji_2021 (id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto)
+SELECT id_slucaj, opis_dogadaja, datum_vrijeme, id_mjesto
+FROM Evidencija_dogadaja
+WHERE YEAR(datum_vrijeme) = 2021;
+
+COMMIT;
+
+Ova ?e transakcija stvoriti tri nove tablice: Doga?aji_2021, Doga?aji_2022 te Doga?aji_2023. Pomo?u transakcije omogu?ujemo dosljednost u ?itanju podataka prilikom cijelog izvo?enja transakcije.
+
+
+Napravi transakciju koja ?e pomo?u procedure dodati 20 novih kažnjivih djela
+SET SESSION TRANSACTION ISOLATION LEVEL 
+READ COMMITTED;
+START TRANSACTION;
+
+CALL Dodaj_Novo_Kaznjivo_Djelo('Lažno prijavljivanje', 'Namjerno davanje lažnih informacija policiji ili drugim službama.', 4);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Sabotaža prometa', 'Namjerno uzrokovano kaos u prometu radi ometanja normalnog toka.', 5);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Povreda tajnosti pisma', 'Neovlašteno otvaranje i ?itanje privatne pošte.', 3);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Prijetnja bombom', 'Prijete?e ponašanje koje uklju?uje prijetnju eksplozivnim napravama.', 8);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Zloupotreba položaja', 'Korištenje položaja u društvu radi stjecanja nepravedne koristi.', 6);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Zlostavljanje starijih osoba', 'Fizi?ko, emocionalno ili financijsko zlostavljanje starijih osoba.', 7);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Ratni zlo?in', 'Zlo?in protiv civilnog stanovništva tijekom rata ili sukoba.', 10);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Neovlaštena uporaba vojnog vozila', 'Korištenje vojnog vozila bez odobrenja.', 4);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Organizirani kriminal', 'Sudjelovanje u organiziranom kriminalu i kriminalnim udruženjima.', 9);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Podmi?ivanje svjedoka', 'Davanje mita svjedoku radi utjecaja na iskaz.', 6);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Sabotaža energetskog sustava', 'Namjerno ošte?enje energetskog sustava radi ometanja opskrbe.', 8);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Nezakoniti izvoz oružja', 'Izvoz oružja bez odobrenja i u suprotnosti s zakonima.', 7);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Otmica djeteta', 'Nezakonito zadržavanje djeteta protiv volje roditelja ili skrbnika.', 5);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Napad na suverenitet', 'Napad na suverenitet države ili teritorijalni integritet.', 9);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Preprodaja ilegalnih supstanci', 'Neovlaštena proizvodnja i distribucija ilegalnih supstanci.', 6);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Zlo?in iz mržnje', 'Napad motiviran mržnjom prema nekoj skupini ljudi.', 7);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Pretvaranje oružja u automatsko', 'Nedopuštena modifikacija vatrenog oružja u automatsko.', 4);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Izazivanje nesre?e', 'Namjerno izazivanje prometne ili druge nesre?e s ozbiljnim posljedicama.', 5);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Zlostavljanje životinja u grupi', 'Ne?ovje?no postupanje prema ve?em broju životinja.', 6);
+CALL Dodaj_Novo_Kaznjivo_Djelo('Dijamantna plja?ka', 'Oružana plja?ka draguljarnice s namjerom kra?e dijamanata.', 8);
+
+COMMIT;
+
+
+Napravi transakciju koja ?e omogu?iti pregled svih službenih vozila
+Neka se stupac id_vlasnik pretvori u stupac vlasnik tipa VARCHAR zato što je vlasnik svih službenih vozila MUP. Osiguraj da se prilikom izvo?enja transakcije ne obriše ili izmjeni niti jedno od službenih vozila (zato imamo REPEATABLE READ i zaklju?avanje). 
+
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+
+ALTER TABLE Vozilo
+ADD COLUMN napomena_službena_vozila VARCHAR(255);
+
+SELECT * FROM Vozilo WHERE sluzbeno_vozilo = 1 FOR UPDATE NOWAIT; 
+
+CREATE TEMPORARY TABLE IF NOT EXISTS Pregled_službenih_vozila (
+    id INT,
+    marka VARCHAR(255),
+    model VARCHAR(255),
+    registracija VARCHAR(20),
+    godina_proizvodnje INT,
+    sluzbeno_vozilo BOOLEAN,
+    vlasnik VARCHAR(255),
+    napomena_službena_vozila VARCHAR(255)
+);
+
+INSERT INTO Pregled_službenih_vozila (id, marka, model, registracija, godina_proizvodnje, sluzbeno_vozilo, vlasnik, napomena_službena_vozila)
+SELECT id, marka, model, registracija, godina_proizvodnje, sluzbeno_vozilo, 'Ministarstvo Unutarnjih Poslova' AS vlasnik, 'Ministarstvo Unutarnjih Poslova' AS napomena_službena_vozila
+FROM Vozilo
+WHERE sluzbeno_vozilo = 1;
+
+COMMIT;
+
+
+
+ER i EER Dijagram 
+(SLIKE SU ZBOG BOLJE ?ITLJIVOSTI PREDANE U FOLDERU)
+ER dijagram
+Opis ER dijagrama
+Skup entiteta podrucje_uprave povezan je sa skupom mjesto jedan naprema više jer se jedno podru?je uprave može nalaziti u više mjesta dok jedno mjesto može imati samo jedno podru?je uprave.
+
+Skup entiteta mjesto povezan je sa skupom predmet jedan naprema više jer se na jednom mjestu može prona?i više predmeta, dok se jedan predmet može prona?i samo na jednom mjestu.
+
+Skup entiteta mjesto povezan je sa skupom evidencija_doga?aja jedan naprema više jer se na jednom mjestu može dogoditi više evidencija doga?aja, dok se jedna evidencija doga?aja može dogoditi na jednom mjestu.
+
+Skup entiteta mjesto povezan je sa skupom zgrada jedan naprema više jer se na jednom mjestu može nalaziti više zgrada, dok se jedna zgrada može nalaziti samo u jednom mjestu.
+
+Skup entiteta mjesto povezan je sa skupom zaposlenik jedan naprema više jer na jednom mjestu radi više zaposlenika, a jedan zaposlenik radi samo na jednom mjestu.
+
+Skup entiteta radno_mjesto je povezan sa skupom zaposlenik jedan naprema više jer na jednom radnom mjestu radi više zaposlenika, dok jedan zaposlenik može raditi samo na jednom radnom mjestu.
+
+Skup entiteta zaposlenik povezan je sa skupom zaposlenik više naprema jedan jer svaki zaposlenik može imati nadre?enog i biti nadre?en nekom drugom. Ukoliko zaposlenik ima nadre?enog, to bilježimo kao referencu na tablicu zaposlenik (samoreferenciranje).
+
+Skup entiteta zaposlenik povezan je sa skupom entiteta zgrada više naprema jedan jer više zaposlenika može raditi u jednoj zgradi, a u jednoj zgradi može raditi više zaposlenika.
+
+Skup entiteta zaposlenik povezan je sa skupom entiteta odjeli više naprema jedan jer više zaposlenika može raditi na jednom odjelu, dok na jednom odjelu može raditi više zaposlenika.
+
+Skup entiteta zaposlenik povezan je sa skupom entiteta slucaj jedan naprema više jer jedan zaposlenik ima jedan slu?aj, dok jedan slu?aj može imati samo jednog zaposlenika.
+
+Skup entiteta zaposlenik povezan je sa skupom entiteta osoba jedan naprema jedan jer jedan zaposlenik može biti jedna osoba, dok jedna osoba može biti samo jedan zaposlenik.
+
+Skup entiteta osoba povezan je sa skupom entiteta vozilo jedan naprema više jer jedna osoba može imati više vozila, dok jedno vozilo može imati samo jedna osoba.
+
+Skup entiteta osoba povezan je sa skupom entiteta izvjestaji jedan naprema više jer jedna osoba radi na više izvještaja, dok jedan izvještaj radi jedna osoba.
+
+Skup entiteta osoba povezan je sa skupom entiteta pas jedan naprema više jer jedna osoba može imati više pasa, a jedan pas može imati jednu osobu kao vlasnika.
+
+Skup entiteta osoba povezan je sa skupom entiteta slucaj jedan naprema više jer jedna osoba može imati više slu?ajeva (biti prisutna), dok jedan slu?aj može imati jedna osoba.
+
+Skup entiteta pas povezan je sa skupom entiteta kaznjiva_djela više naprema jedan jer je više pasa zaduženo za kažnjiva djela, dok je za jedno kažnjivo djelo zaduženo više pasa.
+
+Skup entiteta pas povezan je sa skupom entiteta slucaj jedan naprema više jer jedan pas može imati jedan slu?aj (biti prisutan), dok jedan slu?aj može imati samo jednog psa (prisutnog).
+
+Skup entiteta izvjestaji povezan je sa skupom entiteta slucaj više naprema jedan jer se više izvještaja može napraviti za jedan slu?aj, dok se za jedan slu?aj može napraviti više izvještaja.
+
+Skup entiteta zapljene povezan je sa skupom entiteta slucaj više naprema jedan jer se više zapljena može napraviti u jednom slu?aju, dok se u jednom slu?aju može napraviti više zapljena.
+
+Skup entiteta zapljene povezan je sa skupom entiteta predmet više naprema jedan jer više zapljena može biti povezano sa jednim predmetom, dok jedan predmet može biti povezan sa više zapljena.
+
+Skup entiteta slucaj povezan je sa skupom entiteta evidencija_dogadaja jedan naprema više jer jedan slu?aj može imati više evidencija doga?aja, dok jedna evidencija doga?aja može imati jedan slu?aj.
