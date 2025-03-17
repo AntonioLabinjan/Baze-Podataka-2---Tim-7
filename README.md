@@ -209,6 +209,7 @@ Na ovom se repozitoriju nalazi projektni zadatak tima 7.
 </ul>
 <hr></hr> 
 
+* fun fact: dokumentacija se ne vidi, ali boooooo. Očito se ne more uploadat PDF na Github, ili smo nešto fulali
 <ul>
 <b>Link na aplikaciju:</b></ul>
 <ol>https://github.com/petarally/BP2_policija_aplikacija</ol>
