@@ -3058,7 +3058,7 @@ BEGIN
 END //
 
 DELIMITER ;
-
+# mali easter egg: ako ovo vidite, jako puno ste scrollali
 SELECT Avg_Slucaj_Osoba_Odjel(5);
 
 # Koristeći ovu funkciju napiši upit za pronalaženje odjela s ispodprosječnim brojem slučajeva po osobi
